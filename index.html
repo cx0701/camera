@@ -236,11 +236,12 @@
                 let beta = event.beta || 0;  // X 軸（前後傾斜）
                 let alpha = event.alpha || 0;
                 //用絕對值 計算移動差異
+                 gamma = gamma*0.5
                 let deltaBeta = Math.abs(beta - lastBeta);
                 let deltaAlpha = Math.abs(alpha - lastAlpha);
                 let deltGamma = Math.abs(gamma - lastGamma);
                 beta = beta*4.5;
-                gamma = gamma*0.5
+               
                 lastBeta = beta;
                 lastAlpha = alpha;
                 lastGamma = gamma;
