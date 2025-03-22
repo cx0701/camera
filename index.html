@@ -241,7 +241,7 @@
                 let deltaAlpha = Math.abs(alpha - lastAlpha);
                 let deltGamma = Math.abs(gamma - lastGamma);
                 beta = beta*4.5;
-                if(deltGamma>deltaBeta+10){
+                if(deltGamma>deltaBeta-10 && gamma>30){
                     beta = lastBeta;
                 }
                 lastBeta = beta;
