@@ -240,8 +240,8 @@
                 let deltaBeta = Math.abs(beta - lastBeta);
                 let deltaAlpha = Math.abs(alpha - lastAlpha);
                 let deltGamma = Math.abs(gamma - lastGamma);
-                beta = beta*4.5;
-                if(deltGamma>20){
+                beta = beta*4.2;
+                if(deltGamma>0.00001 && gamma>20){
                     beta = lastBeta;
                 }
                 lastBeta = beta;
