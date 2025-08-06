@@ -137,11 +137,11 @@
         var db = indexedDB.open("dummy_indexdb", 1); // iOS 14.6 fix; the call to open indexdb hangs forever otherwise
 
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/camera.loader.js";
+        const loaderUrl = buildUrl + "/t.loader.js";
         const config = {
-            dataUrl: buildUrl + "/0fe3492165ad38ac25ab0c8bb0ecedda.data.unityweb",
-            frameworkUrl: buildUrl + "/7672fe86c384f5ca4d2dc76a26a31cbc.js.unityweb",
-            codeUrl: buildUrl + "/b6ae127add5ec3f7e35af4ee21ade84d.wasm.unityweb",
+            dataUrl: buildUrl + "/c668a790dfab79c3db9bed22a5d1a47a.data.unityweb",
+            frameworkUrl: buildUrl + "/68d8c3bf6ab753cd15af1b1e991749e1.js.unityweb",
+            codeUrl: buildUrl + "/5c1355e346af25dd8b7cfb85d15ab488.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "VR互動平台-海洋之聲",
@@ -208,6 +208,85 @@
         }
 
     </script>
+        <!-- 設定API 視窗 -->
+<div class="modal fade" id="SettingModal" tabindex="-1" aria-labelledby="SettingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header text-white">
+                <h5 class="modal-title fw-bold" id="SettingModalLabel" style="color: black;">設定API KEY(目前支援gemini)
+                </h5>
+                <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="關閉"
+                    style="color: black;"></button>
+            </div>
+            <div class="modal-body text-center">
+                <input type="text" id="password" placeholder="請複製貼上 API Key" class="form-control mb-3 mt-4"
+                    style="padding: 10px; font-size: 16px; border-width: 2px;">
+                <p class="fs-5" style="color: rgb(255, 39, 39);" id="success"></p>
+            </div>
+
+            <div class="modal-footer justify-content-center">
+                <button class="btn btn-success px-4 fs-6" onclick="Paste()">貼上</button>
+                <button onclick="SendSetting()" class="btn btn-primary px-4 fs-6">確認</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.disableUnityKeyboardInput = true;
+
+    document.addEventListener("keydown", function (e) {
+        const active = document.activeElement;
+        if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
+            e.stopPropagation();
+        }
+    }, true);
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('SettingModal').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('unity-canvas').classList.remove("disable-events");
+        });
+    });
+
+    document.getElementById("password").addEventListener("keydown", function (e) {
+        e.stopPropagation(); // 阻止事件繼續冒泡到 Unity
+    });
+    function ShowSetting() {
+        const modal = new bootstrap.Modal(document.getElementById('SettingModal'));
+        modal.show();
+        console.log("Modal opened");
+
+        document.getElementById('unity-canvas').classList.add("disable-events");
+
+        setTimeout(() => {
+            const input = document.getElementById("password");
+            input.blur();
+            input.focus();
+            console.log("Focused input");
+        }, 200);
+    }
+
+    function SendSetting() {
+        const API = document.getElementById("password").value;
+        window.uarGameInstance.SendMessage('ConnectAi', 'SetApiKey', API);
+
+        if (API) {
+            document.getElementById("success").innerText = "API Key 已成功設定！";
+        } else {
+            document.getElementById("success").innerText = "請輸入 API Key！";
+        }
+
+    }
+    function Paste() {
+    navigator.clipboard.readText().then(text => {
+        document.getElementById("password").value = text;
+        document.getElementById("success").innerText = "API Key 已成功設定！";
+    }).catch(err => {
+        console.error("無法讀取剪貼簿內容：", err);
+        document.getElementById("success").innerText = "無法貼上，請再試一次";
+    });
+}
+
+</script>
 </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
@@ -591,74 +670,6 @@ function sendNextImage_Btn() {
             }
         }
     </script>
-    <!-- 設定API 視窗 -->
-<div class="modal fade" id="SettingModal" tabindex="-1" aria-labelledby="SettingModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content rounded-4 shadow">
-            <div class="modal-header text-white">
-                <h5 class="modal-title fw-bold" id="SettingModalLabel" style="color: black;">設定API KEY(目前支援gemini)
-                </h5>
-                <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="關閉"
-                    style="color: black;"></button>
-            </div>
-            <div class="modal-body text-center">
-                <input type="text" id="password" placeholder="請複製貼上 API Key" class="form-control mb-3 mt-4"
-                    style="padding: 10px; font-size: 16px; border-width: 2px;">
-                <p class="fs-5" style="color: rgb(255, 39, 39);" id="success"></p>
-            </div>
-
-            <div class="modal-footer justify-content-center">
-                <button onclick="SendSetting()" class="btn btn-primary px-4 fs-5">確認</button>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    window.disableUnityKeyboardInput = true;
-
-    document.addEventListener("keydown", function (e) {
-        const active = document.activeElement;
-        if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
-            e.stopPropagation();
-        }
-    }, true);
-
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById('SettingModal').addEventListener('hidden.bs.modal', function () {
-            document.getElementById('unity-canvas').classList.remove("disable-events");
-        });
-    });
-
-    document.getElementById("password").addEventListener("keydown", function (e) {
-        e.stopPropagation(); // 阻止事件繼續冒泡到 Unity
-    });
-    function ShowSetting() {
-        const modal = new bootstrap.Modal(document.getElementById('SettingModal'));
-        modal.show();
-        console.log("Modal opened");
-
-        document.getElementById('unity-canvas').classList.add("disable-events");
-
-        setTimeout(() => {
-            const input = document.getElementById("password");
-            input.blur();
-            input.focus();
-            console.log("Focused input");
-        }, 200);
-    }
-
-    function SendSetting() {
-        const API = document.getElementById("password").value;
-        window.uarGameInstance.SendMessage('ConnectAi', 'SetApiKey', API);
-
-        if (API) {
-            document.getElementById("success").innerText = "API Key 已成功設定！";
-        } else {
-            document.getElementById("success").innerText = "請輸入 API Key！";
-        }
-
-    }
-</script>
     <!-- 1. 引入 Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -730,55 +741,6 @@ function sendNextImage_Btn() {
 
 
             console.log("影片已強制停止");
-        }
-
-
-    </script>
-    <script>
-        function RequestSensorPermission() {
-            console.log("傳送給 Unity:");
-            //向使用者請求感應器權限
-            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                DeviceOrientationEvent.requestPermission()
-                    //permissionState 回傳結果
-                    .then(permissionState => {
-                        //得到granted 就給權限
-                        if (permissionState === 'granted') {
-                            //deviceorientation 行動裝置的移動方向
-                            window.addEventListener("deviceorientation", sendOrientationData);
-                        }
-                    })
-                    .catch(console.error);
-            } else {
-                // 如果不需要手動請求權限（如 Android 或舊版 iOS）
-                window.addEventListener("deviceorientation", sendOrientationData);
-            }
-        }
-
-        let lastBeta = 0, lastGamma = 0, lastAlpha = 0, greaterThan = 0.4;
-        function sendOrientationData(event) {
-            if (window.uarGameInstance) {
-                let gamma = event.gamma || 0;
-                let beta = event.beta || 0;
-                let alpha = event.alpha || 0;
-
-                gamma = gamma * 1.2
-                let deltaBeta = Math.abs(beta - lastBeta);
-                let deltaAlpha = Math.abs(alpha - lastAlpha);
-                let deltGamma = Math.abs(gamma - lastGamma);
-                beta = beta * 5.2;
-
-                if (deltGamma > 0.00001 && gamma > 20) {
-                    beta = lastBeta;
-                }
-
-                lastBeta = beta;
-                lastAlpha = alpha;
-                lastGamma = gamma;
-
-                let data = `${beta},${gamma},${deltGamma},${alpha},${deltaAlpha}`;
-                window.uarGameInstance.SendMessage('CameraManager', 'UpdateCamera', data);
-            }
         }
 
 
