@@ -745,4 +745,53 @@ function sendNextImage_Btn() {
 
 
     </script>
+        <script>
+        function RequestSensorPermission() {
+            console.log("傳送給 Unity:");
+            //向使用者請求感應器權限
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission()
+                    //permissionState 回傳結果
+                    .then(permissionState => {
+                        //得到granted 就給權限
+                        if (permissionState === 'granted') {
+                            //deviceorientation 行動裝置的移動方向
+                            window.addEventListener("deviceorientation", sendOrientationData);
+                        }
+                    })
+                    .catch(console.error);
+            } else {
+                // 如果不需要手動請求權限（如 Android 或舊版 iOS）
+                window.addEventListener("deviceorientation", sendOrientationData);
+            }
+        }
+
+        let lastBeta = 0, lastGamma = 0, lastAlpha = 0, greaterThan = 0.4;
+        function sendOrientationData(event) {
+            if (window.uarGameInstance) {
+                let gamma = event.gamma || 0;
+                let beta = event.beta || 0;
+                let alpha = event.alpha || 0;
+
+                gamma = gamma * 1.2
+                let deltaBeta = Math.abs(beta - lastBeta);
+                let deltaAlpha = Math.abs(alpha - lastAlpha);
+                let deltGamma = Math.abs(gamma - lastGamma);
+                beta = beta * 5.2;
+
+                if (deltGamma > 0.00001 && gamma > 20) {
+                    beta = lastBeta;
+                }
+
+                lastBeta = beta;
+                lastAlpha = alpha;
+                lastGamma = gamma;
+
+                let data = `${beta},${gamma},${deltGamma},${alpha},${deltaAlpha}`;
+                window.uarGameInstance.SendMessage('CameraManager', 'UpdateCamera', data);
+            }
+        }
+
+
+    </script>
 </html>
