@@ -591,6 +591,74 @@ function sendNextImage_Btn() {
             }
         }
     </script>
+    <!-- 設定API 視窗 -->
+<div class="modal fade" id="SettingModal" tabindex="-1" aria-labelledby="SettingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header text-white">
+                <h5 class="modal-title fw-bold" id="SettingModalLabel" style="color: black;">設定API KEY(目前支援gemini)
+                </h5>
+                <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="關閉"
+                    style="color: black;"></button>
+            </div>
+            <div class="modal-body text-center">
+                <input type="text" id="password" placeholder="請複製貼上 API Key" class="form-control mb-3 mt-4"
+                    style="padding: 10px; font-size: 16px; border-width: 2px;">
+                <p class="fs-5" style="color: rgb(255, 39, 39);" id="success"></p>
+            </div>
+
+            <div class="modal-footer justify-content-center">
+                <button onclick="SendSetting()" class="btn btn-primary px-4 fs-5">確認</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.disableUnityKeyboardInput = true;
+
+    document.addEventListener("keydown", function (e) {
+        const active = document.activeElement;
+        if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
+            e.stopPropagation();
+        }
+    }, true);
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('SettingModal').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('unity-canvas').classList.remove("disable-events");
+        });
+    });
+
+    document.getElementById("password").addEventListener("keydown", function (e) {
+        e.stopPropagation(); // 阻止事件繼續冒泡到 Unity
+    });
+    function ShowSetting() {
+        const modal = new bootstrap.Modal(document.getElementById('SettingModal'));
+        modal.show();
+        console.log("Modal opened");
+
+        document.getElementById('unity-canvas').classList.add("disable-events");
+
+        setTimeout(() => {
+            const input = document.getElementById("password");
+            input.blur();
+            input.focus();
+            console.log("Focused input");
+        }, 200);
+    }
+
+    function SendSetting() {
+        const API = document.getElementById("password").value;
+        window.uarGameInstance.SendMessage('ConnectAi', 'SetApiKey', API);
+
+        if (API) {
+            document.getElementById("success").innerText = "API Key 已成功設定！";
+        } else {
+            document.getElementById("success").innerText = "請輸入 API Key！";
+        }
+
+    }
+</script>
     <!-- 1. 引入 Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
