@@ -327,7 +327,7 @@
                         }
                     }).filter(row => row !== null); // 過濾掉為 null 的項目
 
-                    console.log("開始傳送:\n" + JSON.stringify(jsonData, null, 2));
+                    console.log("開始傳送遊戲:\n" + JSON.stringify(jsonData, null, 2));
                     // 確保 Unity 初始化後再發送
                     if (window.uarGameInstance) {
                         sendDataInChunks(jsonData, 10);
