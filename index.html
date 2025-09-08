@@ -733,6 +733,7 @@
 
 
         window.getGameRecode = function (data) {
+            console.log("接收到的 data:", data);
             let obj = (typeof data === "string") ? JSON.parse(data) : data;
 
             // 把物件轉換成 query string
