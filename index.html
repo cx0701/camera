@@ -277,6 +277,7 @@
     function send_UserData(){
         let data = `${userName},${question_Type}`;
         window.uarGameInstance.SendMessage('GameManager', 'receiveUserName', data);
+        console.log("傳送玩家資訊");
     }
     window.SendGameInfo = function (sceneName) {
 
@@ -366,15 +367,15 @@
                     setTimeout(sendNext, 500); //延遲後遞迴呼叫
                 } catch (error) {
                     console.error("Unity 傳輸錯誤，重試中...", error);
-                    setTimeout(sendNextChunk, 2000); // 增加重試時間
+                    setTimeout(sendNext, 2000); // 增加重試時間
                 }
             } else {
                 console.warn("Unity 尚未初始化，等待 1 秒後重試...");
-                setTimeout(sendNextChunk, 2000); // 1 秒後重試
+                setTimeout(sendNext, 2000); // 1 秒後重試
             }
         }
 
-        sendNextChunk();
+        sendNext();
     }
 
     window.sendBackground = function (message) {
