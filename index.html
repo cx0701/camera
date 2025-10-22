@@ -791,7 +791,7 @@
             const input = document.getElementById("password");
             input.type = input.type === "password" ? "text" : "password";
         }
-        const API = document.getElementById("password").value;
+        let API = document.getElementById("password").value;
         window.disableUnityKeyboardInput = true;
 
         document.addEventListener("keydown", function (e) {
