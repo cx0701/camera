@@ -829,7 +829,7 @@
             API = document.getElementById("password").value;
             window.uarGameInstance.SendMessage('ConnectAi', 'SetApiKey', API);
 
-            if (API) {
+            if (API.trim()) {
                 document.getElementById("success").innerText = "API Key 已成功設定！";
             } else {
                 document.getElementById("success").innerText = "請輸入 API Key！";
@@ -840,6 +840,7 @@
             if (navigator.clipboard && navigator.clipboard.readText) {
                 navigator.clipboard.readText().then(text => {
                     document.getElementById("password").value = text;
+                    SendSetting();
                     document.getElementById("success").innerText = "API Key 已成功設定！";
                 }).catch(err => {
                     alert("無法存取剪貼簿" + err);
