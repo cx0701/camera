@@ -424,46 +424,6 @@
         //按鈕功能
         window.allImage = [];
         window.BtnPathIndex = 0;
-
-        const imagePath = window.allImage[window.BtnPathIndex];
-        const imgElement = new Image();
-        imgElement.src = imagePath;
-
-        imgElement.onload = function () {
-            fetch(imgElement.src)
-                .then(response => response.blob())
-                .then(blob => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                        const base64String = reader.result.split(",")[1];
-
-                        if (window.uarGameInstance) {
-                            window.uarGameInstance.SendMessage('UIManager', 'ReceiveImage', base64String);
-                            //console.log("已送出第", window.currentIndex + 1, "張：", imagePath);
-                        } else {
-                            console.error("Unity WebGL 尚未初始化！");
-                        }
-
-                        // 等 1 秒後再送下一張（避免 Unity 無法即時處理）
-                        window.BtnPathIndex++;
-                        setTimeout(sendNextImage_Btn, 300); // 調大延遲可提高成功率
-                    };
-                    reader.readAsDataURL(blob);
-                })
-                .catch(error => {
-                    console.error("圖片讀取失敗:", error);
-                    window.BtnPathIndex++;
-                    setTimeout(sendNextImage_Btn, 1000); // 繼續下一張
-                });
-        };
-
-        imgElement.onerror = function () {
-            console.error("圖片載入錯誤：", imagePath);
-            window.BtnPathIndex++;
-            setTimeout(sendNextImage_Btn, 1000);
-        };
-
-
         window.imageQueue = [];
         window.currentIndex = 0;
 
