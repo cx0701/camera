@@ -591,6 +591,7 @@
         if (value) {
             console.log("btnDict", value); 
             let jsonString = JSON.stringify(value);
+            console.log("jsonString", jsonString);
             if (window.uarGameInstance) {
                 window.uarGameInstance.SendMessage('GameManager', 'getBtnDataFromExcel', jsonString);
             } else {
