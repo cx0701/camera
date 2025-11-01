@@ -645,7 +645,7 @@
             let url = encodeURI("https://script.google.com/macros/s/AKfycbwQEGGv7oifIubcn-PAER768ajKfFFq43r2rfM4VA7EsQBFt8DzfVkpyJAdq6JqjG4tEA/exec?" + params);
 
             console.log("最終請求網址:", url);
-
+            console.log("傳送的:", params);
             fetch(url, { method: "GET" })
                 .then(res => res.text())
                 .then(msg => console.log("Google 的回應:", msg))
