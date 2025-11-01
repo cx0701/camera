@@ -209,7 +209,110 @@
 
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+    //fetchBtn();
+    let Scence = [];
+    let Btn1 = [], Btn2 = [], Btn3 = [], Btn4 = [];
+    let btnDict = {};
+    let cleanPath;
+    //function fetchBtn() {
+    window.fetchBtn = function () {
+      fetch("questionData.xlsx?t=" + new Date().getTime())
+        .then(response => response.arrayBuffer())
+        .then(data => {
+          let workbook = XLSX.read(data, { type: "array" });
+          let sheetName = "editButton";
+          let worksheet = workbook.Sheets[sheetName];
+          let jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true, defval: "" });
+
+          const BtnType = (path) => {
+            if (!path || path.trim() === "") return [];
+            cleanPath = path.replace(/\\/g, "/");
+            if (cleanPath.includes('.jpg')) return cleanPath.split(',');
+            else return [cleanPath];
+          };
+
+          Scence = jsonData.map(row => row.ScenceName).filter(path => path);
+          Btn1 = jsonData.map(row => row.Button1).map(BtnType);
+          Btn2 = jsonData.map(row => row.Button2).map(BtnType);
+          Btn3 = jsonData.map(row => row.Button3).map(BtnType);
+          Btn4 = jsonData.map(row => row.Button4).map(BtnType);
+
+          for (let i = 0; i < jsonData.length; i++) {
+            const sceneName = jsonData[i].ScenceName;
+            if (sceneName) {
+              btnDict[sceneName] = [Btn1[i], Btn2[i], Btn3[i], Btn4[i]];
+            }
+          }
+
+          console.log("載入成功：", btnDict);
+        })
+        .catch(error => console.error("載入按鈕資料失敗", error));
+
+      //setTimeout(() => findBtnData('Scene1'), 500);
+
+    }
+    let images = [];
+    //指定 Scene 的所有圖片
+    //function findBtnData(SceneName) {
+    window.findBtnImg = function (SceneName) {
+      console.log("查找 Scene:", SceneName);
+      const sceneData = btnDict[SceneName];
+      if (!sceneData) {
+        alert("找不到 Scene: " + SceneName);
+        return;
+      }
+
+      //圖片路徑
+
+      for (let group of sceneData) {
+        if (Array.isArray(group)) {
+          for (let path of group) {
+            if (typeof path === "string" && path.includes(".jpg")) {
+              images.push(path.trim());
+            }
+          }
+        }
+      }
+
+      console.log("找到圖片：", images);
+      if (images.length === 0) {
+        alert("Scene 沒有任何圖片！");
+        return;
+      }
+
+      //測試顯示 modal
+      //showImageModal(images);
+    }
+
+    // 顯示圖片
+    //function showImage() {
+    window.showImage = function(){
+      if(images==null)return;
+      let currentIndex = 0;
+      const modal = new bootstrap.Modal(document.getElementById("imageModal"));
+      const modalImg = document.getElementById("modalImage");
+
+      const updateImage = () => {
+        modalImg.src = images[currentIndex];
+      };
+
+      document.getElementById("prevImageBtn").onclick = () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateImage();
+      };
+
+      document.getElementById("nextImageBtn").onclick = () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateImage();
+      };
+
+      updateImage();
+      modal.show();
+    }
+  </script>
 <script>
+    
     let activeScence = [];
     let active_workSheet = [];
     let BgPaths = [];
@@ -773,108 +876,7 @@
     </div>
   </div>
 
-  <script>
-    //fetchBtn();
-    let Scence = [];
-    let Btn1 = [], Btn2 = [], Btn3 = [], Btn4 = [];
-    let btnDict = {};
-    let cleanPath;
-    //function fetchBtn() {
-    window.fetchBtn = function () {
-      fetch("questionData.xlsx?t=" + new Date().getTime())
-        .then(response => response.arrayBuffer())
-        .then(data => {
-          let workbook = XLSX.read(data, { type: "array" });
-          let sheetName = "editButton";
-          let worksheet = workbook.Sheets[sheetName];
-          let jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true, defval: "" });
-
-          const BtnType = (path) => {
-            if (!path || path.trim() === "") return [];
-            cleanPath = path.replace(/\\/g, "/");
-            if (cleanPath.includes('.jpg')) return cleanPath.split(',');
-            else return [cleanPath];
-          };
-
-          Scence = jsonData.map(row => row.ScenceName).filter(path => path);
-          Btn1 = jsonData.map(row => row.Button1).map(BtnType);
-          Btn2 = jsonData.map(row => row.Button2).map(BtnType);
-          Btn3 = jsonData.map(row => row.Button3).map(BtnType);
-          Btn4 = jsonData.map(row => row.Button4).map(BtnType);
-
-          for (let i = 0; i < jsonData.length; i++) {
-            const sceneName = jsonData[i].ScenceName;
-            if (sceneName) {
-              btnDict[sceneName] = [Btn1[i], Btn2[i], Btn3[i], Btn4[i]];
-            }
-          }
-
-          console.log("載入成功：", btnDict);
-        })
-        .catch(error => console.error("載入按鈕資料失敗", error));
-
-      //setTimeout(() => findBtnData('Scene1'), 500);
-
-    }
-    let images = [];
-    //指定 Scene 的所有圖片
-    //function findBtnData(SceneName) {
-    window.findBtnImg = function (SceneName) {
-      console.log("查找 Scene:", SceneName);
-      const sceneData = btnDict[SceneName];
-      if (!sceneData) {
-        alert("找不到 Scene: " + SceneName);
-        return;
-      }
-
-      //圖片路徑
-
-      for (let group of sceneData) {
-        if (Array.isArray(group)) {
-          for (let path of group) {
-            if (typeof path === "string" && path.includes(".jpg")) {
-              images.push(path.trim());
-            }
-          }
-        }
-      }
-
-      console.log("找到圖片：", images);
-      if (images.length === 0) {
-        alert("Scene 沒有任何圖片！");
-        return;
-      }
-
-      //測試顯示 modal
-      //showImageModal(images);
-    }
-
-    // 顯示圖片
-    //function showImage() {
-    window.showImage = function(){
-      if(images==null)return;
-      let currentIndex = 0;
-      const modal = new bootstrap.Modal(document.getElementById("imageModal"));
-      const modalImg = document.getElementById("modalImage");
-
-      const updateImage = () => {
-        modalImg.src = images[currentIndex];
-      };
-
-      document.getElementById("prevImageBtn").onclick = () => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateImage();
-      };
-
-      document.getElementById("nextImageBtn").onclick = () => {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateImage();
-      };
-
-      updateImage();
-      modal.show();
-    }
-  </script>
+  
 </body>
 
 </html>
