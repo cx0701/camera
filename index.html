@@ -791,7 +791,7 @@
 
           const BtnType = (path) => {
             if (!path || path.trim() === "") return [];
-            cprocessButtonPathleanPath = path.replace(/\\/g, "/");
+            cleanPath = path.replace(/\\/g, "/");
             if (cleanPath.includes('.jpg')) return cleanPath.split(',');
             else return [cleanPath];
           };
