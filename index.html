@@ -491,7 +491,7 @@
             let jsonString = JSON.stringify(value);
             // 第二次 stringify：再包成字串 literal（Unity 才能接收）
             let escapedJson = JSON.stringify(jsonString);
-            console.log("jsonString4", escapedJson);
+            console.log("jsonString: ", escapedJson);
             if (window.uarGameInstance) {
                 window.uarGameInstance.SendMessage('GameManager', 'getBtnDataFromExcel', jsonString);
             } else {
