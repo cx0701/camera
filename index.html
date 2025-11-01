@@ -625,7 +625,7 @@
                 let escapedJson = JSON.stringify(jsonString);
                 console.log("jsonString", value);
                 if (window.uarGameInstance) {
-                    window.uarGameInstance.SendMessage('GameManager', 'getBtnDataFromExcel', value);
+                    window.uarGameInstance.SendMessage('GameManager', 'getBtnDataFromExcel', jsonString);
                 } else {
                     console.error("Unity WebGL 尚未初始化！");
                 }
