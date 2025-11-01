@@ -616,7 +616,7 @@
             //let jsonString = JSON.stringify(value);
             console.log("jsonString", jsonString);
             if (window.uarGameInstance) {
-                window.uarGameInstance.SendMessage('GameManager', 'getBtnDataFromExcel', jsonString);
+                window.uarGameInstance.SendMessage('GameManager', 'getBtnDataFromExcel', value);
             } else {
                 console.error("Unity WebGL 尚未初始化！");
             }
