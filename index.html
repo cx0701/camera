@@ -637,18 +637,18 @@
 
             // 如果 data 是 JSON 字串，轉成物件
             let obj = (typeof data === "string") ? JSON.parse(data) : data;
-
+            
             // 轉成查詢字串（確保自動編碼中文與特殊字元）
             let params = new URLSearchParams(obj).toString();
 
             // ✅ 用 encodeURI 處理整個 URL，避免中文出錯
-            let url = encodeURI("https://script.google.com/macros/s/AKfycbwQEGGv7oifIubcn-PAER768ajKfFFq43r2rfM4VA7EsQBFt8DzfVkpyJAdq6JqjG4tEA/exec?" + params);
+            let url = encodeURI("https://script.google.com/macros/s/AKfycbwUUcb1GjKzIOY256UQY9MtNWYwhXEKuGs57TafwZ-F2lfO0TCZKGwmbG0IGsJG9zE8/exec?" + params);
 
             console.log("最終請求網址:", url);
             console.log("傳送的:", params);
             fetch(url, { method: "GET" })
                 .then(res => res.text())
-                .then(msg => console.log("Google 的回應:", msg))
+                .then(msg => console.log("Google 回應 :", msg))
                 .catch(err => console.error("錯誤:", err));
         };
 
