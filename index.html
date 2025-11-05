@@ -327,7 +327,14 @@
                         }
                     }).filter(row => row !== null); // 過濾掉為 null 的項目
 
-                    console.log("開始傳送:\n" + JSON.stringify(jsonData, null, 2));
+                    //console.log("開始傳送:\n" + JSON.stringify(jsonData, null, 2));
+                    function getRandomQuestions(data, count) {
+                        if (data.length <= count) return data; // 如果題目不足 5 題就全取
+                        let shuffled = data.sort(() => Math.random() - 0.5); // 隨機打亂順序
+                        return shuffled.slice(0, count); // 取前 5 題
+                    }
+
+                    jsonData = getRandomQuestions(jsonData, 5);
                     // 確保 Unity 初始化後再發送
                     if (window.uarGameInstance) {
                         sendDataInChunks(jsonData, 10);
@@ -637,7 +644,7 @@
 
             // 如果 data 是 JSON 字串，轉成物件
             let obj = (typeof data === "string") ? JSON.parse(data) : data;
-            
+
             // 轉成查詢字串（確保自動編碼中文與特殊字元）
             let params = new URLSearchParams(obj).toString();
 
