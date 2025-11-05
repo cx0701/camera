@@ -637,7 +637,7 @@
             let params = new URLSearchParams(obj).toString();
 
             // 把參數加到網址後面
-            let url = "https://script.google.com/macros/s/AKfycbwQEGGv7oifIubcn-PAER768ajKfFFq43r2rfM4VA7EsQBFt8DzfVkpyJAdq6JqjG4tEA/exec?" + params;
+            let url = "https://script.google.com/macros/s/AKfycbwUUcb1GjKzIOY256UQY9MtNWYwhXEKuGs57TafwZ-F2lfO0TCZKGwmbG0IGsJG9zE8/exec?" + params;
 
             // GET 請求
             fetch(url, {
@@ -744,7 +744,7 @@
                 });
             }
         }
-        window.sendAPI = function () {
+        function sendAPI() {
             API = document.getElementById("password").value;
             if (API.trim()) {
                 window.uarGameInstance.SendMessage('ConnectAi', 'SetApiKey', API);
