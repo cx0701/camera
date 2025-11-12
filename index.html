@@ -220,7 +220,7 @@
         let imagePaths = [];
         let question_Type = "";//sheet name
         window.fetchActiveData = function () {
-            fetch("easyData.xlsx?t=" + new Date().getTime()) // 加入時間戳記，避免快取
+            fetch("expData.xlsx?t=" + new Date().getTime()) // 加入時間戳記，避免快取
                 .then(response => response.arrayBuffer())
                 .then(data => {
                     let workbook = XLSX.read(data, { type: "array" });
@@ -278,23 +278,51 @@
 
         // 傳送使用者資料給 Unity
         function send_UserData() {
-            let data = `${userName},${question_Type}`;
+            let data = `${userName}`;
             window.uarGameInstance.SendMessage('GameManager', 'receiveUserName', data);
         }
+        
+        let worksheet = "";
         window.SendGameInfo = function (sceneName) {
-            fetch("easyData.xlsx?t=" + new Date().getTime())
+            fetch("expData.xlsx?t=" + new Date().getTime())
                 .then(response => response.arrayBuffer())
                 .then(data => {
                     let workbook = XLSX.read(data, { type: "array" });
 
                     let value = activeDict[sceneName];  // 場景 為 key
                     let sheetName = value ? value[0] : " ";   //value 存在，就取第一個元素，否則返回" "
-                    let worksheet = sheetName ? workbook.Sheets[sheetName] : null;//防呆
-                    question_Type = sheetName;
+                    //let worksheet = sheetName ? workbook.Sheets[sheetName] : null;//防呆
+
+                    if (sceneName === "scene1") {
+                        const sheetOpt = ["match", "match2", "match3"];
+                        const randomIndex = Math.floor(Math.random() * sheetOpt.length);
+                        worksheet = workbook.Sheets[sheetOpt[randomIndex]];
+
+                    }
+                    else if (sceneName === "scene2") {
+                        const sheetOpt = ["cloze", "cloze2", "cloze3"];
+                        const randomIndex = Math.floor(Math.random() * sheetOpt.length);
+                        worksheet = workbook.Sheets[sheetOpt[randomIndex]];
+
+                    }
+                    else if (sceneName === "scene3") {
+                        const sheetOpt = ["card", "card2", "card3"];
+                        const randomIndex = Math.floor(Math.random() * sheetOpt.length);
+                        worksheet = workbook.Sheets[sheetOpt[randomIndex]];
+
+                    }
+                    else {
+                        const sheetOpt = ["sorting", "sorting2", "sorting3"];
+                        const randomIndex = Math.floor(Math.random() * sheetOpt.length);
+                        worksheet = workbook.Sheets[sheetOpt[randomIndex]];
+
+                    }
+
                     if (!worksheet) {
                         console.error("無法找到工作表！");
                         return;
                     }
+
                     send_UserData();
                     let rawData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
                     let jsonData = rawData.map(row => {
@@ -325,14 +353,38 @@
                         }
                     }).filter(row => row !== null); // 過濾掉為 null 的項目
 
-                    //console.log("開始傳送:\n" + JSON.stringify(jsonData, null, 2));
-                    function getRandomQuestions(data, count) {
-                        if (data.length <= count) return data; // 如果題目不足 5 題就全取
-                        let shuffled = data.sort(() => Math.random() - 0.5); // 隨機打亂順序
-                        return shuffled.slice(0, count); // 取前 5 題
+
+                    function getRandomQuestionsByGap(data) {
+                        const total = data.length;
+                        if (total === 0) return [];
+
+                        const gap = Math.floor(total / 3); // 每組區段大小
+                        const result = [];
+
+                        for (let i = 0; i < 3; i++) {
+                            const start = i * gap;
+                            const end = (i === 2) ? total : (start + gap); // 最後一組包含尾端
+                            const segment = data.slice(start, end);
+
+                            //從這個segment區段中隨機抽 2 題
+                            const chosen = getRandomFromSegment(segment, 2);
+                            result.push(...chosen);
+                        }
+
+                        console.log(`總題數: ${total}，gap: ${gap}，最終抽出 ${result.length} 題`);
+                        return result;
                     }
 
-                    jsonData = getRandomQuestions(jsonData, 5);
+                    // 從一個區段中隨機抽 n 題
+                    function getRandomFromSegment(segment, n) {
+                        if (segment.length <= n) return segment;
+                        //打亂重新排序
+                        const shuffled = segment.sort(() => Math.random() - 0.5);
+                        return shuffled.slice(0, n);
+                    }
+
+                    jsonData = getRandomQuestionsByGap(jsonData);
+
                     console.log("隨機取出的題目：", jsonData);
                     // 確保 Unity 初始化後再發送
                     if (window.uarGameInstance) {
