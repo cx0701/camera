@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="shortcut icon" href="favicon.ico">
     <title>英文學習互動平台</title>
     <style>
@@ -43,8 +43,13 @@
         }
 
         #unity-canvas {
-            width: 100%;
-            height: 100%;
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            position: fixed;
+            left: 0;
+            top: 0;
 
             background: #231F20;
         }
@@ -124,9 +129,305 @@
 </head>
 
 <body class="dark">
+    <div id="modeSelector" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 2000;
+        background-color: rgba(255, 255, 255); 
+        display: flex;
+        justify-content: center;
+
+    ">
+        <div class="col-md-6 fs-5 ps-1 pe-1 ">
+            <h3 class="mb-2 d-flex justify-content-center mb-3 mb-md-0" style="color: black; ">基本資料</h3>
+
+            <div style="width: 100%;" class="mb-2">
+                <b>1. 我的生理性別</b>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="gender" id="gender1" value="option1">
+                    <label class="form-check-label" for="gender1">女性</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="gender2" value="option2">
+                    <label class="form-check-label" for="gender2">男性</label>
+                </div>
+            </div>
+
+            <div style="width: 100%;" class="mb-2">
+                <b>2. 我的年齡</b>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="age" id="age1" value="option1">
+                    <label class="form-check-label" for="age1">13-15歲</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="age" id="age2" value="option2">
+                    <label class="form-check-label" for="age2">16-18歲</label>
+                </div>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="age" id="age3" value="option3">
+                    <label class="form-check-label" for="age3">18至21歲</label>
+                </div>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="age" id="age4" value="option4">
+                    <label class="form-check-label" for="age4">21歲以上</label>
+                </div>
+            </div>
+
+            <div style="width: 100%;" class="mb-2 ">
+                <b>3. 教育程度</b>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="education" id="education1" value="option1">
+                    <label class="form-check-label" for="education1">國小</label>
+                </div>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="education" id="education2" value="option2">
+                    <label class="form-check-label" for="education2">國中</label>
+                </div>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="education" id="education3" value="option3">
+                    <label class="form-check-label" for="education3"> 高中（職）</label>
+                </div>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="education" id="education4" value="option4">
+                    <label class="form-check-label" for="education4"> 大學（專）或以上</label>
+                </div>
+            </div>
+
+            <div style="width: 100%;" class="mb-1">
+                <b>4. 我的耐心</b>
+                <div class="form-check">
+                    <!--題目3*2-->
+                    <input class="form-check-input" type="radio" name="patience" id="patience1" value="2">
+                    <label class="form-check-label" for="patience1">不太好</label>
+                </div>
+                <div class="form-check">
+                    <!--題目3*4-->
+                    <input class="form-check-input" type="radio" name="patience" id="patience2" value="4">
+                    <label class="form-check-label" for="patience2">普通</label>
+                </div>
+                <div class="form-check ">
+                    <!--題目3*8  form-check-inline -->
+                    <input class="form-check-input" type="radio" name="patience" id="patience3" value="8">
+                    <label class="form-check-label" for="patience3"> 還不錯 </label>
+                </div>
+
+            </div>
+
+
+            <div class="d-flex justify-content-center mt-3 mt-md-0">
+                <button class="btn fs-5 fw-bold ps-5 pe-5 " style="background-color: #7ed957; color: #ffffff;"
+                    onclick="recode()">送出</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pre_test" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 2000;
+        background-color: rgba(255, 255, 255); 
+        display: flex;
+        justify-content: center;
+    ">
+        <div class="col-md-6 fs-5 ps-3 pe-3">
+            <h2 class="d-flex justify-content-center  mb-2 mb-md-0" style="color: black; ">前測</h2>
+            <h5 class="mb-1" style="color: black;" id="title_pre">請配對以下選項 : </h5>
+            <div style="width: 100%;" class="mb-3 ">
+                <b id="Q1_word"></b>
+                <div id="opt1">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test1" id="S1_1" value="S1_1">
+                        <label class="form-check-label" for="S1_1">A</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test1" id="S1_2" value="S1_2">
+                        <label class="form-check-label" for="S1_2">B</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test1" id="S1_3" value="S1_3">
+                        <label class="form-check-label" for="S1_3">C</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test1" id="S1_4" value="S1_4">
+                        <label class="form-check-label" for="S1_4">D</label>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div style="width: 100%;" class="mb-3">
+                <b id="Q2_word"></b>
+                <div id="opt2">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test2" id="S2_1" value="S2_1">
+                        <label class="form-check-label" for="S2_1">A</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test2" id="S2_2" value="S2_2">
+                        <label class="form-check-label" for="S2_2">B</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test2" id="S2_3" value="S2_3">
+                        <label class="form-check-label" for="S2_3">C</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="test2" id="S2_4" value="S2_4">
+                        <label class="form-check-label" for="S2_4">D</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div style="width: 100%;" class="mb-1">
+                <b id="Q3_word"></b>
+                <div id="opt3">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test3" id="S3_1" value="S3_1">
+                        <label class="form-check-label" for="S3_1">A</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test3" id="S3_2" value="S3_2">
+                        <label class="form-check-label" for="S3_2">B</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test3" id="S3_3" value="S3_3">
+                        <label class="form-check-label" for="S3_3">C</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="test3" id="S3_4" value="S3_4">
+                        <label class="form-check-label" for="S3_4">D</label>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mt-3 mt-md-0">
+                <button class="btn fs-5 fw-bold ps-5 pe-5" style="background-color: #7ed957; color: #ffffff;"
+                    onclick="recodePreTest()">送出</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pro_test" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 2000;
+        background-color: rgba(255, 255, 255); 
+        display: flex;
+        justify-content: center;
+    ">
+        <div class="col-md-6 fs-5 ps-3 pe-3">
+            <h2 class="d-flex justify-content-center  mb-3 mb-md-0" style="color: black;">後測</h2>
+            <h5 class="mb-2 " style="color: black;" id="title_pro">請配對以下選項 : </h5>
+            <div style="width: 100%;" class="mb-3">
+                <b id="Q4_word"></b>
+                <div id="opt4">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test4" id="S4_1" value="S4_1">
+                        <label class="form-check-label" for="S4_1">A</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="test4" id="S4_2" value="S4_2">
+                        <label class="form-check-label" for="S4_2">B</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test4" id="S4_3" value="S4_3">
+                        <label class="form-check-label" for="S4_3">C</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="test4" id="S4_4" value="S4_4">
+                        <label class="form-check-label" for="S4_4">D</label>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div style="width: 100%;" class="mb-3">
+                <b id="Q5_word"></b>
+                <div id="opt5">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test5" id="S5_1" value="S5_1">
+                        <label class="form-check-label" for="S5_1">A</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test5" id="S5_2" value="S5_2">
+                        <label class="form-check-label" for="S5_2">B</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test5" id="S5_3" value="S5_3">
+                        <label class="form-check-label" for="S5_3">C</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="test5" id="S5_4" value="S5_4">
+                        <label class="form-check-label" for="S5_4">D</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="width: 100%;" class="mb-1">
+                <b id="Q6_word"></b>
+                <div id="opt6">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test6" id="S6_1" value="S6_1">
+                        <label class="form-check-label" for="S6_1">A</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test6" id="S6_2" value="S6_2">
+                        <label class="form-check-label" for="S6_2">B</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test6" id="S6_3" value="S6_3">
+                        <label class="form-check-label" for="S6_3">C</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="test6" id="S6_4" value="S6_4">
+                        <label class="form-check-label" for="S6_4">D</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="d-flex justify-content-center fw-bold "> <span id="tips"
+                    style="color: rgb(255, 2, 2); margin-top: 5%;"></span></div>
+
+            <div class="d-flex justify-content-center mt-3 mt-md-0">
+                <button class="btn fs-5 fw-bold ps-5 pe-5" style=" background-color: #7ed957; color: #ffffff;"
+                    onclick="send()">送出</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function fixUnityCanvasSize() {
+            const canvas = document.getElementById("unity-canvas");
+            if (!canvas) return;
+
+            // unity 的畫布尺寸 = 視窗實際尺寸
+            canvas.style.width = window.innerWidth + "px";
+            canvas.style.height = window.innerHeight + "px";
+        }
+
+        // Chrome / Android / iOS Chrome 都支援
+        window.addEventListener("orientationchange", () => {
+            setTimeout(fixUnityCanvasSize, 300);
+        });
+
+        window.addEventListener("resize", fixUnityCanvasSize);
+    </script>
+
 
     <script>
-      
+        document.getElementById("pre_test").style.display = "none"; // 關閉頁面
+        document.getElementById("pro_test").style.display = "none";
+        //document.getElementById("modeSelector").style.display = "none"; // 測試
         function getDateTimeUserName() {
             const now = new Date();
 
@@ -457,6 +758,7 @@
         let Q2_answer = "";      // 第二題答案
         let Q3_answer = "";
         let shuff_test = [];
+        let randomIndex;
         window.SendGameInfo = function (sceneName) {
             //console.log("Unity 傳送的"+sceneName);
             fetch("expData.xlsx?t=" + new Date().getTime())
@@ -470,40 +772,47 @@
 
                     if (sceneName === "Scene1") { //Scene1
                         const sheetOpt = ["match", "match2", "match3"];
-                        const randomIndex = Math.floor(Math.random() * sheetOpt.length);
+                        randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
                         getQusetionBank(randomIndex)
+
+                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的中文 : ";
+                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的中文 : ";
                     }
                     else if (sceneName === "Scene2") {
                         document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
 
                         const sheetOpt = ["cloze", "cloze2", "cloze3"];
-                        const randomIndex = Math.floor(Math.random() * sheetOpt.length);
+                        randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
-
+                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的選項 : ";
+                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的選項 : ";
 
                     }
                     else if (sceneName === "Scene3") {
                         document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
 
                         const sheetOpt = ["card", "card2", "card3"];
-                        const randomIndex = Math.floor(Math.random() * sheetOpt.length);
+                        randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
-
+                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的選項 : ";
+                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的選項 : ";
 
                     }
                     else {
                         document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
 
                         const sheetOpt = ["sorting", "sorting2", "sorting3"];
-                        const randomIndex = Math.floor(Math.random() * sheetOpt.length);
+                        randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
 
+                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的選項 : ";
+                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的選項 : ";
                     }
-
+                    sendBg();
                     if (!Qsheet) {
                         console.error("無法找到工作表！");
                         return;
@@ -561,6 +870,24 @@
                         //再從 6 題中抽出 3 題
                         shuff_test = getRandomFromSegment(result, 3);
 
+                        //題目
+                        if (sceneName == "Scene4") {
+                            document.getElementById("Q1_word").innerText = "1. ";
+                            document.getElementById("Q2_word").innerText = "2. ";
+                            document.getElementById("Q3_word").innerText = "3. ";
+
+                            question_1 = "請選擇正確的排序";
+                            question_2 = question_1;
+                            question_3 = question_2;
+                        } else {
+                            document.getElementById("Q1_word").innerText = "1. " + shuff_test[0]?.question || "";
+                            document.getElementById("Q2_word").innerText = "2. " + shuff_test[1]?.question || "";
+                            document.getElementById("Q3_word").innerText = "3. " + shuff_test[2]?.question || "";
+
+                            question_1 = shuff_test[0]?.question
+                            question_2 = shuff_test[1]?.question
+                            question_3 = shuff_test[2]?.question
+                        }
 
                         //選項
                         // 隨機打亂陣列的函式
@@ -592,7 +919,10 @@
                                 let opts1 = shuffle_Match([shuff_test[0].optionA, ...wrongs]);
                                 correct_1 = shuff_test[0].optionA;
                                 // 顯示到 label
-  
+                                document.querySelector('label[for="S1_1"]').textContent = opts1[0];
+                                document.querySelector('label[for="S1_2"]').textContent = opts1[1];
+                                document.querySelector('label[for="S1_3"]').textContent = opts1[2];
+                                document.querySelector('label[for="S1_4"]').textContent = opts1[3];
 
                             }
 
@@ -608,7 +938,10 @@
                                 let opts2 = shuffle_Match([shuff_test[1].optionA, ...wrongs]);
                                 correct_2 = shuff_test[1].optionA;
                                 // 顯示到 label
-
+                                document.querySelector('label[for="S2_1"]').textContent = opts2[0];
+                                document.querySelector('label[for="S2_2"]').textContent = opts2[1];
+                                document.querySelector('label[for="S2_3"]').textContent = opts2[2];
+                                document.querySelector('label[for="S2_4"]').textContent = opts2[3];
 
                             }
 
@@ -623,7 +956,11 @@
                                 // 合併正確答案 + 錯誤答案
                                 let opts3 = shuffle_Match([shuff_test[2].optionA, ...wrongs]);
                                 correct_3 = shuff_test[2].optionA;
-
+                                // 顯示到 label
+                                document.querySelector('label[for="S3_1"]').textContent = opts3[0];
+                                document.querySelector('label[for="S3_2"]').textContent = opts3[1];
+                                document.querySelector('label[for="S3_3"]').textContent = opts3[2];
+                                document.querySelector('label[for="S3_4"]').textContent = opts3[3];
 
                             }
                             // console.log(`總題數: ${total}，gap: ${gap}，最終抽出 ${result.length} 題`);
@@ -643,7 +980,10 @@
                                     opt_3
                                 ];
                                 let shuffled = shuffle_opt(options);
-
+                                document.querySelector('label[for="S1_1"]').textContent = shuffled[0];
+                                document.querySelector('label[for="S1_2"]').textContent = shuffled[1];
+                                document.querySelector('label[for="S1_3"]').textContent = shuffled[2];
+                                document.querySelector('label[for="S1_4"]').textContent = shuffled[3];
                             }
 
                             if (shuff_test[1]?.optionA) {
@@ -659,7 +999,10 @@
                                     opt_3
                                 ];
                                 let shuffled = shuffle_opt(options);
-
+                                document.querySelector('label[for="S2_1"]').textContent = shuffled[0];
+                                document.querySelector('label[for="S2_2"]').textContent = shuffled[1];
+                                document.querySelector('label[for="S2_3"]').textContent = shuffled[2];
+                                document.querySelector('label[for="S2_4"]').textContent = shuffled[3];
                             }
                             if (shuff_test[2]?.optionA) {
                                 correct_1 = shuff_test[2].optionA + shuff_test[2].optionB + shuff_test[2].optionC + shuff_test[2].answer;
@@ -674,7 +1017,10 @@
                                     opt_3
                                 ];
                                 let shuffled = shuffle_opt(options);
-
+                                document.querySelector('label[for="S3_1"]').textContent = shuffled[0];
+                                document.querySelector('label[for="S3_2"]').textContent = shuffled[1];
+                                document.querySelector('label[for="S3_3"]').textContent = shuffled[2];
+                                document.querySelector('label[for="S3_4"]').textContent = shuffled[3];
                             }
                             return result;
 
@@ -688,7 +1034,10 @@
                                     shuff_test[0].answer
                                 ];
                                 let shuffled = shuffle_opt(options);
-
+                                document.querySelector('label[for="S1_1"]').textContent = shuffled[0];
+                                document.querySelector('label[for="S1_2"]').textContent = shuffled[1];
+                                document.querySelector('label[for="S1_3"]').textContent = shuffled[2];
+                                document.querySelector('label[for="S1_4"]').textContent = shuffled[3];
 
                             }
 
@@ -701,7 +1050,10 @@
                                 ];
                                 let shuffled = shuffle_opt(options);
                                 // 顯示到 label
-
+                                document.querySelector('label[for="S2_1"]').textContent = shuffled[0];
+                                document.querySelector('label[for="S2_2"]').textContent = shuffled[1];
+                                document.querySelector('label[for="S2_3"]').textContent = shuffled[2];
+                                document.querySelector('label[for="S2_4"]').textContent = shuffled[3];
 
                             }
 
@@ -714,7 +1066,10 @@
                                 ];
                                 let shuffled = shuffle_opt(options);
                                 // 顯示到 label
-
+                                document.querySelector('label[for="S3_1"]').textContent = shuffled[0];
+                                document.querySelector('label[for="S3_2"]').textContent = shuffled[1];
+                                document.querySelector('label[for="S3_3"]').textContent = shuffled[2];
+                                document.querySelector('label[for="S3_4"]').textContent = shuffled[3];
 
                             }
                             return result;
@@ -723,7 +1078,7 @@
 
                     }
 
-                   
+                    document.getElementById("pre_test").style.display = "flex";
                     // 從一個區段中隨機抽 n 題
                     function getRandomFromSegment(segment, n) {
                         if (segment.length <= n) return segment;
@@ -732,10 +1087,13 @@
                         return shuffled.slice(0, n);
                     }
 
-              
+                    setTimeout(() => {
+                        checkQuestion(sceneName);
+                    }, 300);
+
                     jsonData = getRandomQuestionsByGap(jsonData);
 
-                    console.log("隨機取出的題目：", jsonData);
+                    console.log("隨機取出的題目：111", jsonData);
                     // 確保 Unity 初始化後再發送
                     if (window.uarGameInstance) {
                         sendDataInChunks(jsonData, 10);
@@ -749,8 +1107,7 @@
         }
 
         function checkQuestion(sceneName) {
-            const q1 = document.getElementById("Q1_word").innerText.trim();
-            if (q1 == "undefined" || q1 == "" || !q1) {
+            if (document.getElementById("Q1_word").innerText == "undefined" || document.getElementById("Q1_word").innerText == "") {
                 //題目
                 if (sceneName == "Scene4") {
                     document.getElementById("Q1_word").innerText = "1. ";
@@ -812,17 +1169,22 @@
 
             sendNext();
         }
-
-        window.sendBackground = function (message) {
+        function sendBg() {
+            console.log("傳送背景");
             localStorage.clear();
             sessionStorage.clear();
-            let value = activeDict[message];  // message 為 key
-            //let BgPath = value ? value[1] : null;  //value 存在，就取第一個元素，否則返回 null
-            let BgPath = "";
-            /*if(Qsheet == "1"){
-                BgPath = "images/s1.jpg";
-            }*/
-           BgPath = "images/00.jpg";
+
+            let BgPath;
+            //校園 建築 情緒
+
+            if (randomIndex == 0) {
+                BgPath = "images/00.jpg";
+            } else if (randomIndex == 1) {
+                BgPath = "images/01.jpg";
+            } else {
+                BgPath = "images/02.jpg";
+            }
+
             if (!BgPath) {
                 console.error("無法發送空的圖片路徑");
                 return;
@@ -852,6 +1214,52 @@
                         console.error("圖片讀取失敗:", error);
                     });
             };
+
+        }
+        window.sendBackground = function (message) {
+            /*localStorage.clear();
+            sessionStorage.clear();
+            let value = activeDict[message];  // message 為 key
+            let BgPath = value ? value[1] : null;  //value 存在，就取第一個元素，否則返回 null
+            //校園 建築 情緒
+
+            if (randomIndex == 0) {
+                BgPath = "images/00.jpg";
+            }else if(randomIndex == 0) {
+                BgPath = "images/01.jpg";
+            }else{
+                BgPath = "images/s1.jpg";
+            }
+
+            if (!BgPath) {
+                console.error("無法發送空的圖片路徑");
+                return;
+            }
+
+            let imgElement = new Image();
+            imgElement.src = BgPath;
+
+            imgElement.onload = function () {
+                fetch(imgElement.src)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            const base64String = reader.result.split(",")[1];
+
+                            // 確保 Unity WebGL 已初始化
+                            if (window.uarGameInstance) {
+                                window.uarGameInstance.SendMessage('UIManager', 'ReceiveBackground', base64String);
+                            } else {
+                                console.error("Unity WebGL 尚未初始化！");
+                            }
+                        };
+                        reader.readAsDataURL(blob);
+                    })
+                    .catch(error => {
+                        console.error("圖片讀取失敗:", error);
+                    });
+            };*/
 
         }
         //按鈕功能
