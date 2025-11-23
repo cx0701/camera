@@ -237,9 +237,8 @@
     ">
         <div class="col-md-6 fs-5 ps-3 pe-3">
             <h2 class="d-flex justify-content-center  mb-2 mb-md-0" style="color: black; ">前測</h2>
-            <h5 class="mb-1" style="color: black;" id="title_pre">請配對以下選項 : </h5>
             <div style="width: 100%;" class="mb-3 ">
-                <b id="Q1_word"></b>
+                <span id="Q1_word"></span>
                 <div id="opt1">
                     <div class="form-check ">
                         <input class="form-check-input" type="radio" name="test1" id="S1_1" value="S1_1">
@@ -263,7 +262,7 @@
 
 
             <div style="width: 100%;" class="mb-3">
-                <b id="Q2_word"></b>
+                <span id="Q2_word"></span>
                 <div id="opt2">
                     <div class="form-check ">
                         <input class="form-check-input" type="radio" name="test2" id="S2_1" value="S2_1">
@@ -286,7 +285,7 @@
 
 
             <div style="width: 100%;" class="mb-1">
-                <b id="Q3_word"></b>
+                <span id="Q3_word"></span>
                 <div id="opt3">
                     <div class="form-check ">
                         <input class="form-check-input" type="radio" name="test3" id="S3_1" value="S3_1">
@@ -326,9 +325,8 @@
     ">
         <div class="col-md-6 fs-5 ps-3 pe-3">
             <h2 class="d-flex justify-content-center  mb-3 mb-md-0" style="color: black;">後測</h2>
-            <h5 class="mb-2 " style="color: black;" id="title_pro">請配對以下選項 : </h5>
             <div style="width: 100%;" class="mb-3">
-                <b id="Q4_word"></b>
+                <span id="Q4_word"></span>
                 <div id="opt4">
                     <div class="form-check ">
                         <input class="form-check-input" type="radio" name="test4" id="S4_1" value="S4_1">
@@ -352,7 +350,7 @@
 
 
             <div style="width: 100%;" class="mb-3">
-                <b id="Q5_word"></b>
+                <span id="Q5_word"></span>
                 <div id="opt5">
                     <div class="form-check ">
                         <input class="form-check-input" type="radio" name="test5" id="S5_1" value="S5_1">
@@ -375,7 +373,7 @@
             </div>
 
             <div style="width: 100%;" class="mb-1">
-                <b id="Q6_word"></b>
+                <span id="Q6_word"></span>
                 <div id="opt6">
                     <div class="form-check ">
                         <input class="form-check-input" type="radio" name="test6" id="S6_1" value="S6_1">
@@ -797,8 +795,6 @@
                         randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
-                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的選項 : ";
-                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的選項 : ";
 
                     }
                     else {
@@ -809,8 +805,6 @@
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
 
-                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的選項 : ";
-                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的選項 : ";
                     }
                     sendBg();
                     if (!Qsheet) {
@@ -872,9 +866,9 @@
 
                         //題目
                         if (sceneName == "Scene4") {
-                            document.getElementById("Q1_word").innerText = "1. ";
-                            document.getElementById("Q2_word").innerText = "2. ";
-                            document.getElementById("Q3_word").innerText = "3. ";
+                            document.getElementById("Q1_word").innerText = "1.請選出正確的排序 ";
+                            document.getElementById("Q2_word").innerText = "2.請選出正確的排序 ";
+                            document.getElementById("Q3_word").innerText = "3.請選出正確的排序";
 
                             question_1 = "請選擇正確的排序";
                             question_2 = question_1;
