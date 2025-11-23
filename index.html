@@ -143,7 +143,6 @@
     ">
         <div class="col-md-6 fs-5 ps-1 pe-1 ">
             <h3 class="mb-2 d-flex justify-content-center mb-3 mb-md-0" style="color: black; ">基本資料</h3>
-
             <div style="width: 100%;" class="mb-2">
                 <b>1. 我的生理性別</b>
                 <div class="form-check ">
@@ -774,8 +773,7 @@
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
                         getQusetionBank(randomIndex)
 
-                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的中文 : ";
-                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的中文 : ";
+
                     }
                     else if (sceneName === "Scene2") {
                         document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
@@ -784,8 +782,7 @@
                         randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
-                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的選項 : ";
-                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的選項 : ";
+
 
                     }
                     else if (sceneName === "Scene3") {
