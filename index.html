@@ -315,12 +315,13 @@
                         <input class="form-check-input" type="radio" name="test3" id="S3_4" value="S3_4">
                         <label class="form-check-label" for="S3_4">D</label>
                     </div>
+                    <div class="d-flex justify-content-end mt-3 mt-md-0">
+                        <button class="btn fs-5 fw-bold ps-5 pe-5" style="background-color: #7ed957; color: #ffffff;"
+                            onclick="recodePreTest()">送出</button>
+                    </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center mt-3 mt-md-0">
-                <button class="btn fs-5 fw-bold ps-5 pe-5" style="background-color: #7ed957; color: #ffffff;"
-                    onclick="recodePreTest()">送出</button>
-            </div>
+
         </div>
     </div>
 
@@ -337,8 +338,8 @@
     ">
         <div class="col-md-6 fs-5 ps-3 pe-3">
             <h2 class="d-flex justify-content-center  mb-3 mb-md-0" style="color: black;">後測</h2>
-            <div class="btn-group justify-content-center mt-1 mb-2" role="group" aria-label="Basic radio toggle button group"
-                style="width: 100%;" id="sortBtn">
+            <div class="btn-group justify-content-center mt-1 mb-2" role="group"
+                aria-label="Basic radio toggle button group" style="width: 100%;" id="sortBtn">
 
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
                 <label class="btn btn-outline-primary pt-2 pb-2 fs-6" for="btnradio1"
@@ -695,7 +696,7 @@
         function openProTest() {
 
             document.getElementById("pro_test").style.display = "flex";
-            if (recodeScene == "Scene4") { 
+            if (recodeScene == "Scene4" || sceneName == "Scene2" || sceneName == "Scene3") {
                 Q1 = true;
                 Q2 = false;
                 Q3 = false;
@@ -705,7 +706,7 @@
                 document.getElementById("sortBtn").style.display = "none";
             }
 
-            document.getElementById("pro_test").style.display = "flex"; 
+            document.getElementById("pro_test").style.display = "flex";
         }
     </script>
 
@@ -1182,7 +1183,7 @@
                     }
 
                     document.getElementById("pre_test").style.display = "flex";
-                    if (sceneName == "Scene4") { //Scene4
+                    if (sceneName == "Scene4" || sceneName == "Scene2" || sceneName == "Scene3") { //Scene4
                         Q1 = true;
                         Q2 = false;
                         Q3 = false;
@@ -1191,7 +1192,6 @@
                         document.getElementById("sort_5").style.display = "none";
                         document.getElementById("sort_6").style.display = "none";
                     } else {
-
                         document.getElementById("sortBtn").style.display = "none";
                     }
                     // 從一個區段中隨機抽 n 題
