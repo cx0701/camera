@@ -404,7 +404,7 @@
     <script>
         document.getElementById("pre_test").style.display = "none"; // 關閉頁面
         document.getElementById("pro_test").style.display = "none";
-        //document.getElementById("modeSelector").style.display = "none"; // 測試
+        document.getElementById("modeSelector").style.display = "none"; // 測試
         function getDateTimeUserName() {
             const now = new Date();
 
@@ -1083,7 +1083,8 @@
         }
 
         function checkQuestion(sceneName) {
-            if (document.getElementById("Q1_word").innerText == "undefined" || document.getElementById("Q1_word").innerText == "") {
+            const q1 = document.getElementById("Q1_word").innerText.trim();
+            if (q1 == "undefined" || q1 == "" || !q1) {
                 //題目
                 if (sceneName == "Scene4") {
                     document.getElementById("Q1_word").innerText = "1. ";
@@ -1150,7 +1151,12 @@
             localStorage.clear();
             sessionStorage.clear();
             let value = activeDict[message];  // message 為 key
-            let BgPath = value ? value[1] : null;  //value 存在，就取第一個元素，否則返回 null
+            //let BgPath = value ? value[1] : null;  //value 存在，就取第一個元素，否則返回 null
+            let BgPath = "";
+            /*if(Qsheet == "1"){
+                BgPath = "images/s1.jpg";
+            }*/
+           BgPath = "images/00.jpg";
             if (!BgPath) {
                 console.error("無法發送空的圖片路徑");
                 return;
