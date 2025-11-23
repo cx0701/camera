@@ -236,7 +236,20 @@
     ">
         <div class="col-md-6 fs-5 ps-3 pe-3">
             <h2 class="d-flex justify-content-center  mb-2 mb-md-0" style="color: black; ">前測</h2>
-            <div style="width: 100%;" class="mb-3 ">
+
+            <div class="btn-group justify-content-center mt-1" role="group" aria-label="Basic radio toggle button group"
+                style="width: 100%;" id="sortBtn">
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                <label class="btn btn-outline-primary pt-2 pb-2 fs-6" for="btnradio1"
+                    onclick="move_preTest('up')">往上</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-primary fs-6" for="btnradio2" onclick="move_preTest('down')">往下</label>
+
+            </div>
+
+            <div style="width: 100%;" class="mb-3 " id="sort_1">
                 <span id="Q1_word"></span>
                 <div id="opt1">
                     <div class="form-check ">
@@ -260,7 +273,7 @@
 
 
 
-            <div style="width: 100%;" class="mb-3">
+            <div style="width: 100%;" class="mb-3" id="sort_2">
                 <span id="Q2_word"></span>
                 <div id="opt2">
                     <div class="form-check ">
@@ -283,7 +296,7 @@
             </div>
 
 
-            <div style="width: 100%;" class="mb-1">
+            <div style="width: 100%;" class="mb-1" id="sort_3">
                 <span id="Q3_word"></span>
                 <div id="opt3">
                     <div class="form-check ">
@@ -324,7 +337,18 @@
     ">
         <div class="col-md-6 fs-5 ps-3 pe-3">
             <h2 class="d-flex justify-content-center  mb-3 mb-md-0" style="color: black;">後測</h2>
-            <div style="width: 100%;" class="mb-3">
+            <div class="btn-group justify-content-center mt-1 mb-2" role="group" aria-label="Basic radio toggle button group"
+                style="width: 100%;" id="sortBtn">
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                <label class="btn btn-outline-primary pt-2 pb-2 fs-6" for="btnradio1"
+                    onclick="move_postTest('up')">往上</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-primary fs-6" for="btnradio2" onclick="move_postTest('down')">往下</label>
+
+            </div>
+            <div style="width: 100%;" class="mb-3" id="sort_4">
                 <span id="Q4_word"></span>
                 <div id="opt4">
                     <div class="form-check ">
@@ -348,7 +372,7 @@
 
 
 
-            <div style="width: 100%;" class="mb-3">
+            <div style="width: 100%;" class="mb-3" id="sort_5">
                 <span id="Q5_word"></span>
                 <div id="opt5">
                     <div class="form-check ">
@@ -371,7 +395,7 @@
 
             </div>
 
-            <div style="width: 100%;">
+            <div style="width: 100%;" id="sort_6">
                 <span id="Q6_word"></span>
                 <div id="opt6">
                     <div class="form-check ">
@@ -400,12 +424,87 @@
 
             </div>
             <div class="d-flex justify-content-center fw-bold "> <span id="tips"
-                    style="color: rgb(255, 2, 2); margin-top: 3%;"></span></div>
+                    style="color: rgb(255, 2, 2); margin-top: 3%;">請記得送出回答~</span></div>
 
 
         </div>
     </div>
     <script>
+        let Q1 = true;
+        let Q2 = false;
+        let Q3 = false;
+        function move_preTest(direction) {
+            if (direction === "up") {
+                if (Q2) {
+                    document.getElementById("sort_2").style.display = "none";
+                    document.getElementById("sort_1").style.display = "block";
+                    document.getElementById("sort_3").style.display = "none";
+                    Q1 = true;
+                    Q2 = false;
+                    Q3 = false;
+                } else if (Q3) {
+                    document.getElementById("sort_3").style.display = "none";
+                    document.getElementById("sort_2").style.display = "block";
+                    document.getElementById("sort_1").style.display = "none";
+                    Q1 = false;
+                    Q2 = true;
+                    Q3 = false;
+                }
+            } else if (direction === "down") {
+                if (Q2) {
+                    document.getElementById("sort_2").style.display = "none";
+                    document.getElementById("sort_3").style.display = "block";
+                    document.getElementById("sort_1").style.display = "none";
+                    Q1 = false;
+                    Q2 = false;
+                    Q3 = true;
+                } else if (Q1) {
+                    document.getElementById("sort_3").style.display = "none";
+                    document.getElementById("sort_2").style.display = "block";
+                    document.getElementById("sort_1").style.display = "none";
+                    Q1 = false;
+                    Q2 = true;
+                    Q3 = false;
+                }
+
+            }
+        }
+        function move_postTest(direction) {
+            if (direction === "up") {
+                if (Q2) {
+                    document.getElementById("sort_5").style.display = "none";
+                    document.getElementById("sort_4").style.display = "block";
+                    document.getElementById("sort_6").style.display = "none";
+                    Q1 = true;
+                    Q2 = false;
+                    Q3 = false;
+                } else if (Q3) {
+                    document.getElementById("sort_6").style.display = "none";
+                    document.getElementById("sort_5").style.display = "block";
+                    document.getElementById("sort_4").style.display = "none";
+                    Q1 = false;
+                    Q2 = true;
+                    Q3 = false;
+                }
+            } else if (direction === "down") {
+                if (Q2) {
+                    document.getElementById("sort_5").style.display = "none";
+                    document.getElementById("sort_6").style.display = "block";
+                    document.getElementById("sort_4").style.display = "none";
+                    Q1 = false;
+                    Q2 = false;
+                    Q3 = true;
+                } else if (Q1) {
+                    document.getElementById("sort_6").style.display = "none";
+                    document.getElementById("sort_5").style.display = "block";
+                    document.getElementById("sort_4").style.display = "none";
+                    Q1 = false;
+                    Q2 = true;
+                    Q3 = false;
+                }
+
+            }
+        }
         function fixUnityCanvasSize() {
             const canvas = document.getElementById("unity-canvas");
             if (!canvas) return;
@@ -487,6 +586,7 @@
         let pro_ans1 = "";
         let pro_ans2 = "";
         let pro_ans3 = "";
+        let recodeScene = "";
         function copyOneLabel(fromId, toId) {
             const from = document.querySelector(`label[for="${fromId}"]`);
             const to = document.querySelector(`label[for="${toId}"]`);
@@ -593,7 +693,19 @@
 
         }
         function openProTest() {
+
             document.getElementById("pro_test").style.display = "flex";
+            if (recodeScene == "Scene4") { 
+                Q1 = true;
+                Q2 = false;
+                Q3 = false;
+                document.getElementById("sort_5").style.display = "none";
+                document.getElementById("sort_6").style.display = "none";
+            } else {
+                document.getElementById("sortBtn").style.display = "none";
+            }
+
+            document.getElementById("pro_test").style.display = "flex"; 
         }
     </script>
 
@@ -769,13 +881,12 @@
                     let value = activeDict[sceneName];  // 場景 為 key
                     let sheetName = value ? value[0] : " ";   //value 存在，就取第一個元素，否則返回" "
                     //let worksheet = sheetName ? workbook.Sheets[sheetName] : null;//防呆
-
+                    recodeScene = sceneName;
                     if (sceneName === "Scene1") { //Scene1
                         const sheetOpt = ["match", "match2", "match3"];
                         randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
                         getQusetionBank(randomIndex)
-
 
                     }
                     else if (sceneName === "Scene2") {
@@ -786,7 +897,6 @@
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
 
-
                     }
                     else if (sceneName === "Scene3") {
                         document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
@@ -795,7 +905,6 @@
                         randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
-
                     }
                     else {
                         document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
@@ -811,7 +920,7 @@
                         console.error("無法找到工作表！");
                         return;
                     }
-                    document.getElementById("tips").innerText = "";
+                    document.getElementById("tips").innerText = "請記得送出回答~";
 
                     let rawData = XLSX.utils.sheet_to_json(Qsheet, { raw: true });
                     let jsonData = rawData.map(row => {
@@ -1073,6 +1182,18 @@
                     }
 
                     document.getElementById("pre_test").style.display = "flex";
+                    if (sceneName == "Scene4") { //Scene4
+                        Q1 = true;
+                        Q2 = false;
+                        Q3 = false;
+                        document.getElementById("sort_2").style.display = "none";
+                        document.getElementById("sort_3").style.display = "none";
+                        document.getElementById("sort_5").style.display = "none";
+                        document.getElementById("sort_6").style.display = "none";
+                    } else {
+
+                        document.getElementById("sortBtn").style.display = "none";
+                    }
                     // 從一個區段中隨機抽 n 題
                     function getRandomFromSegment(segment, n) {
                         if (segment.length <= n) return segment;
@@ -1087,7 +1208,7 @@
 
                     jsonData = getRandomQuestionsByGap(jsonData);
 
-                    console.log("隨機取出的題目：111", jsonData);
+                    console.log("隨機取出的題目：", jsonData);
                     // 確保 Unity 初始化後再發送
                     if (window.uarGameInstance) {
                         sendDataInChunks(jsonData, 10);
