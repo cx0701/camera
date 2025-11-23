@@ -475,9 +475,6 @@
                         const randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
                         getQusetionBank(randomIndex)
-
-                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的中文 : ";
-                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的中文 : ";
                     }
                     else if (sceneName === "Scene2") {
                         document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
@@ -486,8 +483,7 @@
                         const randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
-                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的選項 : ";
-                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的選項 : ";
+
 
                     }
                     else if (sceneName === "Scene3") {
@@ -497,8 +493,7 @@
                         const randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
-                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的選項 : ";
-                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的選項 : ";
+
 
                     }
                     else {
@@ -509,8 +504,6 @@
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
 
-                        document.getElementById("title_pre").innerText = "請根據題目選擇正確的選項 : ";
-                        document.getElementById("title_pro").innerText = "請根據題目選擇正確的選項 : ";
                     }
 
                     if (!Qsheet) {
@@ -570,24 +563,6 @@
                         //再從 6 題中抽出 3 題
                         shuff_test = getRandomFromSegment(result, 3);
 
-                        //題目
-                        if (sceneName == "Scene4") {
-                            document.getElementById("Q1_word").innerText = "1. ";
-                            document.getElementById("Q2_word").innerText = "2. ";
-                            document.getElementById("Q3_word").innerText = "3. ";
-
-                            question_1 = "請選擇正確的排序";
-                            question_2 = question_1;
-                            question_3 = question_2;
-                        } else {
-                            document.getElementById("Q1_word").innerText = "1. " + shuff_test[0]?.question || "";
-                            document.getElementById("Q2_word").innerText = "2. " + shuff_test[1]?.question || "";
-                            document.getElementById("Q3_word").innerText = "3. " + shuff_test[2]?.question || "";
-
-                            question_1 = shuff_test[0]?.question
-                            question_2 = shuff_test[1]?.question
-                            question_3 = shuff_test[2]?.question
-                        }
 
                         //選項
                         // 隨機打亂陣列的函式
@@ -619,10 +594,7 @@
                                 let opts1 = shuffle_Match([shuff_test[0].optionA, ...wrongs]);
                                 correct_1 = shuff_test[0].optionA;
                                 // 顯示到 label
-                                document.querySelector('label[for="S1_1"]').textContent = opts1[0];
-                                document.querySelector('label[for="S1_2"]').textContent = opts1[1];
-                                document.querySelector('label[for="S1_3"]').textContent = opts1[2];
-                                document.querySelector('label[for="S1_4"]').textContent = opts1[3];
+  
 
                             }
 
@@ -638,10 +610,7 @@
                                 let opts2 = shuffle_Match([shuff_test[1].optionA, ...wrongs]);
                                 correct_2 = shuff_test[1].optionA;
                                 // 顯示到 label
-                                document.querySelector('label[for="S2_1"]').textContent = opts2[0];
-                                document.querySelector('label[for="S2_2"]').textContent = opts2[1];
-                                document.querySelector('label[for="S2_3"]').textContent = opts2[2];
-                                document.querySelector('label[for="S2_4"]').textContent = opts2[3];
+
 
                             }
 
@@ -656,11 +625,7 @@
                                 // 合併正確答案 + 錯誤答案
                                 let opts3 = shuffle_Match([shuff_test[2].optionA, ...wrongs]);
                                 correct_3 = shuff_test[2].optionA;
-                                // 顯示到 label
-                                document.querySelector('label[for="S3_1"]').textContent = opts3[0];
-                                document.querySelector('label[for="S3_2"]').textContent = opts3[1];
-                                document.querySelector('label[for="S3_3"]').textContent = opts3[2];
-                                document.querySelector('label[for="S3_4"]').textContent = opts3[3];
+
 
                             }
                             // console.log(`總題數: ${total}，gap: ${gap}，最終抽出 ${result.length} 題`);
@@ -680,10 +645,7 @@
                                     opt_3
                                 ];
                                 let shuffled = shuffle_opt(options);
-                                document.querySelector('label[for="S1_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S1_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S1_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S1_4"]').textContent = shuffled[3];
+
                             }
 
                             if (shuff_test[1]?.optionA) {
@@ -699,10 +661,7 @@
                                     opt_3
                                 ];
                                 let shuffled = shuffle_opt(options);
-                                document.querySelector('label[for="S2_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S2_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S2_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S2_4"]').textContent = shuffled[3];
+
                             }
                             if (shuff_test[2]?.optionA) {
                                 correct_1 = shuff_test[2].optionA + shuff_test[2].optionB + shuff_test[2].optionC + shuff_test[2].answer;
@@ -717,10 +676,7 @@
                                     opt_3
                                 ];
                                 let shuffled = shuffle_opt(options);
-                                document.querySelector('label[for="S3_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S3_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S3_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S3_4"]').textContent = shuffled[3];
+
                             }
                             return result;
 
@@ -734,10 +690,7 @@
                                     shuff_test[0].answer
                                 ];
                                 let shuffled = shuffle_opt(options);
-                                document.querySelector('label[for="S1_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S1_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S1_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S1_4"]').textContent = shuffled[3];
+
 
                             }
 
@@ -750,10 +703,7 @@
                                 ];
                                 let shuffled = shuffle_opt(options);
                                 // 顯示到 label
-                                document.querySelector('label[for="S2_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S2_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S2_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S2_4"]').textContent = shuffled[3];
+
 
                             }
 
@@ -766,10 +716,7 @@
                                 ];
                                 let shuffled = shuffle_opt(options);
                                 // 顯示到 label
-                                document.querySelector('label[for="S3_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S3_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S3_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S3_4"]').textContent = shuffled[3];
+
 
                             }
                             return result;
@@ -778,7 +725,7 @@
 
                     }
 
-                    document.getElementById("pre_test").style.display = "flex";
+                   
                     // 從一個區段中隨機抽 n 題
                     function getRandomFromSegment(segment, n) {
                         if (segment.length <= n) return segment;
@@ -787,10 +734,7 @@
                         return shuffled.slice(0, n);
                     }
 
-                    setTimeout(() => {
-                        checkQuestion(sceneName);
-                    }, 300);
-                    
+              
                     jsonData = getRandomQuestionsByGap(jsonData);
 
                     console.log("隨機取出的題目：", jsonData);
