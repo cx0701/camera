@@ -334,7 +334,7 @@
         <div class="col-md-6 fs-5 ps-3 pe-3">
             <h2 class="d-flex justify-content-center mt-5 mb-3  mb-md-0" style="color: black;">後測</h2>
 
-            
+
             <div class="btn-group justify-content-center mt-3 mb-2" style="width: 100%;" id="sortBtn">
                 <button class="btn btn-outline-secondary pt-2 pb-2 fs-6" onclick="move_postTest('up')">上一題</button>
                 <button class="btn btn-outline-secondary fs-6" onclick="move_postTest('down')">下一題</button>
@@ -866,7 +866,7 @@
                     let sheetName = value ? value[0] : " ";   //value 存在，就取第一個元素，否則返回" "
                     //let worksheet = sheetName ? workbook.Sheets[sheetName] : null;//防呆
                     recodeScene = sceneName;
-                    if (sceneName === "Scene1") { //Scene1
+                    if (sceneName === "Scene3") { //Scene1
                         const sheetOpt = ["match", "match2", "match3"];
                         randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
@@ -874,7 +874,6 @@
 
                     }
                     else if (sceneName === "Scene2") {
-                        document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
 
                         const sheetOpt = ["cloze", "cloze2", "cloze3"];
                         randomIndex = Math.floor(Math.random() * sheetOpt.length);
@@ -882,16 +881,13 @@
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
 
                     }
-                    else if (sceneName === "Scene3") {
-                        document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-
+                    else if (sceneName === "Scene1") {
                         const sheetOpt = ["card", "card2", "card3"];
                         randomIndex = Math.floor(Math.random() * sheetOpt.length);
                         getQusetionBank(randomIndex)
                         Qsheet = workbook.Sheets[sheetOpt[randomIndex]];
                     }
                     else {
-                        document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
 
                         const sheetOpt = ["sorting", "sorting2", "sorting3"];
                         randomIndex = Math.floor(Math.random() * sheetOpt.length);
@@ -993,7 +989,7 @@
                             return array;
                         }
 
-                        if (sceneName == "Scene1") {
+                        if (sceneName == "Scene3") {
                             if (shuff_test[0]?.optionA) {
                                 // 取所有題目的中文當作候選答案
                                 let allAnswers = jsonData.map(q => q.optionA).filter(Boolean);
@@ -1111,7 +1107,8 @@
                             }
                             return result;
 
-                        } else if (sceneName == "Scene2" || sceneName == "Scene3") {
+                        } else if (sceneName == "Scene2" || sceneName == "Scene1") {
+                            console.log("開始選題目" + sceneName);
                             if (shuff_test[0]?.optionA) {
                                 correct_1 = shuff_test[0].answer;
                                 let options = [
@@ -1164,7 +1161,7 @@
 
 
                     }
-
+                    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
                     document.getElementById("pre_test").style.display = "flex";
 
                     Q1 = true;
@@ -1202,7 +1199,7 @@
         }
 
         function checkQuestion(sceneName) {
-            if (document.getElementById("Q1_word").innerText == "undefined" || document.getElementById("Q1_word").innerText == "") {
+            if (document.getElementById("Q1_word").innerText === undefined) {
                 //題目
                 if (sceneName == "Scene4") {
                     document.getElementById("Q1_word").innerText = "1. ";
@@ -1220,6 +1217,8 @@
                     question_1 = shuff_test[0]?.question
                     question_2 = shuff_test[1]?.question
                     question_3 = shuff_test[2]?.question
+
+
                 }
             }
         }
