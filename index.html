@@ -1058,201 +1058,208 @@
                         }
                         //再從 6 題中抽出 3 題
                         shuff_test = getRandomFromSegment(result, 3);
-                        //題目
-                        if (sceneName == "Scene4") {
-                            document.getElementById("Q1_word").innerText = "1.請選出正確的排序 ";
-                            document.getElementById("Q2_word").innerText = "2.請選出正確的排序 ";
-                            document.getElementById("Q3_word").innerText = "3.請選出正確的排序";
+                        setTimeout(() => {
+                            console.log("顯示");
+                            //題目
+                            if (sceneName == "Scene4") {
+                                document.getElementById("Q1_word").innerText = "1.請選出正確的排序 ";
+                                document.getElementById("Q2_word").innerText = "2.請選出正確的排序 ";
+                                document.getElementById("Q3_word").innerText = "3.請選出正確的排序";
 
-                            question_1 = "請選擇正確的排序";
-                            question_2 = question_1;
-                            question_3 = question_2;
-                        } else {
-                            document.getElementById("Q1_word").innerText = "1. " + shuff_test[0]?.question || "";
-                            document.getElementById("Q2_word").innerText = "2. " + shuff_test[1]?.question || "";
-                            document.getElementById("Q3_word").innerText = "3. " + shuff_test[2]?.question || "";
+                                question_1 = "請選擇正確的排序";
+                                question_2 = question_1;
+                                question_3 = question_2;
+                            } else {
+                                document.getElementById("Q1_word").innerText = "1. " + shuff_test[0]?.question || "";
+                                document.getElementById("Q2_word").innerText = "2. " + shuff_test[1]?.question || "";
+                                document.getElementById("Q3_word").innerText = "3. " + shuff_test[2]?.question || "";
 
-                            question_1 = shuff_test[0]?.question
-                            question_2 = shuff_test[1]?.question
-                            question_3 = shuff_test[2]?.question
-                        }
-
-
-
-                        if (sceneName == "Scene3") {
-                            if (shuff_test[0]?.optionA) {
-                                // 取所有題目的中文當作候選答案
-                                let allAnswers = jsonData.map(q => q.optionA).filter(Boolean);
-
-                                // 先隨機取三個錯誤選項（不重複且不等於正確答案）
-                                let wrongs = allAnswers.filter(a => a !== shuff_test[0].optionA);
-                                wrongs = shuffle_Match(wrongs).slice(0, 3);
-
-                                // 合併正確答案 + 錯誤答案
-                                let opts1 = shuffle_Match([shuff_test[0].optionA, ...wrongs]);
-                                correct_1 = shuff_test[0].optionA;
-                                // 顯示到 label
-                                document.querySelector('label[for="S1_1"]').textContent = opts1[0];
-                                document.querySelector('label[for="S1_2"]').textContent = opts1[1];
-                                document.querySelector('label[for="S1_3"]').textContent = opts1[2];
-                                document.querySelector('label[for="S1_4"]').textContent = opts1[3];
-
+                                question_1 = shuff_test[0]?.question
+                                question_2 = shuff_test[1]?.question
+                                question_3 = shuff_test[2]?.question
                             }
 
-                            if (shuff_test[1]?.optionA) {
-                                //取所有題目
-                                let allAnswers = jsonData.map(q => q.optionA).filter(Boolean);
 
-                                // 先隨機取三個錯誤選項（不重複且不等於正確答案）
-                                let wrongs = allAnswers.filter(a => a !== shuff_test[1].optionA);
-                                wrongs = shuffle_Match(wrongs).slice(0, 3);
 
-                                // 合併正確答案 + 錯誤答案
-                                let opts2 = shuffle_Match([shuff_test[1].optionA, ...wrongs]);
-                                correct_2 = shuff_test[1].optionA;
-                                // 顯示到 label
-                                document.querySelector('label[for="S2_1"]').textContent = opts2[0];
-                                document.querySelector('label[for="S2_2"]').textContent = opts2[1];
-                                document.querySelector('label[for="S2_3"]').textContent = opts2[2];
-                                document.querySelector('label[for="S2_4"]').textContent = opts2[3];
+                            if (sceneName == "Scene3") {
+                                if (shuff_test[0]?.optionA) {
+                                    // 取所有題目的中文當作候選答案
+                                    let allAnswers = jsonData.map(q => q.optionA).filter(Boolean);
 
+                                    // 先隨機取三個錯誤選項（不重複且不等於正確答案）
+                                    let wrongs = allAnswers.filter(a => a !== shuff_test[0].optionA);
+                                    wrongs = shuffle_Match(wrongs).slice(0, 3);
+
+                                    // 合併正確答案 + 錯誤答案
+                                    let opts1 = shuffle_Match([shuff_test[0].optionA, ...wrongs]);
+                                    correct_1 = shuff_test[0].optionA;
+                                    // 顯示到 label
+                                    document.querySelector('label[for="S1_1"]').textContent = opts1[0];
+                                    document.querySelector('label[for="S1_2"]').textContent = opts1[1];
+                                    document.querySelector('label[for="S1_3"]').textContent = opts1[2];
+                                    document.querySelector('label[for="S1_4"]').textContent = opts1[3];
+
+                                }
+
+                                if (shuff_test[1]?.optionA) {
+                                    //取所有題目
+                                    let allAnswers = jsonData.map(q => q.optionA).filter(Boolean);
+
+                                    // 先隨機取三個錯誤選項（不重複且不等於正確答案）
+                                    let wrongs = allAnswers.filter(a => a !== shuff_test[1].optionA);
+                                    wrongs = shuffle_Match(wrongs).slice(0, 3);
+
+                                    // 合併正確答案 + 錯誤答案
+                                    let opts2 = shuffle_Match([shuff_test[1].optionA, ...wrongs]);
+                                    correct_2 = shuff_test[1].optionA;
+                                    // 顯示到 label
+                                    document.querySelector('label[for="S2_1"]').textContent = opts2[0];
+                                    document.querySelector('label[for="S2_2"]').textContent = opts2[1];
+                                    document.querySelector('label[for="S2_3"]').textContent = opts2[2];
+                                    document.querySelector('label[for="S2_4"]').textContent = opts2[3];
+
+                                }
+
+                                if (shuff_test[2]?.optionA) {
+                                    //取所有題目
+                                    let allAnswers = jsonData.map(q => q.optionA).filter(Boolean);
+
+                                    // 先隨機取三個錯誤選項（不重複且不等於正確答案）
+                                    let wrongs = allAnswers.filter(a => a !== shuff_test[1].optionA);
+                                    wrongs = shuffle_Match(wrongs).slice(0, 3);
+
+                                    // 合併正確答案 + 錯誤答案
+                                    let opts3 = shuffle_Match([shuff_test[2].optionA, ...wrongs]);
+                                    correct_3 = shuff_test[2].optionA;
+                                    // 顯示到 label
+                                    document.querySelector('label[for="S3_1"]').textContent = opts3[0];
+                                    document.querySelector('label[for="S3_2"]').textContent = opts3[1];
+                                    document.querySelector('label[for="S3_3"]').textContent = opts3[2];
+                                    document.querySelector('label[for="S3_4"]').textContent = opts3[3];
+
+                                }
+                                // console.log(`總題數: ${total}，gap: ${gap}，最終抽出 ${result.length} 題`);
+                                return result;
+
+                            } else if (sceneName == "Scene4") {
+                                if (shuff_test[0]?.optionA) {
+                                    correct_1 = shuff_test[0].optionA + shuff_test[0].optionB + shuff_test[0].optionC + shuff_test[0].answer;
+                                    let opt_1 = shuff_test[0].optionB + shuff_test[0].answer + shuff_test[0].optionA + shuff_test[0].optionC;
+                                    let opt_2 = shuff_test[0].optionA + shuff_test[0].answer + shuff_test[0].optionC + shuff_test[0].optionB;
+                                    let opt_3 = shuff_test[0].optionA + shuff_test[0].optionC + shuff_test[0].optionB + shuff_test[0].answer;
+
+                                    let options = [
+                                        correct_1,
+                                        opt_1,
+                                        opt_2,
+                                        opt_3
+                                    ];
+                                    let shuffled = shuffle_opt(options);
+                                    document.querySelector('label[for="S1_1"]').textContent = shuffled[0];
+                                    document.querySelector('label[for="S1_2"]').textContent = shuffled[1];
+                                    document.querySelector('label[for="S1_3"]').textContent = shuffled[2];
+                                    document.querySelector('label[for="S1_4"]').textContent = shuffled[3];
+                                }
+
+                                if (shuff_test[1]?.optionA) {
+                                    correct_1 = shuff_test[1].optionA + shuff_test[1].optionB + shuff_test[1].optionC + shuff_test[1].answer;
+                                    let opt_1 = shuff_test[1].optionB + shuff_test[1].answer + shuff_test[1].optionA + shuff_test[1].optionC;
+                                    let opt_2 = shuff_test[1].optionA + shuff_test[1].answer + shuff_test[1].optionC + shuff_test[1].optionB;
+                                    let opt_3 = shuff_test[1].optionA + shuff_test[1].optionC + shuff_test[1].optionB + shuff_test[1].answer;
+
+                                    let options = [
+                                        correct_1,
+                                        opt_1,
+                                        opt_2,
+                                        opt_3
+                                    ];
+                                    let shuffled = shuffle_opt(options);
+                                    document.querySelector('label[for="S2_1"]').textContent = shuffled[0];
+                                    document.querySelector('label[for="S2_2"]').textContent = shuffled[1];
+                                    document.querySelector('label[for="S2_3"]').textContent = shuffled[2];
+                                    document.querySelector('label[for="S2_4"]').textContent = shuffled[3];
+                                }
+                                if (shuff_test[2]?.optionA) {
+                                    correct_1 = shuff_test[2].optionA + shuff_test[2].optionB + shuff_test[2].optionC + shuff_test[2].answer;
+                                    let opt_1 = shuff_test[2].optionB + shuff_test[2].answer + shuff_test[2].optionA + shuff_test[2].optionC;
+                                    let opt_2 = shuff_test[2].optionA + shuff_test[2].answer + shuff_test[2].optionC + shuff_test[2].optionB;
+                                    let opt_3 = shuff_test[2].optionA + shuff_test[2].optionC + shuff_test[2].optionB + shuff_test[2].answer;
+
+                                    let options = [
+                                        correct_1,
+                                        opt_1,
+                                        opt_2,
+                                        opt_3
+                                    ];
+                                    let shuffled = shuffle_opt(options);
+                                    document.querySelector('label[for="S3_1"]').textContent = shuffled[0];
+                                    document.querySelector('label[for="S3_2"]').textContent = shuffled[1];
+                                    document.querySelector('label[for="S3_3"]').textContent = shuffled[2];
+                                    document.querySelector('label[for="S3_4"]').textContent = shuffled[3];
+                                }
+                                return result;
+
+                            } else if (sceneName == "Scene2" || sceneName == "Scene1") {
+                                console.log("開始選題目" + sceneName);
+                                if (shuff_test[0]?.optionA) {
+                                    correct_1 = shuff_test[0].answer;
+                                    let options = [
+                                        shuff_test[0].optionA,
+                                        shuff_test[0].optionB,
+                                        shuff_test[0].optionC,
+                                        shuff_test[0].answer
+                                    ];
+                                    let shuffled = shuffle_opt(options);
+                                    document.querySelector('label[for="S1_1"]').textContent = shuffled[0];
+                                    document.querySelector('label[for="S1_2"]').textContent = shuffled[1];
+                                    document.querySelector('label[for="S1_3"]').textContent = shuffled[2];
+                                    document.querySelector('label[for="S1_4"]').textContent = shuffled[3];
+
+                                }
+
+                                if (shuff_test[1]?.optionA) {
+                                    let options = [
+                                        shuff_test[1].optionA,
+                                        shuff_test[1].optionB,
+                                        shuff_test[1].optionC,
+                                        shuff_test[1].answer
+                                    ];
+                                    let shuffled = shuffle_opt(options);
+                                    // 顯示到 label
+                                    document.querySelector('label[for="S2_1"]').textContent = shuffled[0];
+                                    document.querySelector('label[for="S2_2"]').textContent = shuffled[1];
+                                    document.querySelector('label[for="S2_3"]').textContent = shuffled[2];
+                                    document.querySelector('label[for="S2_4"]').textContent = shuffled[3];
+
+                                }
+
+                                if (shuff_test[2]?.optionA) {
+                                    let options = [
+                                        shuff_test[2].optionA,
+                                        shuff_test[2].optionB,
+                                        shuff_test[2].optionC,
+                                        shuff_test[2].answer
+                                    ];
+                                    let shuffled = shuffle_opt(options);
+                                    // 顯示到 label
+                                    document.querySelector('label[for="S3_1"]').textContent = shuffled[0];
+                                    document.querySelector('label[for="S3_2"]').textContent = shuffled[1];
+                                    document.querySelector('label[for="S3_3"]').textContent = shuffled[2];
+                                    document.querySelector('label[for="S3_4"]').textContent = shuffled[3];
+
+                                }
+                                return result;
                             }
 
-                            if (shuff_test[2]?.optionA) {
-                                //取所有題目
-                                let allAnswers = jsonData.map(q => q.optionA).filter(Boolean);
 
-                                // 先隨機取三個錯誤選項（不重複且不等於正確答案）
-                                let wrongs = allAnswers.filter(a => a !== shuff_test[1].optionA);
-                                wrongs = shuffle_Match(wrongs).slice(0, 3);
-
-                                // 合併正確答案 + 錯誤答案
-                                let opts3 = shuffle_Match([shuff_test[2].optionA, ...wrongs]);
-                                correct_3 = shuff_test[2].optionA;
-                                // 顯示到 label
-                                document.querySelector('label[for="S3_1"]').textContent = opts3[0];
-                                document.querySelector('label[for="S3_2"]').textContent = opts3[1];
-                                document.querySelector('label[for="S3_3"]').textContent = opts3[2];
-                                document.querySelector('label[for="S3_4"]').textContent = opts3[3];
-
-                            }
-                            // console.log(`總題數: ${total}，gap: ${gap}，最終抽出 ${result.length} 題`);
-                            return result;
-
-                        } else if (sceneName == "Scene4") {
-                            if (shuff_test[0]?.optionA) {
-                                correct_1 = shuff_test[0].optionA + shuff_test[0].optionB + shuff_test[0].optionC + shuff_test[0].answer;
-                                let opt_1 = shuff_test[0].optionB + shuff_test[0].answer + shuff_test[0].optionA + shuff_test[0].optionC;
-                                let opt_2 = shuff_test[0].optionA + shuff_test[0].answer + shuff_test[0].optionC + shuff_test[0].optionB;
-                                let opt_3 = shuff_test[0].optionA + shuff_test[0].optionC + shuff_test[0].optionB + shuff_test[0].answer;
-
-                                let options = [
-                                    correct_1,
-                                    opt_1,
-                                    opt_2,
-                                    opt_3
-                                ];
-                                let shuffled = shuffle_opt(options);
-                                document.querySelector('label[for="S1_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S1_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S1_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S1_4"]').textContent = shuffled[3];
-                            }
-
-                            if (shuff_test[1]?.optionA) {
-                                correct_1 = shuff_test[1].optionA + shuff_test[1].optionB + shuff_test[1].optionC + shuff_test[1].answer;
-                                let opt_1 = shuff_test[1].optionB + shuff_test[1].answer + shuff_test[1].optionA + shuff_test[1].optionC;
-                                let opt_2 = shuff_test[1].optionA + shuff_test[1].answer + shuff_test[1].optionC + shuff_test[1].optionB;
-                                let opt_3 = shuff_test[1].optionA + shuff_test[1].optionC + shuff_test[1].optionB + shuff_test[1].answer;
-
-                                let options = [
-                                    correct_1,
-                                    opt_1,
-                                    opt_2,
-                                    opt_3
-                                ];
-                                let shuffled = shuffle_opt(options);
-                                document.querySelector('label[for="S2_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S2_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S2_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S2_4"]').textContent = shuffled[3];
-                            }
-                            if (shuff_test[2]?.optionA) {
-                                correct_1 = shuff_test[2].optionA + shuff_test[2].optionB + shuff_test[2].optionC + shuff_test[2].answer;
-                                let opt_1 = shuff_test[2].optionB + shuff_test[2].answer + shuff_test[2].optionA + shuff_test[2].optionC;
-                                let opt_2 = shuff_test[2].optionA + shuff_test[2].answer + shuff_test[2].optionC + shuff_test[2].optionB;
-                                let opt_3 = shuff_test[2].optionA + shuff_test[2].optionC + shuff_test[2].optionB + shuff_test[2].answer;
-
-                                let options = [
-                                    correct_1,
-                                    opt_1,
-                                    opt_2,
-                                    opt_3
-                                ];
-                                let shuffled = shuffle_opt(options);
-                                document.querySelector('label[for="S3_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S3_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S3_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S3_4"]').textContent = shuffled[3];
-                            }
-                            return result;
-
-                        } else if (sceneName == "Scene2" || sceneName == "Scene1") {
-                            console.log("開始選題目" + sceneName);
-                            if (shuff_test[0]?.optionA) {
-                                correct_1 = shuff_test[0].answer;
-                                let options = [
-                                    shuff_test[0].optionA,
-                                    shuff_test[0].optionB,
-                                    shuff_test[0].optionC,
-                                    shuff_test[0].answer
-                                ];
-                                let shuffled = shuffle_opt(options);
-                                document.querySelector('label[for="S1_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S1_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S1_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S1_4"]').textContent = shuffled[3];
-
-                            }
-
-                            if (shuff_test[1]?.optionA) {
-                                let options = [
-                                    shuff_test[1].optionA,
-                                    shuff_test[1].optionB,
-                                    shuff_test[1].optionC,
-                                    shuff_test[1].answer
-                                ];
-                                let shuffled = shuffle_opt(options);
-                                // 顯示到 label
-                                document.querySelector('label[for="S2_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S2_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S2_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S2_4"]').textContent = shuffled[3];
-
-                            }
-
-                            if (shuff_test[2]?.optionA) {
-                                let options = [
-                                    shuff_test[2].optionA,
-                                    shuff_test[2].optionB,
-                                    shuff_test[2].optionC,
-                                    shuff_test[2].answer
-                                ];
-                                let shuffled = shuffle_opt(options);
-                                // 顯示到 label
-                                document.querySelector('label[for="S3_1"]').textContent = shuffled[0];
-                                document.querySelector('label[for="S3_2"]').textContent = shuffled[1];
-                                document.querySelector('label[for="S3_3"]').textContent = shuffled[2];
-                                document.querySelector('label[for="S3_4"]').textContent = shuffled[3];
-
-                            }
-                            return result;
-                        }
-
-
+                        }, 200);
                     }
+                    setTimeout(() => {
+                        checkQuestion(sceneName);
+                    }, 500);
 
                     setTimeout(() => {
+
                         document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
                         document.getElementById("pre_test").style.display = "flex";
 
@@ -1263,9 +1270,7 @@
                         document.getElementById("sort_3").style.display = "none";
                         document.getElementById("sort_1").style.display = "block";
 
-                        setTimeout(() => {
-                            checkQuestion(sceneName);
-                        },100);
+
                     }, 1000);
 
                     console.log("隨機取出的題目：", jsonData);
@@ -1282,6 +1287,7 @@
         }
 
         function checkQuestion(sceneName) {
+            console.log("檢查中");
             if (document.getElementById("Q1_word").innerText === undefined) {
                 //題目
                 if (sceneName == "Scene4") {
@@ -1303,6 +1309,8 @@
                     question_3 = shuff_test[2]?.question
                     console.log("重新顯示題目");
                 }
+            } else {
+                console.log("無異常" + shuff_test[0]?.question + shuff_test[0]?.optionA,);
             }
         }
 
