@@ -139,15 +139,12 @@
         background-color: rgba(255, 255, 255); 
         display: flex;
         justify-content: center;
-
+        align-items: center;
     ">
-        <div class="col-md-6 fs-5 ps-1 pe-1 ">
-            <h3 class="mb-2 d-flex justify-content-center mb-1 mb-md-0" style="color: black; ">基本資料</h3>
-            <div class="btn-group justify-content-center mt-3 mb-2" style="width: 100%;" id="sortBtn">
-                <button class="btn btn-outline-secondary fs-6" onclick="move_Info('up')">上一題</button>
-                <button class="btn btn-outline-secondary fs-6" onclick="move_Info('down')">下一題</button>
-            </div>
-            <div style="width: 100%;" class="mb-2" id="userInfo_1">
+        <div class="col-md-6 ps-1 pe-1 fs-4" style="height: 100%;">
+            <h2 class=" d-flex justify-content-center  mb-2 mt-lg-1 pt-1 pt-lg-5" style="color: black; ">基本資料</h2>
+
+            <div style="width: 100%;" class="mb-2 mt-0 mt-lg-5" id="userInfo_1">
                 <b>1. 我的生理性別</b>
                 <div class="form-check ">
                     <input class="form-check-input" type="radio" name="gender" id="gender1" value="option1">
@@ -159,74 +156,97 @@
                 </div>
             </div>
 
-            <div style="width: 100%;" class="mb-2" id="userInfo_2">
+            <div style="width: 100%;" class="mb-2 mt-0 mt-lg-5" id="userInfo_2">
                 <b>2. 我的年齡</b>
+
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="age" id="age0" value="option0">
+                    <label class="form-check-label" for="age0">0歲至9歲 </label>
+                </div>
                 <div class="form-check ">
                     <input class="form-check-input" type="radio" name="age" id="age1" value="option1">
-                    <label class="form-check-label" for="age1">13-15歲</label>
+                    <label class="form-check-label" for="age1">10歲至19歲</label>
                 </div>
-                <div class="form-check">
+                <div class="form-check  mt-0 mt-lg-2">
                     <input class="form-check-input" type="radio" name="age" id="age2" value="option2">
-                    <label class="form-check-label" for="age2">16-18歲</label>
+                    <label class="form-check-label" for="age2">20歲至29歲</label>
                 </div>
-                <div class="form-check ">
+                <div class="form-check  mt-0 mt-lg-2">
                     <input class="form-check-input" type="radio" name="age" id="age3" value="option3">
-                    <label class="form-check-label" for="age3">18至22歲</label>
+                    <label class="form-check-label" for="age3">30歲至39歲</label>
                 </div>
-                <div class="form-check ">
+                <div class="form-check  mt-0 mt-lg-2">
                     <input class="form-check-input" type="radio" name="age" id="age4" value="option4">
-                    <label class="form-check-label" for="age4">21歲以上</label>
+                    <label class="form-check-label" for="age4">40歲至49歲</label>
+                </div>
+                <div class="form-check  mt-0 mt-lg-2">
+                    <input class="form-check-input" type="radio" name="age" id="age5" value="option5">
+                    <label class="form-check-label" for="age5">50歲至59歲</label>
+                </div>
+                <div class="form-check  mt-0 mt-lg-2">
+                    <input class="form-check-input" type="radio" name="age" id="age6" value="option6">
+                    <label class="form-check-label" for="age6">60歲以上</label>
                 </div>
             </div>
 
-            <div style="width: 100%;" class="mb-2 " id="userInfo_3">
+            <div style="width: 100%;" class="mb-2 mt-0 mt-lg-5" id="userInfo_3">
                 <b>3. 教育程度</b>
                 <div class="form-check ">
                     <input class="form-check-input" type="radio" name="education" id="education1" value="option1">
                     <label class="form-check-label" for="education1">國小</label>
                 </div>
-                <div class="form-check ">
+                <div class="form-check mt-0 mt-lg-2">
                     <input class="form-check-input" type="radio" name="education" id="education2" value="option2">
                     <label class="form-check-label" for="education2">國中</label>
                 </div>
-                <div class="form-check ">
+                <div class="form-check mt-0 mt-lg-2">
                     <input class="form-check-input" type="radio" name="education" id="education3" value="option3">
                     <label class="form-check-label" for="education3"> 高中（職）</label>
                 </div>
-                <div class="form-check ">
+                <div class="form-check mt-0 mt-lg-2">
                     <input class="form-check-input" type="radio" name="education" id="education4" value="option4">
                     <label class="form-check-label" for="education4"> 大學（專）</label>
                 </div>
-                <div class="form-check ">
+                <div class="form-check mt-0 mt-lg-2">
                     <input class="form-check-input" type="radio" name="education" id="education5" value="option4">
-                    <label class="form-check-label" for="education5"> 大學（專）以上</label>
+                    <label class="form-check-label" for="education5"> 研究以上</label>
                 </div>
             </div>
 
-            <div style="width: 100%;" class="mb-1" id="userInfo_4">
+            <div style="width: 100%;" class="mb-1 mt-0 mt-lg-5" id="userInfo_4">
                 <b>4. 我的耐心</b>
                 <div class="form-check">
                     <!--題目3*2-->
                     <input class="form-check-input" type="radio" name="patience" id="patience1" value="2">
                     <label class="form-check-label" for="patience1">不太好</label>
                 </div>
-                <div class="form-check">
+                <div class="form-check mt-0 mt-lg-2">
                     <!--題目3*4-->
                     <input class="form-check-input" type="radio" name="patience" id="patience2" value="4">
                     <label class="form-check-label" for="patience2">普通</label>
                 </div>
-                <div class="form-check ">
+                <div class="form-check mt-0 mt-lg-2 md-5 md-lg-0">
                     <!--題目3*8  form-check-inline -->
                     <input class="form-check-input" type="radio" name="patience" id="patience3" value="8">
                     <label class="form-check-label" for="patience3"> 還不錯 </label>
                 </div>
-                <div class="d-flex justify-content-center mt-3 mt-md-0">
+                <div class="d-flex justify-content-center mt-2 mt-lg-5">
                     <button class="btn fs-5 fw-bold ps-5 pe-5 " style="background-color: #7ed957; color: #ffffff;"
                         onclick="recode()">送出</button>
                 </div>
             </div>
 
+            <button id="prevImageBtn" class="btn btn-dark fs-1 "
+                style="left: 5%; position: absolute; top: 50%; transform: translateY(-50%); background-color: #7ed957; border: 0; "
+                onclick="move_Info('up')">
+                <p class="pt-3 pe-2 pb-1">〈</p>
+            </button>
 
+            <button id="nextImageBtn" class="btn btn-dark fs-1"
+                style="position: absolute; right: 5%; top: 50%; transform: translateY(-50%); background-color: #7ed957; border: 0;"
+                onclick="move_Info('down')">
+                <p class="pt-3 ps-2 pb-1">〉</p>
+            </button>
 
         </div>
     </div>
@@ -242,30 +262,26 @@
         display: flex;
         justify-content: center;
     ">
-        <div class="col-md-6 fs-5 ps-3 pe-3">
-            <h2 class="d-flex justify-content-center mt-1 mb-1 mb-md-0" style="color: black; ">前測</h2>
-            <div class="btn-group justify-content-center mt-2 mb-1" style="width: 100%;" id="sortBtn">
-                <button class="btn btn-outline-secondary fs-6" onclick="move_preTest('up')">上一題</button>
-                <button class="btn btn-outline-secondary fs-6" onclick="move_preTest('down')">下一題</button>
-            </div>
-
-
+        <div class="col-md-6 fs-4 ps-3 pe-3">
+            <h2 class="d-flex justify-content-center mb-2 mt-lg-1 pt-1 pt-lg-5" style="color: black; " id="pre_text">前測
+            </h2>
+            <b id="Q_title"></b>
             <div style="width: 100%;" class="mb-3 mt-3" id="sort_1">
-                <span id="Q1_word"></span>
+                <span id="Q1_word">標題</span>
                 <div id="opt1">
-                    <div class="form-check ">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test1" id="S1_1" value="S1_1">
                         <label class="form-check-label" for="S1_1">A</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test1" id="S1_2" value="S1_2">
                         <label class="form-check-label" for="S1_2">B</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test1" id="S1_3" value="S1_3">
                         <label class="form-check-label" for="S1_3">C</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test1" id="S1_4" value="S1_4">
                         <label class="form-check-label" for="S1_4">D</label>
                     </div>
@@ -281,15 +297,15 @@
                         <input class="form-check-input" type="radio" name="test2" id="S2_1" value="S2_1">
                         <label class="form-check-label" for="S2_1">A</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test2" id="S2_2" value="S2_2">
                         <label class="form-check-label" for="S2_2">B</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test2" id="S2_3" value="S2_3">
                         <label class="form-check-label" for="S2_3">C</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test2" id="S2_4" value="S2_4">
                         <label class="form-check-label" for="S2_4">D</label>
                     </div>
@@ -304,27 +320,36 @@
                         <input class="form-check-input" type="radio" name="test3" id="S3_1" value="S3_1">
                         <label class="form-check-label" for="S3_1">A</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test3" id="S3_2" value="S3_2">
                         <label class="form-check-label" for="S3_2">B</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test3" id="S3_3" value="S3_3">
                         <label class="form-check-label" for="S3_3">C</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mt-0 mt-lg-2 md-5 md-lg-0">
                         <input class="form-check-input" type="radio" name="test3" id="S3_4" value="S3_4">
                         <label class="form-check-label" for="S3_4">D</label>
                     </div>
 
-                    <div class="d-flex justify-content-center mt-1">
+                    <div class="d-flex justify-content-center mt-5 mt-lg-2">
                         <button class="btn fs-5 fw-bold ps-5 pe-5" style="background-color: #7ed957; color: #ffffff;"
                             onclick="recodePreTest()">送出</button>
                     </div>
                 </div>
-
             </div>
+            <button id="prevImageBtn" class="btn btn-dark fs-1 "
+                style="left: 5%; position: absolute; top: 50%; transform: translateY(-50%); background-color: #7ed957; border: 0; "
+                onclick="move_preTest('up')">
+                <p class="pt-3 pe-2 pb-1">〈</p>
+            </button>
 
+            <button id="nextImageBtn" class="btn btn-dark fs-1"
+                style="position: absolute; right: 5%; top: 50%; transform: translateY(-50%); background-color: #7ed957; border: 0;"
+                onclick="move_preTest('down')">
+                <p class="pt-3 ps-2 pb-1">〉</p>
+            </button>
 
         </div>
     </div>
@@ -340,14 +365,10 @@
         display: flex;
         justify-content: center;
     ">
-        <div class="col-md-6 fs-5 ps-3 pe-3">
-            <h2 class="d-flex justify-content-center mt-1 mb-1" style="color: black;">後測</h2>
-
-            <div class="btn-group justify-content-center mt-2 mb-1" style="width: 100%;" id="sortBtn">
-                <button class="btn btn-outline-secondary pt-2 pb-2 fs-6" onclick="move_postTest('up')">上一題</button>
-                <button class="btn btn-outline-secondary fs-6" onclick="move_postTest('down')">下一題</button>
-            </div>
-
+        <div class="col-md-6 fs-4 ps-3 pe-3">
+            <h2 class="d-flex justify-content-center mb-2 mt-lg-1 pt-1 pt-lg-5" style="color: black;" id="pro_text">後測
+            </h2>
+            <b id="Q2_title"></b>
             <div style="width: 100%;" class="mb-3 mt-3" id="sort_4">
                 <span id="Q4_word"></span>
                 <div id="opt4">
@@ -355,15 +376,15 @@
                         <input class="form-check-input" type="radio" name="test4" id="S4_1" value="S4_1">
                         <label class="form-check-label" for="S4_1">A</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test4" id="S4_2" value="S4_2">
                         <label class="form-check-label" for="S4_2">B</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test4" id="S4_3" value="S4_3">
                         <label class="form-check-label" for="S4_3">C</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test4" id="S4_4" value="S4_4">
                         <label class="form-check-label" for="S4_4">D</label>
                     </div>
@@ -379,15 +400,15 @@
                         <input class="form-check-input" type="radio" name="test5" id="S5_1" value="S5_1">
                         <label class="form-check-label" for="S5_1">A</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test5" id="S5_2" value="S5_2">
                         <label class="form-check-label" for="S5_2">B</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test5" id="S5_3" value="S5_3">
                         <label class="form-check-label" for="S5_3">C</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test5" id="S5_4" value="S5_4">
                         <label class="form-check-label" for="S5_4">D</label>
                     </div>
@@ -402,29 +423,67 @@
                         <input class="form-check-input" type="radio" name="test6" id="S6_1" value="S6_1">
                         <label class="form-check-label" for="S6_1">A</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test6" id="S6_2" value="S6_2">
                         <label class="form-check-label" for="S6_2">B</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test6" id="S6_3" value="S6_3">
                         <label class="form-check-label" for="S6_3">C</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check  mt-0 mt-lg-2">
                         <input class="form-check-input" type="radio" name="test6" id="S6_4" value="S6_4">
                         <label class="form-check-label" for="S6_4">D</label>
                     </div>
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center mt-5 mt-lg-2">
                         <button class="btn fs-5 fw-bold ps-3 pe-3 mt-1"
-                            style=" background-color: #7ed957; color: #ffffff; margin-top:-5%;"
-                            onclick="send()">前往下一關</button>
+                            style=" background-color: #7ed957; color: #ffffff; margin-top:-5%;" onclick="send()"
+                            id="nextBtn">前往下一關</button>
                     </div>
-
+                    <div class="d-flex justify-content-center fw-bold mt-1">
+                        <span id="tips" style="color: rgb(255, 2, 2); "></span>
+                    </div>
                 </div>
 
             </div>
-            <div class="d-flex justify-content-center fw-bold md-1 mt-5"> <span id="tips"
-                    style="color: rgb(255, 2, 2); margin-top: 3%;">請記得送出回答~</span></div>
+            <button id="prevImageBtn" class="btn btn-dark fs-1 "
+                style="left: 5%; position: absolute; top: 50%; transform: translateY(-50%); background-color: #7ed957; border: 0; "
+                onclick="move_postTest('up')">
+                <p class="pt-3 pe-2 pb-1">〈</p>
+            </button>
+
+            <button id="nextImageBtn" class="btn btn-dark fs-1"
+                style="position: absolute; right: 5%; top: 50%; transform: translateY(-50%); background-color: #7ed957; border: 0;"
+                onclick="move_postTest('down')">
+                <p class="pt-3 ps-2 pb-1">〉</p>
+            </button>
+
+
+        </div>
+
+
+    </div>
+    <div id="success" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 2000;
+        background-color: rgba(255, 255, 255); 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    ">
+        <div class="col-md-6 fs-4 d-flex flex-column align-items-center">
+
+            <img src="images/t.png" style="width: 45%; height: 45%;">
+
+            <div class="fw-bold mt-3 text-center">
+                <span id="sucTips" style="color: rgb(255, 2, 2);">
+                    恭喜通關~ 前往下一個關卡中...
+                </span>
+            </div>
 
         </div>
     </div>
@@ -596,6 +655,7 @@
     <script>
         document.getElementById("pre_test").style.display = "none"; // 關閉頁面
         document.getElementById("pro_test").style.display = "none";
+        document.getElementById("success").style.display = "none";
         //document.getElementById("modeSelector").style.display = "none"; // 測試
         function getDateTimeUserName() {
             const now = new Date();
@@ -686,7 +746,9 @@
                 alert("請完整填寫所有欄位！");
                 return;
             }
+            document.getElementById("tips").innerText = " ";
             document.getElementById("pre_test").style.display = "none";
+            document.getElementById("nextBtn").style.display = "block";
             function copyGroup(fromId, toIds) {
                 const src = document.querySelector(`label[for="${fromId}"]`);
                 if (!src) return;
@@ -722,6 +784,7 @@
                 return;
             }
             document.getElementById("tips").innerText = "正在傳送資料中，請勿離開畫面";
+            document.getElementById("nextBtn").style.display = "none";
             //封裝資料
             let data = {
                 user_id: user_id,
@@ -746,18 +809,20 @@
 
             let params = new URLSearchParams(data).toString();
             let url = "https://script.google.com/macros/s/AKfycbyNFUaWoBDiqNxZyJUntIf-Ph0dvWYVh1suM4M5bHLyoJ0M3V400miE8nDDYh_UZ09X2Q/exec?" + params;
+            alert("資料已送出，感謝您的填寫！");
+            document.getElementById("success").style.display = "flex";
 
             fetch(url, {
                 method: "GET"
             })
                 //.then(() => console.log("已送出（no-cors），請到試算表查看!"))
+
                 .then(response => {
                     console.log("送出成功：", response);
-                    alert("資料已送出，感謝您的填寫！");
                     document.getElementById("pro_test").style.display = "none"; // 關閉頁面
                     setTimeout(() => {
                         window.uarGameInstance.SendMessage('GameManager', 'NEXT', "data");
-                    }, 50);
+                    }, 100);
 
                 })
                 .catch(err => console.error("送出失敗：", err));
@@ -793,9 +858,9 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-            dataUrl: buildUrl + "/ba3d638705ce0d486ebf8ac5aa4c7508.data.unityweb",
-            frameworkUrl: buildUrl + "/b7efb1857fab48efef1330ca8028ae54.js.unityweb",
-            codeUrl: buildUrl + "/71e069c0f80100ade3c6da944e585d76.wasm.unityweb",
+            dataUrl: buildUrl + "/3966da0b674e771898b1e9602426e36e.data.unityweb",
+            frameworkUrl: buildUrl + "/7216383f947a639772eb62cccfcdf756.js.unityweb",
+            codeUrl: buildUrl + "/ee0253d0820f335f60b4e93e394765cb.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "英文單字互動平台",
@@ -956,11 +1021,11 @@
             fetch("expData.xlsx?t=" + new Date().getTime())
                 .then(response => response.arrayBuffer())
                 .then(data => {
-
+                    document.getElementById("success").style.display = "none";
                     let workbook = XLSX.read(data, { type: "array" });
                     //選擇題庫類型
                     const sheetMap = {
-                        Scene1: ["match", "match2", "match3"],
+                        Scene1: ["match", "match2", "match3"], //Scene1
                         Scene2: ["cloze", "cloze2", "cloze3"],
                         Scene3: ["card", "card2", "card3"],
                         Scene4: ["sorting", "sorting2", "sorting3"]
@@ -969,7 +1034,8 @@
                     const sheets = sheetMap[sceneName];
                     const randomIndex = Math.floor(Math.random() * sheets.length);
                     const sheet = workbook.Sheets[sheets[randomIndex]];
-
+                    console.log("sceneName：", sceneName);
+                    getQusetionBank(randomIndex);
                     if (!sheet) {
                         console.error("找不到工作表");
                         return;
@@ -1074,21 +1140,47 @@
             Q1 = true;
             Q2 = false;
             Q3 = false;
+            // Scene1: match
+            // Scene2: cloze
+            // Scene3: card
+            // Scene4: sorting
+            let Q_content = "";
+            if (scene == "Scene1") {
+                Q_content = "請選出正確中文的意思";
+                document.getElementById("pre_text").innerText = "Scene1 前測";
+                document.getElementById("pro_text").innerText = "Scene1 後測";
+
+            } else if (scene == "Scene2") {
+                Q_content = "請根據題目判斷空格應填入哪個的選項";
+                document.getElementById("pre_text").innerText = "Scene2 前測";
+                document.getElementById("pro_text").innerText = "Scene2 後測";
+            } else if (scene == "Scene3") {
+                Q_content = "請根據題目選擇正確的選項";
+                document.getElementById("pre_text").innerText = "Scene3 前測";
+                document.getElementById("pro_text").innerText = "Scene3 後測";
+            } else if (scene == "Scene4") {
+                Q_content = "請選擇語意和文法正確的句子";
+                document.getElementById("pre_text").innerText = "Scene4 前測";
+                document.getElementById("pre_text").innerText = "Scene4 後測";
+            }
+
+            document.getElementById("Q_title").innerText = Q_content;
+            document.getElementById("Q2_title").innerText = Q_content;
+
             document.getElementById("Q1_word").innerText = "1. " + (shuff_test[0]?.question || "");
             document.getElementById("Q2_word").innerText = "2. " + (shuff_test[1]?.question || "");
             document.getElementById("Q3_word").innerText = "3. " + (shuff_test[2]?.question || "");
-
             try {
                 console.log("開始產生選項，scene =", scene);
 
-                if (scene === "Scene4") {
+                if (scene === "Scene4") { //Scene4
                     console.log("進入 randomSortingOpt");
                     randomSortingOpt(shuff_test);
-                } else if (scene === "Scene1") {
+                } else if (scene === "Scene1") { //Scene1
                     console.log("進入 randomMatchOpt");
                     randomMatchOpt(shuff_test);
                 } else {
-                    console.log("進入 randomCardOpt");
+                    console.log("進入 randomCardOpt"); //card 和克漏字
                     randomCardOpt(shuff_test);
                 }
             } catch (err) {
@@ -1110,8 +1202,11 @@
             q.forEach((item, idx) => {
 
                 const correct = item.optionA;
-
-                // 從全域題庫抓所有 optionA
+                // 記錄正確答案
+                if (idx === 0) correct_1 = correct;
+                if (idx === 1) correct_2 = correct;
+                if (idx === 2) correct_3 = correct;
+                // 從題庫抓所有 optionA
                 let allOptions = globalJsonData
                     .map(x => x.optionA)
                     .filter(o => o && o !== correct);
@@ -1122,7 +1217,6 @@
                 // 合併
                 let ops = shuffle([correct, ...wrongOptions]);
 
-                // 填入 UI
                 document.querySelector(`label[for="S${idx + 1}_1"]`).textContent = ops[0];
                 document.querySelector(`label[for="S${idx + 1}_2"]`).textContent = ops[1];
                 document.querySelector(`label[for="S${idx + 1}_3"]`).textContent = ops[2];
@@ -1131,14 +1225,22 @@
             });
 
         }
-
+        function clearWord(str) {
+            return str + " ";
+        }
 
         function randomSortingOpt(q) {
             q.forEach((item, idx) => {
-                let correct = item.optionA + item.optionB + item.optionC + item.answer;
-                let opt1 = item.optionB + item.answer + item.optionA + item.optionC;
-                let opt2 = item.optionA + item.answer + item.optionC + item.optionB;
-                let opt3 = item.optionA + item.optionC + item.optionB + item.answer;
+                // 正確答案
+                let correct = clearWord(item.optionA) + clearWord(item.optionB) + clearWord(item.optionC) + clearWord(item.answer);
+
+                // 記錄正確答案
+                if (idx === 0) correct_1 = correct;
+                if (idx === 1) correct_2 = correct;
+                if (idx === 2) correct_3 = correct;
+                let opt1 = clearWord(item.optionB) + clearWord(item.answer) + clearWord(item.optionA) + clearWord(item.optionC);
+                let opt2 = clearWord(item.optionA) + clearWord(item.answer) + clearWord(item.optionC) + clearWord(item.optionB);
+                let opt3 = clearWord(item.optionA) + clearWord(item.optionC) + clearWord(item.optionB) + clearWord(item.answer);
 
                 let ops = shuffle([correct, opt1, opt2, opt3]);
 
@@ -1152,7 +1254,10 @@
         function randomCardOpt(q) {
             q.forEach((item, idx) => {
                 let ops = shuffle([item.optionA, item.optionB, item.optionC, item.answer]);
-
+                // 記錄正確答案
+                if (idx === 0) correct_1 = item.answer;
+                if (idx === 1) correct_2 = item.answer;
+                if (idx === 2) correct_3 = item.answer;
                 document.querySelector(`label[for="S${idx + 1}_1"]`).textContent = ops[0];
                 document.querySelector(`label[for="S${idx + 1}_2"]`).textContent = ops[1];
                 document.querySelector(`label[for="S${idx + 1}_3"]`).textContent = ops[2];
@@ -1370,7 +1475,7 @@
             };
         }
         window.findBtnData = function (message) {
-            console.log("findBtnData", message);  // 顯示傳入的 key
+            //console.log("findBtnData", message);  // 顯示傳入的 key
             let value = btnDict[message];  // 查找對應的值
             if (value) {
                 console.log("btn", value);
