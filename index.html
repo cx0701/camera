@@ -897,9 +897,9 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-            dataUrl: buildUrl + "/706c80146275c2de5e7197780178f260.data.unityweb",
+            dataUrl: buildUrl + "/425673460558edbf40982f86204295ce.data.unityweb",
             frameworkUrl: buildUrl + "/763f2f234c72b44cf002fec785ee564f.js.unityweb",
-            codeUrl: buildUrl + "/be08aafc89e36391e5221c7c05354d98.wasm.unityweb",
+            codeUrl: buildUrl + "/5e08df4d20618c255444bf34788992f2.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "英文單字互動平台",
@@ -1019,9 +1019,8 @@
 
         // 傳送使用者資料給 Unity
         function send_UserData() {
-            let data = `${userName},${question_bank}`;
+            let data = `${userName},${question_bank},${userInput}`;
             window.uarGameInstance.SendMessage('GameManager', 'receiveUserName', data);
-
 
         }
         function getQusetionBank(randomIndex) {
