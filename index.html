@@ -142,9 +142,16 @@
         align-items: center;
     ">
         <div class="col-md-6 ps-1 pe-1 fs-4" style="height: 100%;">
-            <h2 class=" d-flex justify-content-center  mb-2 mt-lg-1 pt-1 pt-lg-5" style="color: black; ">基本資料</h2>
-
-            <div style="width: 100%;" class="mb-2 mt-0 mt-lg-5" id="userInfo_1">
+            <h2 class=" d-flex justify-content-center  mb-2 md-lg-3 mt-0 mt-lg-1 pt-1 pt-lg-5" style="color: black; ">
+                基本資料</h2>
+            <div id="userInfo_0">
+                <b>請輸入號碼</b>
+                <div style="width: 100%;" class="input-group mb-2 mb-lg-5">
+                    <input type="text" class="form-control" placeholder="號碼" aria-label="Username"
+                        aria-describedby="basic-addon1" id="userInput">
+                </div>
+            </div>
+            <div style="width: 100%;" class="mb-2 mt-3" id="userInfo_1">
                 <b>1. 我的生理性別</b>
                 <div class="form-check ">
                     <input class="form-check-input" type="radio" name="gender" id="gender1" value="option1">
@@ -225,12 +232,13 @@
                     <input class="form-check-input" type="radio" name="patience" id="patience2" value="4">
                     <label class="form-check-label" for="patience2">普通</label>
                 </div>
-                <div class="form-check mt-0 mt-lg-2 md-5 md-lg-0">
+                <div class="form-check mt-0 mt-lg-2 md-5 ">
                     <!--題目3*8  form-check-inline -->
                     <input class="form-check-input" type="radio" name="patience" id="patience3" value="8">
                     <label class="form-check-label" for="patience3"> 還不錯 </label>
                 </div>
-                <div class="d-flex justify-content-center mt-2 mt-lg-5">
+                <br>
+                <div class="d-flex justify-content-center mt-5 ">
                     <button class="btn fs-5 fw-bold ps-5 pe-5 " style="background-color: #7ed957; color: #ffffff;"
                         onclick="recode()">送出</button>
                 </div>
@@ -265,11 +273,18 @@
         <div class="col-md-6 fs-4 ps-3 pe-3">
             <h2 class="d-flex justify-content-center mb-2 mt-lg-1 pt-1 pt-lg-5" style="color: black; " id="pre_text">前測
             </h2>
-            <b id="Q_title"></b>
-            <div style="width: 100%;" class="mb-3 mt-3" id="sort_1">
+            <div id="sort_0">
+                <span>請輸入號碼(前面有填寫此處不需填寫)</span>
+                <div style="width: 100%;" class="input-group mb-2 mb-lg-5">
+                    <input type="text" class="form-control" placeholder="號碼" aria-label="Username"
+                        aria-describedby="basic-addon1" id="userInput">
+                </div>
+            </div>
+            <span id="Q_title"></span>
+            <div style="width: 100%;" class="mt-1" id="sort_1">
                 <span id="Q1_word">標題</span>
                 <div id="opt1">
-                    <div class="form-check  mt-0 mt-lg-2">
+                    <div class="form-check ">
                         <input class="form-check-input" type="radio" name="test1" id="S1_1" value="S1_1">
                         <label class="form-check-label" for="S1_1">A</label>
                     </div>
@@ -332,8 +347,8 @@
                         <input class="form-check-input" type="radio" name="test3" id="S3_4" value="S3_4">
                         <label class="form-check-label" for="S3_4">D</label>
                     </div>
-
-                    <div class="d-flex justify-content-center mt-5 mt-lg-2">
+                    <br>
+                    <div class="d-flex justify-content-center mt-5 mt-lg-3">
                         <button class="btn fs-5 fw-bold ps-5 pe-5" style="background-color: #7ed957; color: #ffffff;"
                             onclick="recodePreTest()">送出</button>
                     </div>
@@ -368,8 +383,15 @@
         <div class="col-md-6 fs-4 ps-3 pe-3">
             <h2 class="d-flex justify-content-center mb-2 mt-lg-1 pt-1 pt-lg-5" style="color: black;" id="pro_text">後測
             </h2>
-            <b id="Q2_title"></b>
-            <div style="width: 100%;" class="mb-3 mt-3" id="sort_4">
+            <div id="sort_7">
+                <span>請輸入號碼(前面有填寫此處不需填寫)</span>
+                <div style="width: 100%;" class="input-group mb-2 mb-lg-5">
+                    <input type="text" class="form-control" placeholder="號碼" aria-label="Username"
+                        aria-describedby="basic-addon1" id="userInput">
+                </div>
+            </div>
+            <span id="Q2_title"></span>
+            <div style="width: 100%;" class="mb-3 mt-1" id="sort_4">
                 <span id="Q4_word"></span>
                 <div id="opt4">
                     <div class="form-check ">
@@ -435,7 +457,8 @@
                         <input class="form-check-input" type="radio" name="test6" id="S6_4" value="S6_4">
                         <label class="form-check-label" for="S6_4">D</label>
                     </div>
-                    <div class="d-flex justify-content-center mt-5 mt-lg-2">
+                    <br>
+                    <div class="d-flex justify-content-center mt-5 mt-lg-3">
                         <button class="btn fs-5 fw-bold ps-3 pe-3 mt-1"
                             style=" background-color: #7ed957; color: #ffffff; margin-top:-5%;" onclick="send()"
                             id="nextBtn">前往下一關</button>
@@ -475,11 +498,11 @@
         justify-content: center;
         align-items: center;
     ">
-        <div class="col-md-6 fs-4 d-flex flex-column align-items-center">
+        <div class="col-md-6 d-flex flex-column align-items-center">
 
             <img src="images/t.png" style="width: 45%; height: 45%;">
 
-            <div class="fw-bold mt-3 text-center">
+            <div class="fw-bold mt-3 text-center fs-3">
                 <span id="sucTips" style="color: rgb(255, 2, 2);">
                     恭喜通關~ 前往下一個關卡中...
                 </span>
@@ -501,6 +524,7 @@
             if (direction === "up") {
                 if (showAge) {
                     document.getElementById("userInfo_1").style.display = "block";
+                    document.getElementById("userInfo_0").style.display = "block";
                     document.getElementById("userInfo_2").style.display = "none";
                     document.getElementById("userInfo_3").style.display = "none";
                     document.getElementById("userInfo_4").style.display = "none";
@@ -510,6 +534,7 @@
                     showPatience = false;
                 } else if (showEdu) {
                     document.getElementById("userInfo_2").style.display = "block";
+                    document.getElementById("userInfo_0").style.display = "none";
                     document.getElementById("userInfo_1").style.display = "none";
                     document.getElementById("userInfo_3").style.display = "none";
                     document.getElementById("userInfo_4").style.display = "none";
@@ -519,6 +544,7 @@
                     showPatience = false;
                 } else if (showPatience) {
                     document.getElementById("userInfo_3").style.display = "block";
+                    document.getElementById("userInfo_0").style.display = "none";
                     document.getElementById("userInfo_1").style.display = "none";
                     document.getElementById("userInfo_2").style.display = "none";
                     document.getElementById("userInfo_4").style.display = "none";
@@ -531,6 +557,7 @@
                 if (showAge) {
                     document.getElementById("userInfo_3").style.display = "block";
                     document.getElementById("userInfo_1").style.display = "none";
+                    document.getElementById("userInfo_0").style.display = "none";
                     document.getElementById("userInfo_2").style.display = "none";
                     document.getElementById("userInfo_4").style.display = "none";
                     showGender = false;
@@ -540,6 +567,7 @@
                 } else if (showEdu) {
                     document.getElementById("userInfo_4").style.display = "block";
                     document.getElementById("userInfo_1").style.display = "none";
+                    document.getElementById("userInfo_0").style.display = "none";
                     document.getElementById("userInfo_2").style.display = "none";
                     document.getElementById("userInfo_3").style.display = "none";
                     showGender = false;
@@ -549,6 +577,7 @@
                 } else if (showGender) {
                     document.getElementById("userInfo_2").style.display = "block";
                     document.getElementById("userInfo_1").style.display = "none";
+                    document.getElementById("userInfo_0").style.display = "none";
                     document.getElementById("userInfo_3").style.display = "none";
                     document.getElementById("userInfo_4").style.display = "none";
                     showGender = false;
@@ -567,6 +596,7 @@
                 if (Q2) {
                     document.getElementById("sort_2").style.display = "none";
                     document.getElementById("sort_1").style.display = "block";
+                    document.getElementById("sort_0").style.display = "block";
                     document.getElementById("sort_3").style.display = "none";
                     Q1 = true;
                     Q2 = false;
@@ -574,6 +604,7 @@
                 } else if (Q3) {
                     document.getElementById("sort_3").style.display = "none";
                     document.getElementById("sort_2").style.display = "block";
+                    document.getElementById("sort_0").style.display = "none";
                     document.getElementById("sort_1").style.display = "none";
                     Q1 = false;
                     Q2 = true;
@@ -584,6 +615,7 @@
                     document.getElementById("sort_2").style.display = "none";
                     document.getElementById("sort_3").style.display = "block";
                     document.getElementById("sort_1").style.display = "none";
+                    document.getElementById("sort_0").style.display = "none";
                     Q1 = false;
                     Q2 = false;
                     Q3 = true;
@@ -591,6 +623,7 @@
                     document.getElementById("sort_3").style.display = "none";
                     document.getElementById("sort_2").style.display = "block";
                     document.getElementById("sort_1").style.display = "none";
+                    document.getElementById("sort_0").style.display = "none";
                     Q1 = false;
                     Q2 = true;
                     Q3 = false;
@@ -604,6 +637,7 @@
                     document.getElementById("sort_5").style.display = "none";
                     document.getElementById("sort_4").style.display = "block";
                     document.getElementById("sort_6").style.display = "none";
+                    document.getElementById("sort_7").style.display = "block";
                     Q1 = true;
                     Q2 = false;
                     Q3 = false;
@@ -611,6 +645,7 @@
                     document.getElementById("sort_6").style.display = "none";
                     document.getElementById("sort_5").style.display = "block";
                     document.getElementById("sort_4").style.display = "none";
+                    document.getElementById("sort_7").style.display = "none";
                     Q1 = false;
                     Q2 = true;
                     Q3 = false;
@@ -620,6 +655,7 @@
                     document.getElementById("sort_5").style.display = "none";
                     document.getElementById("sort_6").style.display = "block";
                     document.getElementById("sort_4").style.display = "none";
+                    document.getElementById("sort_7").style.display = "none";
                     Q1 = false;
                     Q2 = false;
                     Q3 = true;
@@ -627,6 +663,7 @@
                     document.getElementById("sort_6").style.display = "none";
                     document.getElementById("sort_5").style.display = "block";
                     document.getElementById("sort_4").style.display = "none";
+                    document.getElementById("sort_7").style.display = "none";
                     Q1 = false;
                     Q2 = true;
                     Q3 = false;
@@ -687,6 +724,7 @@
         let age = "";
         let education = "";
         let patience = "";
+        let userInput = "";
         let user_id = userName;
         let correct_1 = "";
         let correct_2 = "";
@@ -697,9 +735,9 @@
             age = document.querySelector('input[name="age"]:checked')?.nextElementSibling.textContent.trim() || "";
             education = document.querySelector('input[name="education"]:checked')?.nextElementSibling.textContent.trim() || "";
             patience = document.querySelector('input[name="patience"]:checked')?.nextElementSibling.textContent.trim() || "";
-
+            userInput = document.querySelector("#userInfo_0 input").value;
             user_id = userName;
-            if (!gender || !age || !education || !patience) {
+            if (!gender || !age || !education || !patience || !userInput) {
                 alert("請完整填寫所有欄位！");
                 return;
             }
@@ -788,6 +826,7 @@
             //封裝資料
             let data = {
                 user_id: user_id,
+                number: userInput,
                 gender: gender,
                 age: age,
                 education: education,
@@ -822,7 +861,7 @@
                     document.getElementById("pro_test").style.display = "none"; // 關閉頁面
                     setTimeout(() => {
                         window.uarGameInstance.SendMessage('GameManager', 'NEXT', "data");
-                    }, 100);
+                    }, 50);
 
                 })
                 .catch(err => console.error("送出失敗：", err));
@@ -858,9 +897,9 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-            dataUrl: buildUrl + "/3966da0b674e771898b1e9602426e36e.data.unityweb",
-            frameworkUrl: buildUrl + "/7216383f947a639772eb62cccfcdf756.js.unityweb",
-            codeUrl: buildUrl + "/ee0253d0820f335f60b4e93e394765cb.wasm.unityweb",
+            dataUrl: buildUrl + "/706c80146275c2de5e7197780178f260.data.unityweb",
+            frameworkUrl: buildUrl + "/763f2f234c72b44cf002fec785ee564f.js.unityweb",
+            codeUrl: buildUrl + "/be08aafc89e36391e5221c7c05354d98.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "英文單字互動平台",
