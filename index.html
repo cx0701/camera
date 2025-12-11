@@ -272,13 +272,15 @@
     ">
         <div class="col-md-6 fs-4 ps-3 pe-3">
             <div class="position-relative d-flex justify-content-center align-items-center mb-2 mt-lg-1 pt-1 pt-lg-4">
+
+                <button class="btn btn-light  fw-bold border-0 position-absolute start-0 ms-3" onclick="reload()">
+                    <img src="images/刷新.png" style="width: 30px; height: 30px;">
+                </button>
+
                 <h2 style="color: black;" id="pre_text">前測</h2>
 
-                <button class="btn fs-1 fw-bold btn-outline-primary border-0 position-absolute start-0"
-                    onclick="reload()">
-                    ⟳
-                </button>
             </div>
+
 
             <span id="Q_title"></span>
             <div style="width: 100%;" class="mt-1" id="sort_1">
@@ -383,7 +385,7 @@
         <div class="col-md-6 fs-4 ps-3 pe-3">
             <h2 class="d-flex justify-content-center mb-2 mt-lg-1 pt-1 pt-lg-5" style="color: black;" id="pro_text">後測
             </h2>
-  
+
             <span id="Q2_title"></span>
             <div style="width: 100%;" class="mb-3 mt-1" id="sort_4">
                 <span id="Q4_word"></span>
@@ -873,7 +875,7 @@
     </script>
 
 
-<div id="unity-container" class="unity-desktop">
+    <div id="unity-container" class="unity-desktop">
         <canvas id="unity-canvas"></canvas>
     </div>
     <div id="loading-cover" style="display:none;">
@@ -891,26 +893,26 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-            dataUrl: buildUrl + "/4371ace0ac5f34b289b2c0682b1f2102.data.unityweb",
+            dataUrl: buildUrl + "/ad0b90b6783a15db865b5185f10b6f11.data.unityweb",
             frameworkUrl: buildUrl + "/109e280b09c251a48eddd8429c2ebfaf.js.unityweb",
             codeUrl: buildUrl + "/28918fde133de53707e48129a6dd94f5.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "互動平台-海洋之聲",
             productVersion: "0.1.0",
-        //Useful when used along with Filename as Hashes option
+            //Useful when used along with Filename as Hashes option
             cacheControl: function (url) {
-            // typically includes: .data, .bundle, .zpt
-            if (url.match(/\.data/) || url.match(/\.bundle/) || url.match(/\.zpt/)) {
-             return "immutable";
-}
-   
-            if (url.match(/\.mp4/) || url.match(/\.custom/) || url.match(/\.zbin/)) {
-                return "immutable";
-            }   
-            // Disable explicit caching for all other files.
-            // Note: the default browser cache may cache them anyway.
-            return "no-store";
+                // typically includes: .data, .bundle, .zpt
+                if (url.match(/\.data/) || url.match(/\.bundle/) || url.match(/\.zpt/)) {
+                    return "immutable";
+                }
+
+                if (url.match(/\.mp4/) || url.match(/\.custom/) || url.match(/\.zbin/)) {
+                    return "immutable";
+                }
+                // Disable explicit caching for all other files.
+                // Note: the default browser cache may cache them anyway.
+                return "no-store";
             },
         };
 
