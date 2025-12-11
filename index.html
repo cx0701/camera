@@ -893,9 +893,9 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-            dataUrl: buildUrl + "/92f3f0d213a11cdcafe615e76d936d5a.data.unityweb",
+            dataUrl: buildUrl + "/a4a8016db81ee1aba53da70cef141a78.data.unityweb",
             frameworkUrl: buildUrl + "/109e280b09c251a48eddd8429c2ebfaf.js.unityweb",
-            codeUrl: buildUrl + "/1d33c1bbe915880e391152a3c237b1f2.wasm.unityweb",
+            codeUrl: buildUrl + "/382bb9dde6f444c06871f3cb2daf9ebe.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "互動平台-海洋之聲",
@@ -1200,18 +1200,24 @@
                 document.getElementById("pro_text").innerText = "Scene3 後測";
                 sceneNumber = "3";
             } else if (scene == "Scene4") {
-                Q_content = "請選擇語意和文法正確的句子";
+                Q_content = " ";
                 document.getElementById("pre_text").innerText = "Scene4 前測";
                 document.getElementById("pre_text").innerText = "Scene4 後測";
                 sceneNumber = "4";
             }
-
+            //請選擇語意和文法正確的句子
             document.getElementById("Q_title").innerText = Q_content;
             document.getElementById("Q2_title").innerText = Q_content;
+            if (scene == "Scene4") {
+                document.getElementById("Q1_word").innerText = "1. 請選擇語意和文法正確的句子";
+                document.getElementById("Q2_word").innerText = "2. 請選擇語意和文法正確的句子";
+                document.getElementById("Q3_word").innerText = "3. 請選擇語意和文法正確的句子";
+            } else {
+                document.getElementById("Q1_word").innerText = "1. " + (shuff_test[0]?.question || "");
+                document.getElementById("Q2_word").innerText = "2. " + (shuff_test[1]?.question || "");
+                document.getElementById("Q3_word").innerText = "3. " + (shuff_test[2]?.question || "");
+            }
 
-            document.getElementById("Q1_word").innerText = "1. " + (shuff_test[0]?.question || "");
-            document.getElementById("Q2_word").innerText = "2. " + (shuff_test[1]?.question || "");
-            document.getElementById("Q3_word").innerText = "3. " + (shuff_test[2]?.question || "");
             try {
                 console.log("開始產生選項，scene =", scene);
 
