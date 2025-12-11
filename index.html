@@ -145,14 +145,14 @@
             <h2 class=" d-flex justify-content-center  mb-2 md-lg-3 mt-0 mt-lg-1 pt-1 pt-lg-5" style="color: black; ">
                 基本資料</h2>
             <div id="userInfo_0">
-                <b>請輸入號碼</b>
+                <span>請輸入號碼：</span>
                 <div style="width: 100%;" class="input-group mb-2 mb-lg-5">
                     <input type="text" class="form-control" placeholder="號碼" aria-label="Username"
                         aria-describedby="basic-addon1" id="userInput">
                 </div>
             </div>
             <div style="width: 100%;" class="mb-2 mt-3" id="userInfo_1">
-                <b>1. 我的生理性別</b>
+                <span>1. 我的生理性別</span>
                 <div class="form-check ">
                     <input class="form-check-input" type="radio" name="gender" id="gender1" value="option1">
                     <label class="form-check-label" for="gender1">女性</label>
@@ -164,7 +164,7 @@
             </div>
 
             <div style="width: 100%;" class="mb-2 mt-0 mt-lg-5" id="userInfo_2">
-                <b>2. 我的年齡</b>
+                <span>2. 我的年齡</span>
 
                 <div class="form-check ">
                     <input class="form-check-input" type="radio" name="age" id="age0" value="option0">
@@ -197,7 +197,7 @@
             </div>
 
             <div style="width: 100%;" class="mb-2 mt-0 mt-lg-5" id="userInfo_3">
-                <b>3. 教育程度</b>
+                <span>3. 教育程度</span>
                 <div class="form-check ">
                     <input class="form-check-input" type="radio" name="education" id="education1" value="option1">
                     <label class="form-check-label" for="education1">國小</label>
@@ -221,7 +221,7 @@
             </div>
 
             <div style="width: 100%;" class="mb-1 mt-0 mt-lg-5" id="userInfo_4">
-                <b>4. 我的耐心</b>
+                <span>4. 我的耐心</span>
                 <div class="form-check">
                     <!--題目3*2-->
                     <input class="form-check-input" type="radio" name="patience" id="patience1" value="2">
@@ -274,17 +274,10 @@
             <div class="position-relative d-flex justify-content-center align-items-center mb-2 mt-lg-1 pt-1 pt-lg-4">
                 <h2 style="color: black;" id="pre_text">前測</h2>
 
-                <button class="btn fs-2 fw-bold btn-outline-primary border-0 position-absolute start-0"
+                <button class="btn fs-1 fw-bold btn-outline-primary border-0 position-absolute start-0"
                     onclick="reload()">
                     ⟳
                 </button>
-            </div>
-
-            <div id="sort_0">
-                <div style="width: 100%;" class="input-group mb-2 mb-lg-5">
-                    <input type="text" class="form-control" placeholder="請輸入號碼(基本資料有填寫此處不需填寫)" aria-label="Username"
-                        aria-describedby="basic-addon1" id="userInput">
-                </div>
             </div>
 
             <span id="Q_title"></span>
@@ -390,13 +383,7 @@
         <div class="col-md-6 fs-4 ps-3 pe-3">
             <h2 class="d-flex justify-content-center mb-2 mt-lg-1 pt-1 pt-lg-5" style="color: black;" id="pro_text">後測
             </h2>
-            <div id="sort_7">
-                <span>請輸入號碼(前面有填寫此處不需填寫)</span>
-                <div style="width: 100%;" class="input-group mb-2 mb-lg-5">
-                    <input type="text" class="form-control" placeholder="號碼" aria-label="Username"
-                        aria-describedby="basic-addon1" id="userInput">
-                </div>
-            </div>
+  
             <span id="Q2_title"></span>
             <div style="width: 100%;" class="mb-3 mt-1" id="sort_4">
                 <span id="Q4_word"></span>
@@ -603,7 +590,7 @@
                 if (Q2) {
                     document.getElementById("sort_2").style.display = "none";
                     document.getElementById("sort_1").style.display = "block";
-                    document.getElementById("sort_0").style.display = "block";
+                    //document.getElementById("sort_0").style.display = "block";
                     document.getElementById("sort_3").style.display = "none";
                     Q1 = true;
                     Q2 = false;
@@ -611,7 +598,7 @@
                 } else if (Q3) {
                     document.getElementById("sort_3").style.display = "none";
                     document.getElementById("sort_2").style.display = "block";
-                    document.getElementById("sort_0").style.display = "none";
+                    //document.getElementById("sort_0").style.display = "none";
                     document.getElementById("sort_1").style.display = "none";
                     Q1 = false;
                     Q2 = true;
@@ -622,7 +609,7 @@
                     document.getElementById("sort_2").style.display = "none";
                     document.getElementById("sort_3").style.display = "block";
                     document.getElementById("sort_1").style.display = "none";
-                    document.getElementById("sort_0").style.display = "none";
+                    //document.getElementById("sort_0").style.display = "none";
                     Q1 = false;
                     Q2 = false;
                     Q3 = true;
@@ -630,7 +617,7 @@
                     document.getElementById("sort_3").style.display = "none";
                     document.getElementById("sort_2").style.display = "block";
                     document.getElementById("sort_1").style.display = "none";
-                    document.getElementById("sort_0").style.display = "none";
+                    //document.getElementById("sort_0").style.display = "none";
                     Q1 = false;
                     Q2 = true;
                     Q3 = false;
@@ -644,7 +631,7 @@
                     document.getElementById("sort_5").style.display = "none";
                     document.getElementById("sort_4").style.display = "block";
                     document.getElementById("sort_6").style.display = "none";
-                    document.getElementById("sort_7").style.display = "block";
+                    //document.getElementById("sort_7").style.display = "block";
                     Q1 = true;
                     Q2 = false;
                     Q3 = false;
@@ -652,7 +639,7 @@
                     document.getElementById("sort_6").style.display = "none";
                     document.getElementById("sort_5").style.display = "block";
                     document.getElementById("sort_4").style.display = "none";
-                    document.getElementById("sort_7").style.display = "none";
+                    //document.getElementById("sort_7").style.display = "none";
                     Q1 = false;
                     Q2 = true;
                     Q3 = false;
@@ -662,7 +649,7 @@
                     document.getElementById("sort_5").style.display = "none";
                     document.getElementById("sort_6").style.display = "block";
                     document.getElementById("sort_4").style.display = "none";
-                    document.getElementById("sort_7").style.display = "none";
+                    //document.getElementById("sort_7").style.display = "none";
                     Q1 = false;
                     Q2 = false;
                     Q3 = true;
@@ -670,7 +657,7 @@
                     document.getElementById("sort_6").style.display = "none";
                     document.getElementById("sort_5").style.display = "block";
                     document.getElementById("sort_4").style.display = "none";
-                    document.getElementById("sort_7").style.display = "none";
+                    //document.getElementById("sort_7").style.display = "none";
                     Q1 = false;
                     Q2 = true;
                     Q3 = false;
@@ -904,9 +891,9 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-            dataUrl: buildUrl + "/f9d759eee8f5199b4d0bd9c6ef4f52b3.data.unityweb",
-            frameworkUrl: buildUrl + "/763f2f234c72b44cf002fec785ee564f.js.unityweb",
-            codeUrl: buildUrl + "/5e08df4d20618c255444bf34788992f2.wasm.unityweb",
+            dataUrl: buildUrl + "/f837a40b6ccc006db16ff1f44af66ba9.data.unityweb",
+            frameworkUrl: buildUrl + "/7b85d659a3cb7ee42501432785977337.js.unityweb",
+            codeUrl: buildUrl + "/8217f124fc55cd4badecf78f6c34f87a.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "英文單字互動平台",
