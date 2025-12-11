@@ -873,7 +873,7 @@
     </script>
 
 
-    <div id="unity-container" class="unity-desktop">
+<div id="unity-container" class="unity-desktop">
         <canvas id="unity-canvas"></canvas>
     </div>
     <div id="loading-cover" style="display:none;">
@@ -891,26 +891,26 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-            dataUrl: buildUrl + "/f837a40b6ccc006db16ff1f44af66ba9.data.unityweb",
-            frameworkUrl: buildUrl + "/7b85d659a3cb7ee42501432785977337.js.unityweb",
-            codeUrl: buildUrl + "/8217f124fc55cd4badecf78f6c34f87a.wasm.unityweb",
+            dataUrl: buildUrl + "/6db4a1a8c6c78ca6b9c548b6c067376c.data.unityweb",
+            frameworkUrl: buildUrl + "/284d985f08347778c792eca1bdca1187.js.unityweb",
+            codeUrl: buildUrl + "/a24ab404f8c390ff18a3e8350c3088b6.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
-            productName: "英文互動平台",
+            productName: "VR互動平台-海洋之聲",
             productVersion: "0.1.0",
-            //Useful when used along with Filename as Hashes option
+        //Useful when used along with Filename as Hashes option
             cacheControl: function (url) {
-                // typically includes: .data, .bundle, .zpt
-                if (url.match(/\.data/) || url.match(/\.bundle/) || url.match(/\.zpt/)) {
-                    return "immutable";
-                }
-
-                if (url.match(/\.mp4/) || url.match(/\.custom/) || url.match(/\.zbin/)) {
-                    return "immutable";
-                }
-                // Disable explicit caching for all other files.
-                // Note: the default browser cache may cache them anyway.
-                return "no-store";
+            // typically includes: .data, .bundle, .zpt
+            if (url.match(/\.data/) || url.match(/\.bundle/) || url.match(/\.zpt/)) {
+             return "immutable";
+}
+   
+            if (url.match(/\.mp4/) || url.match(/\.custom/) || url.match(/\.zbin/)) {
+                return "immutable";
+            }   
+            // Disable explicit caching for all other files.
+            // Note: the default browser cache may cache them anyway.
+            return "no-store";
             },
         };
 
@@ -965,7 +965,7 @@
         let activeScence = [];
         let active_workSheet = [];
         let BgPaths = [];
-        activeDict = {};
+        let activeDict = {};
         let imagePaths = [];
         let question_bank = "";//sheet name
         window.fetchActiveData = function () {
@@ -1813,7 +1813,6 @@
         let Scence = [];
         let Btn1 = [], Btn2 = [], Btn3 = [], Btn4 = [];
         let btnDict = {};
-        let cleanPath;
         //function fetchBtn() {
         window.fetchBtn = function () {
             fetch("expData.xlsx?t=" + new Date().getTime())
