@@ -893,9 +893,9 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-            dataUrl: buildUrl + "/a4a8016db81ee1aba53da70cef141a78.data.unityweb",
-            frameworkUrl: buildUrl + "/109e280b09c251a48eddd8429c2ebfaf.js.unityweb",
-            codeUrl: buildUrl + "/382bb9dde6f444c06871f3cb2daf9ebe.wasm.unityweb",
+            dataUrl: buildUrl + "/0167e2783c19ac737a7e711f714df4a7.data.unityweb",
+            frameworkUrl: buildUrl + "/284d985f08347778c792eca1bdca1187.js.unityweb",
+            codeUrl: buildUrl + "/7e3089cb63b5ba5fd406c6e978c9d360.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "互動平台-海洋之聲",
@@ -1184,25 +1184,25 @@
             // Scene3: card
             // Scene4: sorting
             let Q_content = "";
-            if (scene == "Scene1") {
+            if (scene === "Scene1") {
                 Q_content = "請選出正確中文的意思";
                 document.getElementById("pre_text").innerText = "Scene1 前測";
                 document.getElementById("pro_text").innerText = "Scene1 後測";
                 sceneNumber = "1";
-            } else if (scene == "Scene2") {
+            } else if (scene === "Scene2") {
                 Q_content = "請根據題目判斷空格應填入哪個的選項";
                 document.getElementById("pre_text").innerText = "Scene2 前測";
                 document.getElementById("pro_text").innerText = "Scene2 後測";
                 sceneNumber = "2";
-            } else if (scene == "Scene3") {
+            } else if (scene === "Scene3") {
                 Q_content = "請根據題目選擇正確的選項";
                 document.getElementById("pre_text").innerText = "Scene3 前測";
                 document.getElementById("pro_text").innerText = "Scene3 後測";
                 sceneNumber = "3";
-            } else if (scene == "Scene4") {
+            } else if (scene === "Scene4") {
                 Q_content = " ";
                 document.getElementById("pre_text").innerText = "Scene4 前測";
-                document.getElementById("pre_text").innerText = "Scene4 後測";
+                document.getElementById("pro_text").innerText = "Scene4 後測";
                 sceneNumber = "4";
             }
             //請選擇語意和文法正確的句子
