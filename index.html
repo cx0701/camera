@@ -855,9 +855,7 @@
                 .then(response => {
                     console.log("送出成功：", response);
                     document.getElementById("pro_test").style.display = "none"; // 關閉頁面
-                    setTimeout(() => {
-                        window.uarGameInstance.SendMessage('GameManager', 'NEXT', "data");
-                    }, 50);
+                    window.uarGameInstance.SendMessage('GameManager', 'NEXT', "data");
 
                 })
                 .catch(err => console.error("送出失敗：", err));
