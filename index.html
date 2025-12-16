@@ -955,7 +955,7 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-            dataUrl: buildUrl + "/94f2cfb25b5f54c9069e930cd015412f.data.unityweb",
+            dataUrl: buildUrl + "/8ad7e37e9de47907004879025b6cf1fe.data.unityweb",
             frameworkUrl: buildUrl + "/556bc38d1c14857d6de9b80c9ef5fe00.js.unityweb",
             codeUrl: buildUrl + "/20e558a2275e1615825565f1fe2369f7.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
@@ -1246,26 +1246,32 @@
             // Scene3: card
             // Scene4: sorting
             let Q_content = "";
+            let add = "";
             if (scene === "Scene1") {
                 Q_content = "請選出正確中文的意思";
                 document.getElementById("pre_text").innerText = "Scene1 前測";
                 document.getElementById("pro_text").innerText = "Scene1 後測";
                 sceneNumber = "1";
+                add = "";
             } else if (scene === "Scene2") {
                 Q_content = "請根據題目判斷空格應填入哪個的選項";
                 document.getElementById("pre_text").innerText = "Scene2 前測";
                 document.getElementById("pro_text").innerText = "Scene2 後測";
                 sceneNumber = "2";
+                add = "";
             } else if (scene === "Scene3") {
-                Q_content = "請根據題目選擇正確的選項";
+                Q_content = "";
+                add = " ";
                 document.getElementById("pre_text").innerText = "Scene3 前測";
                 document.getElementById("pro_text").innerText = "Scene3 後測";
                 sceneNumber = "3";
+                add = "請根據題目選擇正確的選項： ";
             } else if (scene === "Scene4") {
                 Q_content = " ";
                 document.getElementById("pre_text").innerText = "Scene4 前測";
                 document.getElementById("pro_text").innerText = "Scene4 後測";
                 sceneNumber = "4";
+                add = "";
             }
             //請選擇語意和文法正確的句子
             document.getElementById("Q_title").innerText = Q_content;
@@ -1275,9 +1281,9 @@
                 document.getElementById("Q2_word").innerText = "2. 請選擇語意和文法正確的句子";
                 document.getElementById("Q3_word").innerText = "3. 請選擇語意和文法正確的句子";
             } else {
-                document.getElementById("Q1_word").innerText = "1. " + (shuff_test[0]?.question || "");
-                document.getElementById("Q2_word").innerText = "2. " + (shuff_test[1]?.question || "");
-                document.getElementById("Q3_word").innerText = "3. " + (shuff_test[2]?.question || "");
+                document.getElementById("Q1_word").innerText = "1. " + add + (shuff_test[0]?.question || "");
+                document.getElementById("Q2_word").innerText = "2. " + add + (shuff_test[1]?.question || "");
+                document.getElementById("Q3_word").innerText = "3. " + add + (shuff_test[2]?.question || "");
             }
 
             try {
