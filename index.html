@@ -145,7 +145,7 @@
         @media (max-width: 768px) {
             .nav-btn {
                 top: auto;
-                bottom: 16%;
+                bottom: 8%;
                 transform: none;
                 font-size: 2.5rem;
             }
@@ -327,7 +327,7 @@
         display: flex;
         justify-content: center;
     ">
-        <div class="col-md-6 fs-4 ps-3 pe-3">
+        <div class="col-md-6 fs-4 ps-3 pe-3" id="group_text1">
             <div class="position-relative d-flex justify-content-center align-items-center mb-2 mt-md-1 pt-1 pt-md-4">
 
                 <button class="btn btn-light  fw-bold border-0 position-absolute start-0 " onclick="reload()">
@@ -440,7 +440,7 @@
         display: flex;
         justify-content: center;
     ">
-        <div class="col-md-6 fs-4 ps-3 pe-3">
+        <div class="col-md-6 fs-4 ps-3 pe-3" id="group_text2">
             <h2 class="d-flex justify-content-center mb-2 mt-md-1 pt-1 pt-md-5" style="color: black;" id="pro_text">後測
             </h2>
 
@@ -680,7 +680,7 @@
                     Q1 = false;
                     Q2 = true;
                     Q3 = false;
-                }else if (Q3){
+                } else if (Q3) {
                     recodePreTest();
                     //console.log("recodePreTest");
                 }
@@ -723,7 +723,7 @@
                     Q1 = false;
                     Q2 = true;
                     Q3 = false;
-                }else if(Q3){
+                } else if (Q3) {
                     send();
                 }
 
@@ -955,7 +955,7 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-           dataUrl: buildUrl + "/7d9c7769a8eba162ef3ffda640534190.data.unityweb",
+            dataUrl: buildUrl + "/7d9c7769a8eba162ef3ffda640534190.data.unityweb",
             frameworkUrl: buildUrl + "/556bc38d1c14857d6de9b80c9ef5fe00.js.unityweb",
             codeUrl: buildUrl + "/20e558a2275e1615825565f1fe2369f7.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
@@ -1266,13 +1266,18 @@
                 document.getElementById("pro_text").innerText = "Scene3 後測";
                 sceneNumber = "3";
                 add = "請根據題目選擇正確的選項： ";
+                const fs_pre = document.getElementById("group_text1");
+                fs_pre.classList.replace("fs-4", "fs-5");
+                const fs_post = document.getElementById("group_text2");
+                fs_post.classList.replace("fs-4", "fs-5");
+
             } else if (scene === "Scene4") {
                 Q_content = " ";
                 document.getElementById("pre_text").innerText = "Scene4 前測";
                 document.getElementById("pro_text").innerText = "Scene4 後測";
                 sceneNumber = "4";
                 add = "";
-                
+
                 document.getElementById("nextBtn").innerText = "前往問卷";
                 document.getElementById("success").innerHTML = `
                 <a href="https://forms.gle/fVipAdLPukH3y7rR8"
