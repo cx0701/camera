@@ -285,13 +285,13 @@
                 </div>
                 <div class="form-check mt-0 mt-md-2">
                     <!--題目3*4-->
-                    <input class="form-check-input" type="radio" name="patience" id="patience1" value="2">
-                    <label class="form-check-label" for="patience1">普通</label>
+                    <input class="form-check-input" type="radio" name="patience" id="patience2" value="2">
+                    <label class="form-check-label" for="patience2">普通</label>
                 </div>
                 <div class="form-check mt-0 mt-md-2 mb-1 mb-md-2">
                     <!--題目3*8  form-check-inline -->
-                    <input class="form-check-input" type="radio" name="patience" id="patience1" value="2">
-                    <label class="form-check-label" for="patience1"> 還不錯 </label>
+                    <input class="form-check-input" type="radio" name="patience" id="patience3" value="4">
+                    <label class="form-check-label" for="patience3"> 還不錯 </label>
                 </div>
                 <br>
                 <div class="d-flex justify-content-center mt-5 ">
@@ -680,6 +680,9 @@
                     Q1 = false;
                     Q2 = true;
                     Q3 = false;
+                }else if (Q3){
+                    recodePreTest();
+                    //console.log("recodePreTest");
                 }
 
             }
@@ -720,6 +723,8 @@
                     Q1 = false;
                     Q2 = true;
                     Q3 = false;
+                }else if(Q3){
+                    send();
                 }
 
             }
@@ -950,7 +955,7 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-            dataUrl: buildUrl + "/8ad7e37e9de47907004879025b6cf1fe.data.unityweb",
+           dataUrl: buildUrl + "/7d9c7769a8eba162ef3ffda640534190.data.unityweb",
             frameworkUrl: buildUrl + "/556bc38d1c14857d6de9b80c9ef5fe00.js.unityweb",
             codeUrl: buildUrl + "/20e558a2275e1615825565f1fe2369f7.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
@@ -1267,6 +1272,8 @@
                 document.getElementById("pro_text").innerText = "Scene4 後測";
                 sceneNumber = "4";
                 add = "";
+                
+                document.getElementById("nextBtn").innerText = "前往問卷";
                 document.getElementById("success").innerHTML = `
                 <a href="https://forms.gle/fVipAdLPukH3y7rR8"
                 target="_blank"
