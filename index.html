@@ -145,7 +145,7 @@
         @media (max-width: 768px) {
             .nav-btn {
                 top: auto;
-                bottom: 8%;
+                bottom: 12%;
                 transform: none;
                 font-size: 2.5rem;
             }
@@ -1277,6 +1277,11 @@
                 document.getElementById("pro_text").innerText = "Scene4 後測";
                 sceneNumber = "4";
                 add = "";
+
+                const fs_pre = document.getElementById("group_text1");
+                fs_pre.classList.replace("fs-5", "fs-4");
+                const fs_post = document.getElementById("group_text2");
+                fs_post.classList.replace("fs-5", "fs-4");
 
                 document.getElementById("nextBtn").innerText = "前往問卷";
                 document.getElementById("success").innerHTML = `
