@@ -155,6 +155,25 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
+    function fixUnityCanvasSize() {
+      const canvas = document.getElementById("unity-canvas");
+      if (!canvas) return;
+
+      let w = window.visualViewport ? window.visualViewport.width : window.innerWidth;
+      let h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+
+      canvas.style.width = w + "px";
+      canvas.style.height = h + "px";
+    }
+
+    window.addEventListener("resize", fixUnityCanvasSize);
+    window.addEventListener("orientationchange", () => setTimeout(fixUnityCanvasSize, 300));
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", fixUnityCanvasSize);
+      window.visualViewport.addEventListener("scroll", fixUnityCanvasSize);
+    }
+
     let activeScence = [];
     let active_workSheet = [];
     let BgPaths = [];
