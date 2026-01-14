@@ -4,22 +4,70 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Unity WebGL Player | 英文學習平台</title>
-  <link rel="shortcut icon" href="TemplateData/favicon.ico">
-  <link rel="stylesheet" href="TemplateData/style.css">
-  <link rel="manifest" href="manifest.webmanifest">
+  <title>英文學習平台</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #unity-container,
+    #unity-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #unity-loading-bar {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: radial-gradient(#1c1c1c, #0f0f0f);
+    }
+
+    #loading-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 進度條外框 */
+    #unity-progress-bar-empty {
+      width: 80%;
+      max-width: 1000px;
+      height: 30px;
+      border: 2px solid white;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+
+    /* 填滿 */
+    #unity-progress-bar-full {
+      width: 0%;
+      height: 100%;
+      background: white;
+    }
+  </style>
 </head>
 
-<body>
-  <div id="unity-container">
-    <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
-    <div id="unity-loading-bar">
-      <div id="unity-logo"></div>
+<body class="dark">
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas"></canvas>
+  </div>
+
+  <div id="unity-loading-bar">
+    <div id="loading-overlay">
       <div id="unity-progress-bar-empty">
         <div id="unity-progress-bar-full"></div>
       </div>
     </div>
-    <div id="unity-warning"> </div>
   </div>
   <script>
     window.addEventListener("load", function () {
@@ -545,11 +593,11 @@
 
       console.log("影片已停止並清空來源");
     }
-    RequestSensorPermission();
+
 
     //旋轉
     function RequestSensorPermission() {
-      console.log("傳送給 Unity:");
+      console.log("傳送行動裝置的移動方向給 Unity:");
       //向使用者請求感應器權限
       if (typeof DeviceOrientationEvent.requestPermission === 'function') {
         DeviceOrientationEvent.requestPermission()
