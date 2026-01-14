@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Excel 編輯與下載</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        /*選擇工作表*/
+        .pill-radio-container {
+            --text-color: #414141;
+            --total-options: 8;
+
+            display: flex;
+            position: relative;
+            background: var(--pill-bg);
+            border-radius: 3rem;
+            padding: 0.5rem;
+            gap: 1rem;
+            width: fit-content;
+        }
+
+        .pill-radio-container input {
+            display: none;
+        }
+
+        .pill-radio-container label {
+            position: relative;
+            padding: 0.6rem;
+            border-radius: 3rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-color);
+            transition: color 0.3s ease-in-out;
+            z-index: 2;
+        }
+
+        .pill-radio-container input:checked+label {
+            color: #3DB8AA;
+        }
+
+        /* 加底線 */
+        .pill-radio-container label::after {
+            content: "";
+            position: absolute;
+            bottom: 4px;
+            left: 15%;
+            width: 70%;
+            height: 3px;
+            background-color: transparent;
+            border-radius: 2px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* 當 input 被選中時，找到對應的 label，加底線顏色 */
+        .pill-radio-container input:checked+label::after {
+            background-color: #3DB8AA;
+        }
+
+
+        /*預覽*/
+        #previewTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        #previewTable th,
+        #previewTable td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        #previewTable td {
+            border: 1px solid #777777;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #previewTable th {
+            border: 1px solid #ffffff;
+            border-top: 1px solid #3DB8AA;
+            background-color: #3DB8AA;
+            -webkit-text-fill-color: rgb(255, 255, 255);
+        }
+
+        #previewTable th:first-child {
+            border-left: 1px solid #3DB8AA;
+        }
+
+        #previewTable th:last-child {
+            border-right: 1px solid #3DB8AA;
+        }
+
+        .mode-2,
+        .mode-3,
+        .mode-4,
+        .mode-5,
+        .mode-6 {
+            display: none;
+        }
+
+        #previewArea {
+            display: none;
+        }
+
+        /* 選擇介面 */
+        .tab-container {
+            position: relative;
+            width: 42%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+
+            background-color: #dadadb;
+            border-radius: 15px;
+        }
+
+        .indicator {
+            content: "";
+            width: 180px;
+            height: 50px;
+            background: #ffffff;
+            position: absolute;
+            top: 2px;
+            left: 3px;
+            z-index: 9;
+            border: 0.5px solid rgba(0, 0, 0, 0.04);
+            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
+            border-radius: 13px;
+            transition: all 0.2s ease-out;
+        }
+
+        .tab {
+            width: 180px;
+            height: 50px;
+            position: absolute;
+            z-index: 99;
+            outline: none;
+            opacity: 0;
+        }
+
+        .tab_label {
+            width: 180px;
+            height: 50px;
+
+            position: relative;
+            z-index: 999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 0;
+
+            font-size: 18px;
+            opacity: 0.6;
+
+            cursor: pointer;
+        }
+
+        .tab--1:checked~.indicator {
+            left: 3px;
+        }
+
+        .tab--2:checked~.indicator {
+            left: calc(180px + 3px);
+        }
+
+        .tab--3:checked~.indicator {
+            left: calc(180px * 2 + 1px);
+        }
+
+        /* 上傳專案 */
+        .custum-file-upload {
+            height: 45%;
+            width: 35%;
+            display: flex;
+            flex-direction: column;
+            align-items: space-between;
+            gap: 10px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #8d8d8d;
+            background-color: #ffffff;
+            padding: 5%;
+            border-radius: 10px;
+            box-shadow: 0px 48px 35px -48px #ffffff;
+        }
+
+        .custum-file-upload .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .custum-file-upload .text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custum-file-upload .text span {
+            font-weight: 700;
+            color: #8d8d8d;
+            font-size: 20px;
+        }
+
+        .custum-file-upload .text span:hover {
+            color: #7295fd;
+        }
+
+        .custum-file-upload input {
+            display: none;
+        }
+
+        #InputContainer {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body class="p-4 bg-light">
+    <div class="container">
+
+        <h2 class="mb-4 fw-bold d-flex justify-content-center">編輯 Excel </h2>
+
+        <div class="d-flex justify-content-center">
+            <div class="tab-container mb-3 ">
+                <input type="radio" name="tab" id="tab1" class="tab tab--1" />
+                <label class="tab_label" for="tab1" onclick="ChangeInterface(1)">Step1 選擇檔案</label>
+
+                <input type="radio" name="tab" id="tab2" class="tab tab--2" />
+                <label class="tab_label" for="tab2" onclick="ChangeInterface(2)">Step2 編輯檔案</label>
+
+                <input type="radio" name="tab" id="tab3" class="tab tab--3" />
+                <label class="tab_label" for="tab3" onclick="ChangeInterface(3),downloadExcel()">Step3 下載</label>
+
+                <div class="indicator"></div>
+            </div>
+        </div>
+
+        <div id="InputContainer" style="margin-top: 8%;">
+            <label class="custum-file-upload" for="fileInput">
+                <div class="icon"><img
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Microsoft_Excel_2013-2019_logo.svg/509px-Microsoft_Excel_2013-2019_logo.svg.png"
+                        style="width: 30%; height: 10%;"> </div>
+                <div class="text">
+                    <span>Click to upload Excel</span>
+                </div>
+                <input type="file" class="form-control" id="fileInput" accept=".xlsx, .xls">
+            </label>
+        </div>
+
+        <div id="previewArea" class="mb-3">
+            <div class="mb-1">
+                <label class="form-label fw-bold" style="font-size: 20px;">選擇要編輯的工作表：</label>
+                <div class="pill-radio-container" id="sheetSelector"></div>
+            </div>
+
+
+            <h5 class="mt-1 mb-4 d-flex justify-content-center fw-bold">檔案預覽</h5>
+
+            <div id="tableContainer" class="table-responsive" style="margin-left: 30px; ">
+                <table id="previewTable"></table>
+            </div>
+
+            <div class="mt-3 mb-3">
+                <div class="d-flex justify-content-Start">
+                    <button class="btn btn-outline-success me-2" onclick="saveSheet()">儲存檔案</button>
+                    <button class="btn btn-outline-success me-2" id="addBtn" onclick="promptNewSheet()">新增工作表</button>
+                    <button class="btn btn-outline-danger me-2" id="addBtn"
+                        onclick="deleteCurrentSheet()">刪除工作表</button>
+                    <input type="text" class="form-control me-2" id="newRowNum" placeholder="新增幾筆資料"
+                        style="width: 10%;">
+                    <button class="btn btn-primary" id="addRowBtn" onclick="addRow()">新增空白資料</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        let workbook;
+        let InputFileName;
+        let currentSheetName = null;
+        let currentQuestionRow = 1; // 追蹤目前要編輯的資料行
+
+        let jsonData;
+        let sheet;
+        let ColumnName;
+
+        //當 HTML 初始載入時執行
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            const modeSelector = document.getElementById('selectedModeValue');
+            const dropdownButton = document.querySelector('.dropdown-toggle');
+            const sheetSelector = document.getElementById('sheetSelector'); // Get sheetSelector here
+            document.getElementById('downloadDiv').style.display = 'none';
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', function (event) {
+                    const value = this.dataset.value; // 取得玩家選擇哪個 data-value 1~6
+                    modeSelector.value = value;   //記錄目前模式
+                    dropdownButton.textContent = this.textContent; // 更新按鈕文字
+                    switchMode();
+                    event.preventDefault(); // 防止跳轉
+                });
+            });
+
+            // Listen for changes in the sheet selector.  放在DOMContentLoaded 確保元素加載完畢
+            sheetSelector.addEventListener('change', function () {
+                if (workbook) { // 確保 workbook 已經載入
+                    currentSheetName = this.value;
+                    showExcel(workbook.Sheets[currentSheetName]);
+                }
+            });
+
+        });
+
+
+        function deleteRow() {
+            const deleteRowNum = parseInt(document.getElementById("delRowNum").value, 10);
+
+            if (currentSheetName == "editButton") {
+                alert("該資料數量為固定無法刪除!");
+                return;
+            } else if (isNaN(deleteRowNum) || deleteRowNum <= 0) {
+                alert("請輸入有效的行數");
+                return;
+            }
+
+            const sheet = workbook.Sheets[currentSheetName];
+            const jsonData = XLSX.utils.sheet_to_json(sheet, {
+                header: 1,
+                raw: false
+            }); // 讀取原始資料 轉成json
+
+            if (!jsonData || jsonData.length === 0) {
+                alert("目前工作表沒有資料");
+                return;
+            }
+
+            // 檢查要刪除的行是否存在
+            if (deleteRowNum > jsonData.length) {
+                alert(`工作表 "${currentSheetName}" 沒有第 ${deleteRowNum} 行`);
+                return;
+            }
+
+            // 刪除指定行資料
+            jsonData.splice(deleteRowNum - 1, 1);
+
+            // 將修改後的 JSON 轉換回 Excel 
+            const newWorksheet = XLSX.utils.aoa_to_sheet(jsonData);
+
+            // 更新
+            workbook.Sheets[currentSheetName] = newWorksheet;
+
+            //重新計算工作表有幾筆資料
+            if (jsonData.length > 0) {
+                const range = XLSX.utils.decode_range(newWorksheet['!ref'] || 'A1');
+                range.e.r = jsonData.length - 1;
+                newWorksheet['!ref'] = XLSX.utils.encode_range(range);
+            } else {
+                newWorksheet['!ref'] = 'A1';
+            }
+            createPreview(workbook);
+            alert(`成功刪除工作表 "${currentSheetName}" 的第 ${deleteRowNum} 行`);
+        }
+
+        function addRow() {
+            const addRowCount = parseInt(document.getElementById("newRowNum").value, 10); // 取得要新增的行數，確保是數字
+
+            if (currentSheetName == "editButton") {
+                alert("該資料數量為固定無法新增!");
+                return;
+            } else if (isNaN(addRowCount) || addRowCount <= 0) {
+                alert("請輸入有效的行數 (大於 0 的數字)");
+                return;
+            }
+            const sheet = workbook.Sheets[currentSheetName];
+            const jsonData = XLSX.utils.sheet_to_json(sheet);  // 不傳 header: 1
+            let maxRowNum = 0;
+
+            if (jsonData.length > 0) {
+                for (let i = 0; i < jsonData.length; i++) {
+                    const row = jsonData[i];
+                    if (row.row_no !== undefined && typeof row.row_no === 'number' && row.row_no > maxRowNum) {
+                        maxRowNum = row.row_no;
+                    }
+                }
+            }
+
+            let numColumns = 0;
+            if (currentSheetName == "Setting") {
+                numColumns = 4;
+            } else {
+                numColumns = 6;
+            }
+            if (jsonData.length > 0) {
+                //numColumns = Object.keys(jsonData[0]).length;
+            } else if (workbook.Sheets[currentSheetName]['!ref']) {
+                const range = XLSX.utils.decode_range(workbook.Sheets[currentSheetName]['!ref']); //把工作表有資料的範圍解析成一個物件
+                numColumns = range.e.c + 1; //得到e.c 位置 ->「最後一欄」
+            }
+
+            //新增Row
+            for (let j = 1; j <= addRowCount; j++) {
+                const newRowNum = maxRowNum + j; //計算每一行的 row_no
+                const newRowData = {
+                    row_no: newRowNum
+                };
+                for (let i = 1; i < numColumns; i++) {
+                    const header = jsonData.length > 0 ? Object.keys(jsonData[0])[i] : `欄位${i + 1}`;
+                    newRowData[header] = '';
+                }
+                XLSX.utils.sheet_add_json(sheet, [newRowData], {
+                    header: Object.keys(newRowData),
+                    skipHeader: true,
+                    origin: -1
+                });
+            }
+
+            // 重新渲染預覽表格
+            createPreview(workbook);
+        }
+
+        function saveSheet() {
+            if (!workbook) {
+                alert("請先上傳 Excel 檔案");
+                return;
+            }
+
+            alert("儲存成功");
+
+            const table = document.getElementById('previewTable');
+            const sheetData = [];
+            const headerRow = []; // 儲存標題列
+
+            // 1. 提取表格資料
+            for (let i = 0; i < table.rows.length; i++) {
+                const row = table.rows[i];
+                const rowData = [];
+
+                if (i === 0) {
+                    // 處理標題列
+                    for (let j = 0; j < row.cells.length; j++) {
+                        headerRow.push(row.cells[j].textContent); // 將標題儲存到 headerRow
+                    }
+                } else {
+                    // 處理資料列
+                    for (let j = 0; j < row.cells.length; j++) {
+                        const cell = row.cells[j];
+                        if (cell.querySelector('div')) {
+                            if (row.cells.length > 0) row.deleteCell(row.cells.length - 1);
+                            const textDiv = cell.querySelector('div');
+                            // 移除 "請選擇類型 正確答案 錯誤答案"
+                            const cleanText = textDiv.textContent.replace(/請選擇類型正確答案錯誤答案/g, '').trim();
+                            rowData.push(cleanText);
+                        } else {
+                            rowData.push(cell.textContent);
+                        }
+                    }
+                    sheetData.push(rowData);
+                }
+            }
+
+            // 將標題列和資料合併
+            const finalData = [headerRow, ...sheetData];
+
+            // 將陣列轉換回 Sheet
+            const newWorksheet = XLSX.utils.aoa_to_sheet(finalData);
+
+            // 更新工作表
+            workbook.Sheets[currentSheetName] = newWorksheet;
+
+            showExcel(workbook.Sheets[currentSheetName]);
+        }
+
+
+
+
+        //監聽是否上傳
+        document.getElementById('fileInput').addEventListener('change', handleFile);
+
+        function handleFile(e) {
+            const file = e.target.files[0];
+            if (file) {
+
+                InputFileName = file.name;
+                const reader = new FileReader(); //JavaScript 讀取檔案
+                reader.onload = function (event) {
+                    const data = new Uint8Array(event.target.result); //以二進制資料來解析 Excel 檔案
+                    workbook = XLSX.read(data, {
+                        type: 'array'
+                    });
+
+                    //顯示
+                    createPreview(workbook);
+                    ChangeInterface(2);
+                    document.getElementById('tab2').checked = true;
+                };
+                reader.readAsArrayBuffer(file);
+            } else {
+                //沒有選擇檔案先隱藏預覽區域
+                document.getElementById('previewArea').style.display = 'none';
+            }
+
+        }
+        function ChangeInterface(Number) {
+            const fileInput = document.getElementById('InputContainer');
+            const previewArea = document.getElementById('previewArea');
+            if (Number == 1) {
+                location.reload();
+                fileInput.style.display = 'flex';
+                previewArea.style.display = 'none';
+            } else if (Number == 2) {
+                previewArea.style.display = 'block';
+                fileInput.style.display = 'none';
+            }
+        }
+        //預覽
+        function createPreview(wb) {
+            const sheetNames = wb.SheetNames;
+            const sheetSelector = document.getElementById('sheetSelector');
+            const previousSheetName = currentSheetName;
+            sheetSelector.innerHTML = ''; // 清空原本的內容
+
+            let firstSelected = false;
+
+            //把陣列中的每個元素都執行一次↓
+            sheetNames.forEach((name, index) => {
+                const input = document.createElement('input');
+                //設定 input 的屬性
+                input.type = 'radio';
+                input.name = 'sheet'; //變數將保存來自 sheetNames 陣列的目前工作表名稱的值
+                input.id = `sheet-${index}`;
+                input.value = name; //工作表名稱
+
+                if (name === previousSheetName || (!previousSheetName && !firstSelected)) {
+                    input.checked = true;
+                    currentSheetName = name;
+                    firstSelected = true;
+                }
+
+                //radio 被點擊選取或取消選取時
+                input.addEventListener('change', () => {
+                    currentSheetName = name;
+                    showExcel(wb.Sheets[currentSheetName]);
+                });
+
+                const label = document.createElement('label');
+                label.setAttribute('for', input.id);
+                label.textContent = name;
+
+                sheetSelector.appendChild(input);
+                sheetSelector.appendChild(label);
+            });
+
+            if (currentSheetName && wb.Sheets[currentSheetName]) {
+                showExcel(wb.Sheets[currentSheetName]);
+                document.getElementById('previewArea').style.display = 'block';
+            } else {
+                document.getElementById('previewArea').style.display = 'none';
+            }
+        }
+
+        function showExcel(sheet) {
+            const previewTable = document.getElementById('previewTable');
+            previewTable.innerHTML = '';
+
+            const jsonData = XLSX.utils.sheet_to_json(sheet, {
+                header: 1,
+                raw: false
+            });
+
+            if (jsonData && jsonData.length > 0) {
+                const headerRow = previewTable.insertRow();
+
+                // 找出 "question" 欄位的 index
+                const questionColIndex = jsonData[0].indexOf('question');
+
+                // 建立表頭
+                jsonData[0].forEach((headerText) => {
+                    const th = document.createElement('th');
+                    th.textContent = headerText === undefined ? '' : headerText;
+                    headerRow.appendChild(th);
+                });
+
+                // 建立資料列
+                for (let i = 1; i < jsonData.length; i++) {
+                    const dataRow = previewTable.insertRow();
+
+                    jsonData[i].forEach((cellData, colIndex) => {
+                        const td = document.createElement('td');
+
+                        if (colIndex === questionColIndex) {
+                            // 建立文字區塊
+                            const textDiv = document.createElement('div');
+                            textDiv.textContent = cellData === undefined ? '' : cellData;
+                            textDiv.contentEditable = true;
+                            textDiv.style.flex = '1'; // 讓文字區塊自動撐開
+                            textDiv.style.alignItems = 'center';
+
+                            // 建立下拉選單
+                            const select = document.createElement('select');
+                            select.className = 'form-select mt-1';
+                            select.style.width = '50%';
+
+                            const defaultOption = document.createElement('option');
+                            defaultOption.text = '請選擇類型';
+                            defaultOption.value = '';
+                            select.appendChild(defaultOption);
+
+                            const correctOption = document.createElement('option');
+                            correctOption.text = '正確答案';
+                            correctOption.value = '正確答案';
+                            select.appendChild(correctOption);
+
+                            const wrongOption = document.createElement('option');
+                            wrongOption.text = '錯誤答案';
+                            wrongOption.value = '錯誤答案';
+                            select.appendChild(wrongOption);
+
+                            // 事件處理（你可以自己定義行為）
+                            select.addEventListener('change', () => {
+                                const selectedValue = select.value;  // 先取得選擇值
+                                if (selectedValue) {
+                                    // 移除開頭的 正確答案 或 錯誤答案，再附加新選項到最前面
+                                    textDiv.textContent = selectedValue + ': ' + textDiv.textContent.replace(/^(正確答案:|錯誤答案:)\s*/, '');
+                                }
+                            });
+
+                            // 使用一個 div 包裹 textDiv 和 select，並設定樣式
+                            const wrapperDiv = document.createElement('div');
+                            wrapperDiv.style.display = 'flex'; // 使用 Flexbox
+                            wrapperDiv.style.alignItems = 'center'; // 垂直置中
+                            wrapperDiv.style.gap = '8px'; // 設定間距
+                            wrapperDiv.style.width = '30%;'
+                            wrapperDiv.appendChild(textDiv);
+                            wrapperDiv.appendChild(select);
+                            td.appendChild(wrapperDiv);
+                        } else {
+                            td.textContent = cellData === undefined ? '' : cellData;
+                            td.contentEditable = true;
+                        }
+
+                        dataRow.appendChild(td);
+                    });
+
+                    // 刪除按鈕欄
+                    const deleteTd = dataRow.insertCell(-1);
+                    deleteTd.style.border = 'none';
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = '刪除';
+                    deleteBtn.className = 'btn btn-danger';
+
+                    deleteBtn.addEventListener('click', () => {
+                        if (currentSheetName === "editButton") {
+                            alert("該資料數量為固定，只能編輯無法刪除!");
+                            return;
+                        } else {
+                            previewTable.deleteRow(dataRow.rowIndex);
+                        }
+                    });
+
+                    deleteTd.appendChild(deleteBtn);
+                }
+
+            } else {
+                const row = previewTable.insertRow();
+                const cell = row.insertCell();
+                cell.textContent = "該工作表沒有資料。";
+            }
+        }
+
+        function deleteCurrentSheet() {
+            if (!workbook || !currentSheetName) {
+                alert("尚未載入工作表！");
+                return;
+            }
+            if (currentSheetName == "editButton" || currentSheetName == "Setting") {
+                alert("平台固定工作表無法刪除!");
+            } else {
+                // 確認是否要刪除
+                if (!confirm(`確定要刪除工作表「${currentSheetName}」嗎？這個動作無法還原！`)) {
+                    return;
+                }
+
+                // 刪除 Sheets 中對應的內容
+                delete workbook.Sheets[currentSheetName];
+
+                // 找出目前工作表名稱的 index，並從 SheetNames 陣列中移除
+                const index = workbook.SheetNames.indexOf(currentSheetName);
+                if (index !== -1) {
+                    workbook.SheetNames.splice(index, 1);
+                }
+
+                // 更新 currentSheetName，改為第一個工作表
+                currentSheetName = workbook.SheetNames[0] || null;
+
+                // 重新渲染預覽畫面
+                createPreview(workbook);
+
+                alert("已刪除工作表！");
+            }
+
+        }
+
+
+        function promptNewSheet() {
+            const newSheetName = prompt("請輸入新的工作表名稱：");
+            if (newSheetName && newSheetName.trim() !== "") {
+                if (!workbook.SheetNames.includes(newSheetName)) {
+                    // 新增工作表，僅包含標題列
+                    const headerData = [["1", "question", "optionA", "optionB", "optionC", "answer"]];
+                    const newSheet = XLSX.utils.aoa_to_sheet(headerData);
+                    XLSX.utils.book_append_sheet(workbook, newSheet, newSheetName);
+
+                    // 更新下拉式選單
+                    const sheetSelector = document.getElementById('sheetSelector');
+                    const option = document.createElement('option');
+                    option.value = newSheetName;
+                    option.textContent = newSheetName;
+                    sheetSelector.appendChild(option);
+                    sheetSelector.value = newSheetName;
+                    currentSheetName = newSheetName;
+
+                    createPreview(workbook);
+                    alert(`已新增工作表：${newSheetName}`);
+                } else {
+                    alert("工作表名稱已存在，請使用其他名稱。");
+                }
+            } else {
+                alert("未輸入工作表名稱，無法新增。");
+            }
+        }
+
+
+        function downloadExcel() {
+            if (!workbook) {
+                alert("請先上傳 Excel 檔案");
+                return;
+            }
+
+            const table = document.getElementById('previewTable');
+            const rows = table.rows;
+            const removedCells = [];
+            const sheetData = [];
+            const headerRow = [];
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const rowData = [];
+                const lastCellIndex = row.cells.length - 1;
+                const lastCell = row.cells[lastCellIndex];
+
+                // 移除操作欄
+                if (lastCell && lastCell.querySelector('button')) {
+                    removedCells.push(lastCell);
+                    row.deleteCell(lastCellIndex);
+                } else {
+                    removedCells.push(null);
+                }
+
+                if (i === 0) {
+                    for (let j = 0; j < row.cells.length; j++) {
+                        headerRow.push(row.cells[j].textContent);
+                    }
+                } else {
+                    for (let j = 0; j < row.cells.length; j++) {
+                        const cell = row.cells[j];
+                        if (cell.querySelector('div')) {
+                            const textDiv = cell.querySelector('div');
+                            const cleanText = textDiv.textContent.replace(/請選擇類型正確答案錯誤答案/g, '').trim();
+                            rowData.push(cleanText);
+                        } else {
+                            rowData.push(cell.textContent);
+                        }
+                    }
+                    sheetData.push(rowData);
+                }
+            }
+
+            const finalData = [headerRow, ...sheetData];
+            const updatedSheet = XLSX.utils.aoa_to_sheet(finalData);
+
+            workbook.Sheets[currentSheetName] = updatedSheet;
+
+            for (let i = 0; i < rows.length; i++) {
+                if (removedCells[i]) {
+                    rows[i].appendChild(removedCells[i]);
+                }
+            }
+
+            const newFileName = InputFileName.replace(/\.[^/.]+$/, "") + ".xlsx";
+            XLSX.writeFile(workbook, newFileName);
+        }
+
+
+    </script>
+
+</body>
+
+</html>
