@@ -203,11 +203,11 @@
                 <h2 class=" d-flex justify-content-center  mb-1 md-md-3 mt-0 mt-md-1 pt-0 pt-md-5"
                     style="color: black; ">
                     基本資料</h2>
-                
-                <div class="input-group mb-2 mb-md-5 "id="inputGroup-sizing-lg">
-                    <span class="input-group-text" id="basic-addon1">我的學號</span> 
+
+                <div class="input-group mb-2 mb-md-5 " id="inputGroup-sizing-lg">
+                    <span class="input-group-text" id="basic-addon1">我的學號</span>
                     <input type="text" class="form-control" placeholder="範例：11514123" aria-label="Username"
-                        aria-describedby="basic-addon1" id="userInput" >
+                        aria-describedby="basic-addon1" id="userInput">
                 </div>
             </div>
             <div style="width: 100%;" class="mb-2 mt-3" id="userInfo_1">
@@ -234,7 +234,7 @@
                 </div>
             </div>
 
-            <div style="width: 100%;" class="mb-2 mt-0 mt-md-5" id="userInfo_3">
+            <div style="width: 100%;" class="mb-2 mt-5 mt-md-5 " id="userInfo_3">
                 <span>3.是否考過多益</span>
                 <div class="form-check d-flex align-items-center gap-2">
                     <input class="form-check-input" type="radio" name="toeic" id="toeic_yes" value="option1">
@@ -268,7 +268,7 @@
             </div>
 
             <div style="width: 100%;" class="mb-0 mt-md-5" id="userInfo_4">
-                <div style="width: 100%;" class="mb-2 mt-0 mt-md-5">
+                <div style="width: 100%;" class="mb-3 mt-3 mt-md-5">
                     <span>5.我的英文分班</span>
                     <div class="form-check d-flex align-items-center gap-2">
                         <input class="form-check-input " type="radio" name="class" id="class_1" value="option3">
@@ -278,17 +278,18 @@
                         <input class="form-check-input" type="radio" name="class" id="class_2" value="option3">
                         <label class="form-check-label" for="class_2">中級</label>
                     </div>
-                    <div class="form-check ">
+                    <div class="form-check">
                         <input class="form-check-input" type="radio" name="class" id="class_3" value="option3">
                         <label class="form-check-label" for="class_2">中高級</label>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center mt-5 ">
-                    <button class="btn fs-5 fw-bold ps-5 pe-5 " style="background-color: #7ed957; color: #ffffff;"
-                        onclick="recode()">送出</button>
-                </div>
+
             </div>
 
+            <div id="send_1" class="nav-btn fs-1 d-flex align-items-center justify-content-center">
+                <button class="btn fs-5 fw-bold ps-5 pe-5 " style="background-color: #7ed957; color: #ffffff;"
+                    onclick="recode()">送出</button>
+            </div>
             <button id="prevImageBtn"
                 class="btn btn-dark fs-1 nav-btn prev-btn d-flex align-items-center justify-content-center"
                 style="left: 1%; background-color: #7ed957; border: 0;" onclick="move_Info('up')">
@@ -579,6 +580,10 @@
         document.getElementById("userInfo_2").style.display = "block";
         document.getElementById("userInfo_3").style.display = "none";
         document.getElementById("userInfo_4").style.display = "none";
+        document.getElementById("send_1").classList.add("d-none");
+
+
+
         //userInfo_3
         function move_Info(direction) {
             if (direction === "up") {
@@ -588,6 +593,8 @@
                     document.getElementById("userInfo_2").style.display = "block";
                     document.getElementById("userInfo_3").style.display = "none";
                     document.getElementById("userInfo_4").style.display = "none";
+                    document.getElementById("send_1").classList.add("d-none");
+
                     showGender = true;
                     showExam = false;
                     showCass = false;
@@ -597,6 +604,8 @@
                     document.getElementById("userInfo_1").style.display = "none";
                     document.getElementById("userInfo_3").style.display = "block";
                     document.getElementById("userInfo_4").style.display = "none";
+                    document.getElementById("send_1").classList.add("d-none");
+
                     showGender = false;
                     showExam = true;
                     showCass = false;
@@ -608,11 +617,15 @@
                     document.getElementById("userInfo_0").style.display = "none";
                     document.getElementById("userInfo_2").style.display = "none";
                     document.getElementById("userInfo_4").style.display = "none";
+                    document.getElementById("send_1").classList.add("d-none");
+
                     showGender = false;
                     showExam = true;
                     showCass = false;
                 } else if (showExam) {
                     document.getElementById("userInfo_4").style.display = "block";
+                    document.getElementById("send_1").classList.remove("d-none");
+
                     document.getElementById("userInfo_1").style.display = "none";
                     document.getElementById("userInfo_0").style.display = "none";
                     document.getElementById("userInfo_2").style.display = "none";
@@ -634,8 +647,8 @@
             if (direction === "up") {
                 if (Q2) {
                     document.getElementById("sort_2").style.display = "none";
+                    document.getElementById("send_2").style.display = "none";
                     document.getElementById("sort_1").style.display = "block";
-                    //document.getElementById("sort_0").style.display = "block";
                     document.getElementById("sort_3").style.display = "none";
                     Q1 = true;
                     Q2 = false;
@@ -643,7 +656,7 @@
                 } else if (Q3) {
                     document.getElementById("sort_3").style.display = "none";
                     document.getElementById("sort_2").style.display = "block";
-                    //document.getElementById("sort_0").style.display = "none";
+                    document.getElementById("send_2").style.display = "block";
                     document.getElementById("sort_1").style.display = "none";
                     Q1 = false;
                     Q2 = true;
@@ -652,17 +665,17 @@
             } else if (direction === "down") {
                 if (Q2) {
                     document.getElementById("sort_2").style.display = "none";
+                    document.getElementById("send_2").style.display = "none";
                     document.getElementById("sort_3").style.display = "block";
                     document.getElementById("sort_1").style.display = "none";
-                    //document.getElementById("sort_0").style.display = "none";
                     Q1 = false;
                     Q2 = false;
                     Q3 = true;
                 } else if (Q1) {
                     document.getElementById("sort_3").style.display = "none";
                     document.getElementById("sort_2").style.display = "block";
+                    document.getElementById("send_2").style.display = "block";
                     document.getElementById("sort_1").style.display = "none";
-                    //document.getElementById("sort_0").style.display = "none";
                     Q1 = false;
                     Q2 = true;
                     Q3 = false;
