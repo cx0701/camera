@@ -126,7 +126,7 @@
             }
         }
 
-        /* 桌機預設（維持你原本的樣子） */
+        /* 桌機預設 */
         .nav-btn {
             position: absolute;
             top: 50%;
@@ -141,8 +141,16 @@
             margin-right: 2%;
         }
 
+        .send-btn {
+            padding-top: 50%;
+        }
+
         /* 手機版 */
         @media (max-width: 768px) {
+            .send-btn {
+                padding-top: 70%;
+            }
+
             .nav-btn {
                 top: auto;
                 bottom: 12%;
@@ -286,7 +294,7 @@
 
             </div>
 
-            <div id="send_1" class="nav-btn fs-1 d-flex align-items-center justify-content-center">
+            <div id="send_1" class="send-btn fs-1 d-flex align-items-center justify-content-center w-100">
                 <button class="btn fs-5 fw-bold ps-5 pe-5 " style="background-color: #7ed957; color: #ffffff;"
                     onclick="recode()">送出</button>
             </div>
