@@ -6,9 +6,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="shortcut icon" href="favicon.ico">
-    <title>英文學習平台</title>
+    <title>英文互動平台</title>
     <style>
         html {
             box-sizing: border-box;
@@ -23,7 +23,10 @@
         html,
         body {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
 
         canvas {
@@ -40,8 +43,13 @@
         }
 
         #unity-canvas {
-            width: 100%;
-            height: 100%;
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            position: fixed;
+            left: 0;
+            top: 0;
 
             background: #231F20;
         }
@@ -117,14 +125,1191 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* 桌機預設 */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .prev-btn {
+            margin-left: 2%;
+        }
+
+        .next-btn {
+            margin-right: 2%;
+        }
+
+        .send-btn {
+            padding-top: 30%;
+        }
+
+        /* 手機版 */
+        @media (max-width: 780px) {
+            .send-btn {
+                padding-top: 10%;
+            }
+
+            .nav-btn {
+                top: auto;
+                bottom: 20%;
+                transform: none;
+                font-size: 2.5rem;
+            }
+
+            .prev-btn {
+                left: 10%;
+                height: 12%;
+                width: 16%;
+            }
+
+            .btn-text {
+                font-size: 28px;
+            }
+
+            .next-btn {
+                right: 10%;
+                height: 12%;
+                width: 16%;
+            }
+        }
+
+        .header-wrap {
+            min-height: 48px;
+        }
+
+        .reload-btn {
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            #pre_text {
+                padding-left: 55px;
+                /* 按鈕寬 + 緩衝 */
+            }
+        }
+
+        /* 小手機版 */
+        @media (max-width: 740px) {
+            .send-btn {
+                padding-top: 5%;
+            }
+
+            .nav-btn {
+                top: auto;
+                bottom: 20%;
+                transform: none;
+                font-size: 2.5rem;
+            }
+
+            .prev-btn {
+                left: 10%;
+                height: 12%;
+                width: 16%;
+            }
+
+            .btn-text {
+                font-size: 20px;
+            }
+
+            .next-btn {
+                right: 10%;
+                height: 12%;
+                width: 16%;
+            }
+        }
+
+        .header-wrap {
+            min-height: 48px;
+        }
+
+        .reload-btn {
+            left: 0;
+        }
     </style>
 </head>
 
 <body class="dark">
+    <div id="modeSelector" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 2000;
+        background-color: rgba(255, 255, 255); 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    ">
+        <div class="col-md-6 ps-1 pe-1 fs-4" style="height: 100%;">
+
+            <div id="userInfo_0">
+                <h2 class=" d-flex justify-content-center  mb-3 md-md-3 mt-3 mt-md-3 pt-0 pt-md-5"
+                    style="color: black; ">
+                    基本資料</h2>
+
+                <div class="input-group mb-3 mb-md-5 mt-2" id="inputGroup-sizing-lg">
+                    <span class="input-group-text" id="basic-addon1">我的學號</span>
+                    <input type="text" class="form-control" placeholder="範例：11514123" aria-label="Username"
+                        aria-describedby="basic-addon1" id="userInput">
+                </div>
+            </div>
+
+            <div style="width: 100%;" class="mt-3" id="userInfo_1">
+                <span>1. 我的生理性別</span>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="gender" id="gender1" value="option1">
+                    <label class="form-check-label" for="gender1">女性</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="gender2" value="option2">
+                    <label class="form-check-label" for="gender2">男性</label>
+                </div>
+            </div>
+
+            <div style="width: 100%;" class="mb-2 mt-3 mt-md-5 " id="userInfo_2">
+                <span>2. 我曾畢業於</span>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="education" id="education1" value="option1">
+                    <label class="form-check-label" for="education1">高中</label>
+                </div>
+                <div class="form-check mt-0 mt-md-2">
+                    <input class="form-check-input" type="radio" name="education" id="education2" value="option2">
+                    <label class="form-check-label" for="education2">高職</label>
+                </div>
+                <div style="width: 100%;" class="mb-3 mt-3 mt-md-5">
+                    <span>3.我的英文分班</span>
+                    <div class="form-check d-flex align-items-center gap-2">
+                        <input class="form-check-input " type="radio" name="class" id="class_1" value="option3">
+                        <label class="form-check-label mt-2" for="class_1">初級</label>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="class" id="class_2" value="option3">
+                        <label class="form-check-label" for="class_2">中級</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="class" id="class_3" value="option3">
+                        <label class="form-check-label" for="class_2">中高級</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="width: 100%;" class="mb-0 mt-3 mt-md-5" id="userInfo_3">
+
+                <span>4.是否考過多益</span>
+                <div class="form-check d-flex align-items-center gap-2">
+                    <input class="form-check-input" type="radio" name="toeic" id="toeic_yes" value="option1">
+                    <label class="form-check-label mt-2" for="toeic_yes">是</label>
+
+                    <div id="toeic_input_wrapper" style="display: none;">
+                        <input type="text" class="form-control mt-2" placeholder="請輸入多益分數" id="toeic_sc"
+                            style="max-width: 250px;">
+                    </div>
+                </div>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="toeic" id="toeic_no" value="option1">
+                    <label class="form-check-label" for="toeic_no">否</label>
+                </div>
+
+                <div style="width: 100%;" class="mb-2 mt-0 mt-md-5">
+                    <span>5.是否考過全民英檢</span>
+                    <div class="form-check d-flex align-items-center gap-2">
+                        <input class="form-check-input" type="radio" name="GEPT" id="GEPT_yes" value="option1">
+                        <label class="form-check-label mt-2" for="GEPT_yes">是</label>
+                        <div id="gept_input_wrapper" style="display: none;">
+                            <input type="text" class="form-control mt-2" placeholder="請輸入全民英檢分數" id="GEPT_sc"
+                                style="max-width: 250px;">
+                        </div>
+                    </div>
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="GEPT" id="GEPT_no" value="option2">
+                        <label class="form-check-label" for="GEPT_no">否</label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="send_1" class="send-btn fs-1 d-flex align-items-center justify-content-center w-100">
+                <button class="btn fs-5 fw-bold ps-5 pe-5 " style="background-color: #7ed957; color: #ffffff;"
+                    onclick="recode()">送出</button>
+            </div>
+            <button id="prevImageBtn"
+                class="btn btn-dark fs-1 nav-btn prev-btn d-flex align-items-center justify-content-center"
+                style="left: 1%; background-color: #7ed957; border: 0;" onclick="move_Info('up')">
+                <span class="pt-1 pe-2 pb-1 btn-text">〈</span>
+            </button>
+
+            <button id="nextImageBtn"
+                class="btn btn-dark fs-1 nav-btn next-btn d-flex align-items-center justify-content-center"
+                style="right: 1%; background-color: #7ed957; border: 0;" onclick="move_Info('down')">
+                <span class="pt-1 ps-2 pb-1 btn-text">〉</span>
+            </button>
+
+
+        </div>
+    </div>
+
+    <div id="pre_test" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 2000;
+        background-color: rgba(255, 255, 255); 
+        display: flex;
+        justify-content: center;
+    ">
+        <div class="col-md-6 fs-4 ps-3 pe-3" id="group_text1">
+            <div class="position-relative d-flex justify-content-center align-items-center mb-2 mt-md-1 pt-1 pt-md-4">
+
+                <button class="btn btn-light  fw-bold border-0 position-absolute start-0 " onclick="reload()">
+                    <img src="images/刷新.png" style="width: 30px; height: 30px;">
+                </button>
+
+                <h2 style="color: black;" id="pre_text">前測</h2>
+
+            </div>
+
+
+            <span id="Q_title"></span>
+            <div style="width: 100%;" class="mb-1 mt-1 mt-md-2 mb-md-2" id="pre_1">
+                <span id="Q1_word">第一題</span>
+                <div id="opt1">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test1" id="S1_1" value="S1_1">
+                        <label class="form-check-label" for="S1_1">A</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test1" id="S1_2" value="S1_2">
+                        <label class="form-check-label" for="S1_2">B</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test1" id="S1_3" value="S1_3">
+                        <label class="form-check-label" for="S1_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test1" id="S1_4" value="S1_4">
+                        <label class="form-check-label" for="S1_4">D</label>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div style="width: 100%;" class="mb-1 mt-1 mt-md-2 mb-md-2" id="pre_2">
+                <span id="Q2_word">第二題</span>
+                <div id="opt2">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test2" id="S2_1" value="S2_1">
+                        <label class="form-check-label" for="S2_1">A</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test2" id="S2_2" value="S2_2">
+                        <label class="form-check-label" for="S2_2">B</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test2" id="S2_3" value="S2_3">
+                        <label class="form-check-label" for="S2_3">C</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test2" id="S2_4" value="S2_4">
+                        <label class="form-check-label" for="S2_4">D</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div style="width: 100%;" class="mb-0 mt-1 mt-md-2 mb-md-2" id="pre_3">
+                <span id="Q3_word">第三題</span>
+                <div id="opt3">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test3" id="S3_1" value="S3_1">
+                        <label class="form-check-label" for="S3_1">A</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test3" id="S3_2" value="S3_2">
+                        <label class="form-check-label" for="S3_2">B</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test3" id="S3_3" value="S3_3">
+                        <label class="form-check-label" for="S3_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2 mb-0 mb-md-5">
+                        <input class="form-check-input" type="radio" name="test3" id="S3_4" value="S3_4">
+                        <label class="form-check-label" for="S3_4">D</label>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <div style="width: 100%;" class="mb-0 mt-1 mt-md-2 mb-md-2" id="pre_4">
+                <span id="Q4_word">第四題</span>
+                <div id="opt3">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test4" id="S4_1" value="S4_1">
+                        <label class="form-check-label" for="S4_1">A</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test4" id="S4_2" value="S4_2">
+                        <label class="form-check-label" for="S4_2">B</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test4" id="S4_3" value="S4_3">
+                        <label class="form-check-label" for="S4_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2 mb-0 mb-md-5">
+                        <input class="form-check-input" type="radio" name="test4" id="S4_4" value="S4_4">
+                        <label class="form-check-label" for="S4_4">D</label>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <div style="width: 100%;" class="mb-0 mt-1 mt-md-2 mb-md-2" id="pre_5">
+                <span id="Q5_word">第五題</span>
+                <div id="opt3">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test5" id="S5_1" value="S5_1">
+                        <label class="form-check-label" for="S5_1">A</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test5" id="S5_2" value="S5_2">
+                        <label class="form-check-label" for="S5_2">B</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test5" id="S5_3" value="S5_3">
+                        <label class="form-check-label" for="S5_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2 mb-0 mb-md-5">
+                        <input class="form-check-input" type="radio" name="test5" id="S5_4" value="S5_4">
+                        <label class="form-check-label" for="S5_4">D</label>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <div style="width: 100%;" class="mb-0 mt-1 mt-md-2 mb-md-2" id="pre_6">
+                <span id="Q6_word">第六題</span>
+                <div id="opt3">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test6" id="S6_1" value="S6_1">
+                        <label class="form-check-label" for="S6_1">A</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test6" id="S6_2" value="S6_2">
+                        <label class="form-check-label" for="S6_2">B</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test6" id="S6_3" value="S6_3">
+                        <label class="form-check-label" for="S6_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2 mb-0 mb-md-5">
+                        <input class="form-check-input" type="radio" name="test6" id="S6_4" value="S6_4">
+                        <label class="form-check-label" for="S6_4">D</label>
+                    </div>
+
+                </div>
+            </div>
+            <div style="width: 100%;" class="mb-0 mt-1 mt-md-2 mb-md-2" id="pre_7">
+                <span id="Q7_word">第七題</span>
+                <div id="opt3">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test7" id="S7_1" value="S7_1">
+                        <label class="form-check-label" for="S7_1">A</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test7" id="S7_2" value="S7_2">
+                        <label class="form-check-label" for="S7_2">B</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test7" id="S7_3" value="S7_3">
+                        <label class="form-check-label" for="S7_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2 mb-0 mb-md-5">
+                        <input class="form-check-input" type="radio" name="test7" id="S7_4" value="S7_4">
+                        <label class="form-check-label" for="S7_4">D</label>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-1 mt-md-5">
+                        <button class="btn fs-5 fw-bold ps-5 pe-5" style="background-color: #7ed957; color: #ffffff;"
+                            onclick="recodePreTest()">送出</button>
+                    </div>
+                </div>
+            </div>
+            <button id="prevImageBtn"
+                class="btn btn-dark fs-1 nav-btn prev-btn d-flex align-items-center justify-content-center"
+                style="left: 1%; background-color: #7ed957; border: 0;" onclick="move_preTest('up')">
+                <span class="pt-1 pe-2 pb-1 btn-text">〈</span>
+            </button>
+
+            <button id="nextImageBtn"
+                class="btn btn-dark fs-1 nav-btn next-btn d-flex align-items-center justify-content-center"
+                style="right: 1%; background-color: #7ed957; border: 0;" onclick="move_preTest('down')">
+                <span class="pt-1 ps-2 pb-1 btn-text">〉</span>
+            </button>
+
+        </div>
+    </div>
+
+    <div id="pro_test" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 2000;
+        background-color: rgba(255, 255, 255); 
+        display: flex;
+        justify-content: center;
+    ">
+        <div class="col-md-6 fs-4 ps-3 pe-3" id="group_text2">
+            <h2 class="d-flex justify-content-center mb-2 mt-md-1 pt-1 pt-md-5" style="color: black;" id="pro_text">後測
+            </h2>
+
+            <span id="Q2_title"></span>
+            <div style="width: 100%;" class="mb-1 mt-1 mt-md-2 mb-md-2" id="post_1">
+                <span id="Q8_word">第一題</span>
+                <div id="opt4">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test8" id="S8_1" value="S8_1">
+                        <label class="form-check-label" for="S8_1">A</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test8" id="S8_2" value="S8_2">
+                        <label class="form-check-label" for="S8_2">B</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test8" id="S8_3" value="S8_3">
+                        <label class="form-check-label" for="S8_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test8" id="S8_4" value="S8_4">
+                        <label class="form-check-label" for="S8_4">D</label>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div style="width: 100%;" class="mb-1 mt-1 mt-md-2 mb-md-2" id="post_2">
+                <span id="Q9_word">第二題</span>
+                <div id="opt5">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test9" id="S9_1" value="S9_1">
+                        <label class="form-check-label" for="S9_1">A</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test9" id="S9_2" value="S9_2">
+                        <label class="form-check-label" for="S9_2">B</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test9" id="S9_3" value="S9_3">
+                        <label class="form-check-label" for="S9_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test9" id="S9_4" value="S9_4">
+                        <label class="form-check-label" for="S9_4">D</label>
+                    </div>
+                </div>
+
+            </div>
+            <div style="width: 100%;" class="mb-1 mt-1 mt-md-2 mb-md-2" id="post_3">
+                <span id="Q10_word">第三題</span>
+                <div id="opt5">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test10" id="S10_1" value="S10_1">
+                        <label class="form-check-label" for="S10_1">A</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test10" id="S10_2" value="S10_2">
+                        <label class="form-check-label" for="S10_2">B</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test10" id="S10_3" value="S10_3">
+                        <label class="form-check-label" for="S10_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test10" id="S10_4" value="S10_4">
+                        <label class="form-check-label" for="S10_4">D</label>
+                    </div>
+                </div>
+
+            </div>
+            <div style="width: 100%;" class="mb-1 mt-1 mt-md-2 mb-md-2" id="post_4">
+                <span id="Q11_word">第四題</span>
+                <div id="opt5">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test11" id="S11_1" value="S11_1">
+                        <label class="form-check-label" for="S11_1">A</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test11" id="S11_2" value="S11_2">
+                        <label class="form-check-label" for="S11_2">B</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test11" id="S11_3" value="S11_3">
+                        <label class="form-check-label" for="S11_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test11" id="S11_4" value="S11_4">
+                        <label class="form-check-label" for="S11_4">D</label>
+                    </div>
+                </div>
+
+            </div>
+            <div style="width: 100%;" class="mb-1 mt-1 mt-md-2 mb-md-2" id="post_5">
+                <span id="Q12_word">第五題</span>
+                <div id="opt5">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test12" id="S12_1" value="S12_1">
+                        <label class="form-check-label" for="S12_1">A</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test12" id="S12_2" value="S12_2">
+                        <label class="form-check-label" for="S12_2">B</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test12" id="S12_3" value="S12_3">
+                        <label class="form-check-label" for="S12_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test12" id="S12_4" value="S12_4">
+                        <label class="form-check-label" for="S12_4">D</label>
+                    </div>
+                </div>
+
+            </div>
+            <div style="width: 100%;" class="mb-1 mt-1 mt-md-2 mb-md-2" id="post_6">
+                <span id="Q13_word">第六題</span>
+                <div id="opt5">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test13" id="S13_1" value="S13_1">
+                        <label class="form-check-label" for="S13_1">A</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test13" id="S13_2" value="S13_2">
+                        <label class="form-check-label" for="S13_2">B</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test13" id="S13_3" value="S13_3">
+                        <label class="form-check-label" for="S13_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test13" id="S13_4" value="S13_4">
+                        <label class="form-check-label" for="S13_4">D</label>
+                    </div>
+                </div>
+
+            </div>
+            <div style="width: 100%;" class="mb-1 mt-1 mt-md-2 mb-md-2" id="post_7">
+                <span id="Q14_word">第七題</span>
+                <div id="opt6">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="test14" id="S14_1" value="S14_1">
+                        <label class="form-check-label" for="S14_1">A</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test14" id="S14_2" value="S14_2">
+                        <label class="form-check-label" for="S14_2">B</label>
+                    </div>
+                    <div class="form-check  mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test14" id="S14_3" value="S14_3">
+                        <label class="form-check-label" for="S14_3">C</label>
+                    </div>
+                    <div class="form-check mt-0 mt-md-2">
+                        <input class="form-check-input" type="radio" name="test14" id="S14_4" value="S14_4">
+                        <label class="form-check-label" for="S14_4">D</label>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-center mt-0 mt-md-5">
+                        <button class="btn fs-5 fw-bold ps-3 pe-3 mt-1 mt-0 mt-md-5"
+                            style=" background-color: #7ed957; color: #ffffff; margin-top:-5%;" onclick="send()"
+                            id="nextBtn">前往下一關</button>
+                    </div>
+                    <div class="d-flex justify-content-center fw-bold mt-1">
+                        <span id="tips" style="color: rgb(255, 2, 2); "></span>
+                    </div>
+                </div>
+
+            </div>
+            <button id="prevImageBtn"
+                class="btn btn-dark fs-1 nav-btn prev-btn d-flex align-items-center justify-content-center"
+                style="left: 1%; background-color: #7ed957; border: 0;" onclick="move_postTest('up')">
+                <span class="pt-1 pe-2 pb-1 btn-text">〈</span>
+            </button>
+
+            <button id="nextImageBtn"
+                class="btn btn-dark fs-1 nav-btn next-btn d-flex align-items-center justify-content-center"
+                style="right: 1%; background-color: #7ed957; border: 0;" onclick="move_postTest('down')">
+                <span class="pt-1 ps-2 pb-1 btn-text">〉</span>
+            </button>
+
+        </div>
+
+
+    </div>
+    <div id="success" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 2000;
+        background-color: rgba(255, 255, 255); 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    ">
+        <div class="col-md-6 d-flex flex-column align-items-center">
+
+            <img src="images/t.png" style="width: 45%; height: 45%;">
+
+            <div class="fw-bold mt-3 text-center fs-3">
+                <span id="sucTips" style="color: rgb(255, 2, 2);">
+                    恭喜通關~ 前往下一個關卡中...
+                </span>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        document.getElementById("toeic_yes").addEventListener("change", function () {
+            document.getElementById("toeic_input_wrapper").style.display = "block";
+        });
+
+        document.getElementById("toeic_no").addEventListener("change", function () {
+            document.getElementById("toeic_input_wrapper").style.display = "none";
+            document.getElementById("toeic_sc").value = "";
+        });
+
+        document.getElementById("GEPT_yes").addEventListener("change", function () {
+            document.getElementById("gept_input_wrapper").style.display = "block";
+        });
+
+        document.getElementById("GEPT_no").addEventListener("change", function () {
+            document.getElementById("gept_input_wrapper").style.display = "none";
+            document.getElementById("GEPT_sc").value = "";
+        });
+
+
+        let showGender = true;
+        let showExam = false;
+        let showCass = false;
+        document.getElementById("userInfo_1").style.display = "block";
+        document.getElementById("userInfo_2").style.display = "none";
+        document.getElementById("userInfo_3").style.display = "none";
+        document.getElementById("send_1").classList.add("d-none");
+
+
+
+        //userInfo_3
+        function move_Info(direction) {
+            if (direction === "up") {
+                if (showExam) {
+                    document.getElementById("userInfo_1").style.display = "block";
+                    document.getElementById("userInfo_0").style.display = "block";
+                    document.getElementById("userInfo_2").style.display = "none";
+                    document.getElementById("userInfo_3").style.display = "none";
+                    document.getElementById("send_1").classList.add("d-none");
+
+                    showGender = true;
+                    showExam = false;
+                    showCass = false;
+                } else if (showCass) {
+                    document.getElementById("userInfo_2").style.display = "block";
+                    document.getElementById("userInfo_0").style.display = "none";
+                    document.getElementById("userInfo_1").style.display = "none";
+                    document.getElementById("userInfo_3").style.display = "none";
+                    document.getElementById("send_1").classList.add("d-none");
+
+                    showGender = false;
+                    showExam = true;
+                    showCass = false;
+                }
+            } else if (direction === "down") {
+                if (showGender) {
+                    document.getElementById("userInfo_2").style.display = "block";
+                    document.getElementById("userInfo_1").style.display = "none";
+                    document.getElementById("userInfo_0").style.display = "none";
+                    document.getElementById("userInfo_3").style.display = "none";
+                    document.getElementById("send_1").classList.add("d-none");
+
+                    showGender = false;
+                    showExam = true;
+                    showCass = false;
+                } else if (showExam) {
+                    document.getElementById("userInfo_3").style.display = "block";
+                    document.getElementById("send_1").classList.remove("d-none");
+
+                    document.getElementById("userInfo_1").style.display = "none";
+                    document.getElementById("userInfo_0").style.display = "none";
+                    document.getElementById("userInfo_2").style.display = "none";
+                    showGender = false;
+                    showExam = false;
+                    showCass = true;
+                }
+                else if (showCass) {
+                    recode();
+                }
+
+            }
+        }
+        let currentQ = 1;
+        const totalQ = 7;
+
+        function showQuestion(index) {
+            for (let i = 1; i <= totalQ; i++) {
+                document.getElementById(`pre_${i}`).style.display =
+                    i === index ? "block" : "none";
+            }
+            currentQ = index;
+        }
+        function show_post(index) {
+            for (let i = 1; i <= totalQ; i++) {
+                document.getElementById(`post_${i}`).style.display =
+                    i === index ? "block" : "none";
+            }
+            currentQ = index;
+        }
+        let Q1 = true;
+        let Q2 = false;
+        let Q3 = false;
+        let Q4 = false;
+        let Q5 = false;
+        let Q6 = false;
+        let Q7 = false;
+        showQuestion(1);
+        function move_preTest(direction) {
+            if (direction === "up") {
+                if (Q2) {
+                    showQuestion(1); // 顯示第_題
+                    Q1 = true;
+                    Q2 = false;
+                } else if (Q3) {
+                    showQuestion(2);
+                    Q1 = false;
+                    Q2 = true;
+                    Q3 = false;
+                } else if (Q4) {
+                    showQuestion(3);
+                    Q2 = false;
+                    Q3 = true;
+                    Q4 = false;
+                } else if (Q5) {
+                    showQuestion(4);
+                    Q3 = false;
+                    Q4 = true;
+                    Q5 = false;
+                } else if (Q6) {
+                    showQuestion(5);
+                    Q4 = false;
+                    Q5 = true;
+                    Q6 = false;
+                } else if (Q7) {
+                    showQuestion(6);
+                    Q5 = false;
+                    Q6 = true;
+                    Q7 = false;
+                }
+            } else if (direction === "down") {
+                if (Q2) {
+                    showQuestion(3);
+                    Q1 = false;
+                    Q2 = false;
+                    Q3 = true;
+                } else if (Q1) {
+                    showQuestion(2);
+                    Q1 = false;
+                    Q2 = true;
+                    Q3 = false;
+                } else if (Q3) {
+                    showQuestion(4);
+                    Q3 = false;
+                    Q4 = true;
+                    Q5 = false;
+                } else if (Q4) {
+                    showQuestion(5);
+                    Q4 = false;
+                    Q5 = true;
+                    Q6 = false;
+                } else if (Q5) {
+                    showQuestion(6);
+                    Q5 = false;
+                    Q6 = true;
+                    Q7 = false;
+                } else if (Q6) {
+                    showQuestion(7);
+                    Q6 = false;
+                    Q7 = true;
+                } else if (Q7) {
+                    recodePreTest();
+                    //console.log("recodePreTest");
+                }
+
+            }
+        }
+        function move_postTest(direction) {
+            if (direction === "up") {
+                if (Q2) {
+                    show_post(1); // 顯示第_題
+                    Q1 = true;
+                    Q2 = false;
+                } else if (Q3) {
+                    show_post(2);
+                    Q1 = false;
+                    Q2 = true;
+                    Q3 = false;
+                } else if (Q4) {
+                    show_post(3);
+                    Q2 = false;
+                    Q3 = true;
+                    Q4 = false;
+                } else if (Q5) {
+                    show_post(4);
+                    Q3 = false;
+                    Q4 = true;
+                    Q5 = false;
+                } else if (Q6) {
+                    show_post(5);
+                    Q4 = false;
+                    Q5 = true;
+                    Q6 = false;
+                } else if (Q7) {
+                    show_post(6);
+                    Q5 = false;
+                    Q6 = true;
+                    Q7 = false;
+                }
+            } else if (direction === "down") {
+                if (Q2) {
+                    show_post(3);
+                    Q1 = false;
+                    Q2 = false;
+                    Q3 = true;
+                } else if (Q1) {
+                    show_post(2);
+                    Q1 = false;
+                    Q2 = true;
+                    Q3 = false;
+                } else if (Q3) {
+                    show_post(4);
+                    Q3 = false;
+                    Q4 = true;
+                    Q5 = false;
+                } else if (Q4) {
+                    show_post(5);
+                    Q4 = false;
+                    Q5 = true;
+                    Q6 = false;
+                } else if (Q5) {
+                    show_post(6);
+                    Q5 = false;
+                    Q6 = true;
+                    Q7 = false;
+                } else if (Q6) {
+                    show_post(7);
+                    Q6 = false;
+                    Q7 = true;
+                } else if (Q7) {
+                    send();
+                    //console.log("recodePreTest");
+                }
+            }
+        }
+        function fixUnityCanvasSize() {
+            const canvas = document.getElementById("unity-canvas");
+            if (!canvas) return;
+
+            // unity 的畫布尺寸 = 視窗實際尺寸
+            canvas.style.width = window.innerWidth + "px";
+            canvas.style.height = window.innerHeight + "px";
+        }
+
+        // Chrome / Android / iOS Chrome 都支援
+        window.addEventListener("orientationchange", () => {
+            setTimeout(fixUnityCanvasSize, 300);
+        });
+
+        window.addEventListener("resize", fixUnityCanvasSize);
+    </script>
+
+
+    <script>
+        document.getElementById("pre_test").style.display = "none"; // 關閉頁面 flex
+        document.getElementById("pro_test").style.display = "none";
+        document.getElementById("success").style.display = "none";
+        //document.getElementById("modeSelector").style.display = "none"; // 測試
+        function getDateTimeUserName() {
+            const now = new Date();
+
+            //取台灣時間
+            const taipeiTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Taipei" }));
+
+            const year = taipeiTime.getFullYear();
+            const month = String(taipeiTime.getMonth() + 1).padStart(2, "0");
+            const day = String(taipeiTime.getDate()).padStart(2, "0");
+            const hour = String(taipeiTime.getHours()).padStart(2, "0");
+            const minute = String(taipeiTime.getMinutes()).padStart(2, "0");
+            const second = String(taipeiTime.getSeconds()).padStart(2, "0");
+
+            return `${year}${month}${day}${hour}${minute}${second}`;
+        }
+        let extraNum = 0;
+
+        document.querySelectorAll('input[name="patience"]').forEach(radio => {
+            radio.addEventListener("change", function () {
+                extraNum = Number(this.value);
+                console.log("抽取的題數: " + extraNum);
+            });
+        });
+
+        let userName = getDateTimeUserName();
+        console.log(userName);  // 例如：20251114021345（台灣時間）
+        let gender = "";
+        let education = "";
+        let toeic_test = "";
+        let toeic_score = "0";
+        let gept_test = "";
+        let gept_score = "0";
+        let class_type = "";
+        let school_id = "";
+        let time_id = userName;
+        let correct_1 = "";
+        let correct_2 = "";
+        let correct_3 = "";
+        let correct_4 = "";
+        let correct_5 = "";
+        let correct_6 = "";
+        let correct_7 = "";
+
+        function recode() {
+            //取得使用者選擇的值
+            gender = document.querySelector('input[name="gender"]:checked')?.nextElementSibling.textContent.trim() || "";
+            education = document.querySelector('input[name="education"]:checked')?.nextElementSibling.textContent.trim() || "";
+            toeic_test = document.querySelector('input[name="toeic"]:checked')?.nextElementSibling.textContent.trim() || "";
+            gept_test = document.querySelector('input[name="GEPT"]:checked')?.nextElementSibling.textContent.trim() || "";
+            school_id = document.getElementById("userInput").value;
+            toeic_score = document.getElementById("toeic_sc").value;
+            gept_score = document.getElementById("GEPT_sc").value;
+
+            if (!toeic_score) {
+                toeic_score = "0";
+            }
+            if (!gept_score) {
+                gept_score = "0";
+            }
+
+            class_type = document.querySelector('input[name="class"]:checked')?.nextElementSibling.textContent.trim() || "";
+
+            time_id = userName;
+            console.log("多益：", school_id, toeic_score, gept_score, class_type, time_id);
+            if (!gender || !gept_test || !education || !toeic_test || !school_id) {
+                alert("請完整填寫所有欄位！");
+                return;
+            }
+            
+            let data = {
+                time_id: time_id,
+                school_id: school_id,
+                gender: gender,
+                education: education,
+                class_type: class_type,
+                toeic_test: toeic_test,
+                toeic_score: toeic_score,
+                gept_test: gept_test,
+                gept_score: gept_score
+            };
+            let params = new URLSearchParams(data).toString();
+            console.log("params", params);
+            let url = "https://script.google.com/macros/s/AKfycbzciaz1zNs13T1CJcjaUOPgCwPIQqliI-E-pzDo0UYvTWGo_x13VodX3hqHCyGu8KlK/exec?" + params;
+            document.getElementById("modeSelector").style.display = "none"; // 關閉頁面
+            fetch(url, {
+                method: "GET"
+            })
+                //.then(() => console.log("已送出（no-cors），請到試算表查看!"))
+
+                .then(response => {
+                    console.log("送出成功：", response);
+
+                })
+                .catch(err => console.error("送出失敗：", err));
+        }
+        let question_1 = "";
+        let question_2 = "";
+        let question_3 = "";
+        let question_4 = "";
+        let question_5 = "";
+        let question_6 = "";
+        let question_7 = "";
+
+        let pre_ans1 = "";
+        let pre_ans2 = "";
+        let pre_ans3 = "";
+        let pre_ans4 = "";
+        let pre_ans5 = "";
+        let pre_ans6 = "";
+        let pre_ans7 = "";
+
+        let post_ans1 = "";
+        let post_ans2 = "";
+        let post_ans3 = "";
+        let post_ans4 = "";
+        let post_ans5 = "";
+        let post_ans6 = "";
+        let post_ans7 = "";
+        let recodeScene = "";
+        function copyOneLabel(fromId, toId) {
+            const from = document.querySelector(`label[for="${fromId}"]`);
+            const to = document.querySelector(`label[for="${toId}"]`);
+            if (from && to) {
+                to.textContent = from.textContent;
+            } else {
+                console.warn("找不到 label:", fromId, toId);
+            }
+        }
+
+        function copyLabemdroup(fromPrefix, toPrefix) {
+            for (let i = 1; i <= 4; i++) {
+                copyOneLabel(`${fromPrefix}_${i}`, `${toPrefix}_${i}`);
+            }
+        }
+
+        function recodePreTest() {
+            question_1 = document.getElementById('Q1_word')?.textContent.trim() || "";
+            question_2 = document.getElementById('Q2_word')?.textContent.trim() || "";
+            question_3 = document.getElementById('Q3_word')?.textContent.trim() || "";
+            question_4 = document.getElementById('Q4_word')?.textContent.trim() || "";
+            question_5 = document.getElementById('Q5_word')?.textContent.trim() || "";
+            question_6 = document.getElementById('Q6_word')?.textContent.trim() || "";
+            question_7 = document.getElementById('Q7_word')?.textContent.trim() || "";
+
+            pre_ans1 = document.querySelector('input[name="test1"]:checked')?.nextElementSibling.textContent.trim() || "";
+            pre_ans2 = document.querySelector('input[name="test2"]:checked')?.nextElementSibling.textContent.trim() || "";
+            pre_ans3 = document.querySelector('input[name="test3"]:checked')?.nextElementSibling.textContent.trim() || "";
+            pre_ans4 = document.querySelector('input[name="test4"]:checked')?.nextElementSibling.textContent.trim() || "";
+            pre_ans5 = document.querySelector('input[name="test5"]:checked')?.nextElementSibling.textContent.trim() || "";
+            pre_ans6 = document.querySelector('input[name="test6"]:checked')?.nextElementSibling.textContent.trim() || "";
+            pre_ans7 = document.querySelector('input[name="test7"]:checked')?.nextElementSibling.textContent.trim() || "";
+
+            if (!pre_ans1 || !pre_ans2 || !pre_ans3 || !pre_ans4 || !pre_ans5 || !pre_ans6 || !pre_ans7) {
+                alert("請完整填寫所有欄位！");
+                return;
+            }
+            document.getElementById("tips").innerText = " ";
+            document.getElementById("pre_test").style.display = "none";
+            document.getElementById("nextBtn").style.display = "block";
+            function copyGroup(fromId, toIds) {
+                const src = document.querySelector(`label[for="${fromId}"]`);
+                if (!src) return;
+
+                toIds.forEach(toId => {
+                    const dest = document.querySelector(`label[for="${toId}"]`);
+                    if (dest) dest.textContent = src.textContent;
+                });
+            }
+
+            //安全寫法
+            copyLabemdroup("S1", "S8");  // 複製題目
+            copyLabemdroup("S2", "S9");
+            copyLabemdroup("S3", "S10");
+            copyLabemdroup("S4", "S11");
+            copyLabemdroup("S5", "S12");
+            copyLabemdroup("S6", "S13");
+            copyLabemdroup("S7", "S14");
+
+            document.getElementById("Q8_word").textContent = document.getElementById("Q1_word").textContent;
+            document.getElementById("Q9_word").textContent = document.getElementById("Q2_word").textContent;
+            document.getElementById("Q10_word").textContent = document.getElementById("Q3_word").textContent;
+            document.getElementById("Q11_word").textContent = document.getElementById("Q4_word").textContent;
+            document.getElementById("Q12_word").textContent = document.getElementById("Q5_word").textContent;
+            document.getElementById("Q13_word").textContent = document.getElementById("Q6_word").textContent;
+            document.getElementById("Q14_word").textContent = document.getElementById("Q7_word").textContent;
+        }
+        function send() {
+            post_ans1 = document.querySelector('input[name="test8"]:checked')?.nextElementSibling?.textContent.trim() || "";
+            post_ans2 = document.querySelector('input[name="test9"]:checked')?.nextElementSibling?.textContent.trim() || "";
+            post_ans3 = document.querySelector('input[name="test10"]:checked')?.nextElementSibling?.textContent.trim() || "";
+            post_ans4 = document.querySelector('input[name="test11"]:checked')?.nextElementSibling?.textContent.trim() || "";
+            post_ans5 = document.querySelector('input[name="test12"]:checked')?.nextElementSibling?.textContent.trim() || "";
+            post_ans6 = document.querySelector('input[name="test13"]:checked')?.nextElementSibling?.textContent.trim() || "";
+            post_ans7 = document.querySelector('input[name="test14"]:checked')?.nextElementSibling?.textContent.trim() || "";
+            if (!post_ans1 || !post_ans2 || !post_ans3 || !post_ans4 || !post_ans5 || !post_ans6 || !post_ans7) {
+                alert("請完整填寫所有欄位！");
+                return;
+            }
+            document.getElementById("tips").innerText = "正在傳送資料中，請勿離開畫面";
+            document.getElementById("nextBtn").style.display = "none";
+            //封裝資料
+            let data = {
+                school_id: school_id,
+                question_1: question_1,
+                question_2: question_2,
+                question_3: question_3,
+                pre_ans1: pre_ans1,
+                pre_ans2: pre_ans2,
+                pre_ans3: pre_ans3,
+                pre_ans4: pre_ans4,
+                pre_ans5: pre_ans5,
+                pre_ans6: pre_ans6,
+                pre_ans6: pre_ans7,
+
+                pro_ans1: post_ans1,
+                pro_ans2: post_ans2,
+                pro_ans3: post_ans3,
+                pro_ans4: post_ans4,
+                pro_ans5: post_ans5,
+                pro_ans6: post_ans6,
+                pro_ans7: post_ans7,
+
+                correct_1: correct_1,
+                correct_2: correct_2,
+                correct_3: correct_3,
+                correct_4: correct_4,
+                correct_5: correct_5,
+                correct_6: correct_6,
+                correct_7: correct_7,
+                question_bank: question_bank
+            };
+
+            let params = new URLSearchParams(data).toString();
+            let url = "https://script.google.com/macros/s/AKfycbyNFUaWoBDiqNxZyJUntIf-Ph0dvWYVh1suM4M5bHLyoJ0M3V400miE8nDDYh_UZ09X2Q/exec?" + params;
+            alert("資料已送出，感謝您的填寫！");
+            document.getElementById("success").style.display = "flex";
+
+
+
+            fetch(url, {
+                method: "GET"
+            })
+                //.then(() => console.log("已送出（no-cors），請到試算表查看!"))
+
+                .then(response => {
+                    console.log("送出成功：", response);
+                    document.getElementById("pro_test").style.display = "none"; // 關閉頁面
+                    window.uarGameInstance.SendMessage('GameManager', 'NEXT', "data");
+
+                })
+                .catch(err => console.error("送出失敗：", err));
+
+        }
+        function openProTest() {
+            let Q1 = true;
+            let Q2 = false;
+            let Q3 = false;
+            let Q4 = false;
+            let Q5 = false;
+            let Q6 = false;
+            let Q7 = false;
+            show_post(1);
+        }
+    </script>
+
+
     <div id="unity-container" class="unity-desktop">
         <canvas id="unity-canvas"></canvas>
     </div>
     <div id="loading-cover" style="display:none;">
+        <span style="font-size: 20px; color:aliceblue">請先將手機轉成橫向</span>
         <div id="unity-loading-bar">
             <div id="unity-progress-bar-empty" style="display: none;">
                 <div id="unity-progress-bar-full"></div>
@@ -137,28 +1322,28 @@
         var db = indexedDB.open("dummy_indexdb", 1); // iOS 14.6 fix; the call to open indexdb hangs forever otherwise
 
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/f.loader.js";
+        const loaderUrl = buildUrl + "/camera.loader.js";
         const config = {
-            dataUrl: buildUrl + "/9130b3fbd4bbcb6d73a80784774c494c.data.unityweb",
-            frameworkUrl: buildUrl + "/e76c82c4f005ba0dd2683da7843fc11b.js.unityweb",
-            codeUrl: buildUrl + "/84ebe0af450e99a958beade4338de073.wasm.unityweb",
+            dataUrl: buildUrl + "/4431237c3f0445f9cc8aaa09c3df4227.data.unityweb",
+            frameworkUrl: buildUrl + "/24c61e9add08f064fa91abbbe441109f.js.unityweb",
+            codeUrl: buildUrl + "/13829fea291233d16df229f6039fc4f5.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "英文學習平台",
             productVersion: "0.1.0",
-        //Useful when used along with Filename as Hashes option
+            //Useful when used along with Filename as Hashes option
             cacheControl: function (url) {
-            // typically includes: .data, .bundle, .zpt
-            if (url.match(/\.data/) || url.match(/\.bundle/) || url.match(/\.zpt/)) {
-             return "immutable";
-}
-   
-            if (url.match(/\.mp4/) || url.match(/\.custom/) || url.match(/\.zbin/)) {
-                return "immutable";
-            }   
-            // Disable explicit caching for all other files.
-            // Note: the default browser cache may cache them anyway.
-            return "no-store";
+                // typically includes: .data, .bundle, .zpt
+                if (url.match(/\.data/) || url.match(/\.bundle/) || url.match(/\.zpt/)) {
+                    return "immutable";
+                }
+
+                if (url.match(/\.mp4/) || url.match(/\.custom/) || url.match(/\.zbin/)) {
+                    return "immutable";
+                }
+                // Disable explicit caching for all other files.
+                // Note: the default browser cache may cache them anyway.
+                return "no-store";
             },
         };
 
@@ -208,726 +1393,980 @@
         }
 
     </script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <script>
-    function fixUnityCanvasSize() {
-      const canvas = document.getElementById("unity-canvas");
-      if (!canvas) return;
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        let activeScence = [];
+        let active_workSheet = [];
+        let BgPaths = [];
+        let activeDict = {};
+        let imagePaths = [];
+        let question_bank = "";//sheet name
+        window.fetchActiveData = function () {
+            fetch("expData.xlsx?t=" + new Date().getTime()) // 加入時間戳記，避免快取
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    let workbook = XLSX.read(data, { type: "array" });
+                    let sheetName = "Setting";
+                    let worksheet = workbook.Sheets[sheetName];
 
-      let w = window.visualViewport ? window.visualViewport.width : window.innerWidth;
-      let h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+                    // 解析 Excel，確保 raw: true，並略過 row_no 欄位
+                    let jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true, defval: "" });
+                    jsonData = jsonData.map(row => {
+                        let { row_no, ...rest } = row;
+                        return rest;
+                    });
 
-      canvas.style.width = w + "px";
-      canvas.style.height = h + "px";
-    }
+                    activeScence = jsonData.map(row => row.activeScence).filter(path => path);
+                    active_workSheet = jsonData.map(row => row.active_workSheet).filter(path => path);
+                    BgPaths = jsonData
+                        .map(row => row.background)
+                        .filter(path => path)
+                        .map(path => path.replace(/\\/g, "/"));
 
-    window.addEventListener("resize", fixUnityCanvasSize);
-    window.addEventListener("orientationchange", () => setTimeout(fixUnityCanvasSize, 300));
+                    if (activeScence.length > 1) {
+                        for (let i = 0; i < activeScence.length; i++) {
+                            activeDict[activeScence[i]] = [active_workSheet[i], BgPaths[i]];
+                        }
+                    }
 
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener("resize", fixUnityCanvasSize);
-      window.visualViewport.addEventListener("scroll", fixUnityCanvasSize);
-    }
+                    console.log("取得啟動資料：", activeDict);
 
-    let activeScence = [];
-    let active_workSheet = [];
-    let BgPaths = [];
-    let game_playtime = [];
-    let activeDict = {};
-    let imagePaths = [];
-    let question_bank = "";//sheet name
-    window.fetchActiveData = function () {
-      fetch("questionData.xlsx?t=" + new Date().getTime()) // 加入時間戳記，避免快取
-        .then(response => response.arrayBuffer())
-        .then(data => {
-          let workbook = XLSX.read(data, { type: "array" });
-          let sheetName = "Setting";
-          let worksheet = workbook.Sheets[sheetName];
+                    // 確保 fetch 完成後傳回 Unity
+                    let jsonString = JSON.stringify(activeScence);
+                    if (window.uarGameInstance) {
+                        window.uarGameInstance.SendMessage('GameManager', 'fromExcel', jsonString);
+                    } else {
+                        console.error("Unity WebGL 尚未初始化！");
+                    }
+                })
+                .catch(error => console.error("讀取 Excel 發生錯誤:", error));
+        };
 
-          // 解析 Excel，確保 raw: true，並略過 row_no 欄位
-          let jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true, defval: "" });
-          jsonData = jsonData.map(row => {
-            let { row_no, ...rest } = row;
-            return rest;
-          });
 
-          activeScence = jsonData.map(row => row.active_Scence).filter(path => path);
-          active_workSheet = jsonData.map(row => row.active_workSheet).filter(path => path);
-          BgPaths = jsonData
-            .map(row => row.background)
-            .filter(path => path)
-            .map(path => path.replace(/\\/g, "/"));
-          game_playtime = jsonData.map(row => row.game_playtime).filter(t => t);
 
-          if (activeScence.length > 1) {
-            for (let i = 0; i < activeScence.length; i++) {
-              activeDict[activeScence[i]] = [active_workSheet[i], BgPaths[i], game_playtime[i]];
+        // 傳送使用者資料給 Unity
+        function send_UserData() {
+            let data = `${userName},${question_bank},${school_id}`;
+            window.uarGameInstance.SendMessage('GameManager', 'receiveUserName', data);
+        }
+        function reload() {
+            console.log("sceneNumber" + sceneNumber);
+            let data = `${sceneNumber}`;
+            window.uarGameInstance.SendMessage('GameManager', 'choose', data);
+        }
+        function getQusetionBank(randomIndex) {
+            if (randomIndex == 0) {
+                question_bank = "教育或學校"
+            } else if (randomIndex == 1) {
+                question_bank = "地點或建築"
+            } else {
+                question_bank = "情緒相關"
             }
-          }
+            send_UserData();
+        }
+        let Qsheet = "";
+        let Q1_answer = "";      // 第一題答案
+        let Q2_answer = "";      // 第二題答案
+        let Q3_answer = "";
+        let shuff_test = [];
+        let randomIndex;
+        let globalJsonData = [];
+        let sceneNumber = "";
+        //選項
 
-          console.log("取得啟動資料：", activeDict);
+        // 從一個區段中隨機抽 n 題
+        function getRandomFromSegment(segment, n) {
+            if (segment.length <= n) return segment;
+            //打亂重新排序
+            const shuffled = segment.sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, n);
+        }
+        function clearSelection() {
+            // 選取並直接取消勾選
+            document.querySelectorAll('input[name="test1"]').forEach(radio => {
+                radio.checked = false;
+            });
+        }
+        window.SendGameInfo = function (sceneName) {
+            fetch("expData.xlsx?t=" + new Date().getTime())
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    document.getElementById("success").style.display = "none";
+                    let workbook = XLSX.read(data, { type: "array" });
+                    //選擇題庫類型
+                    const sheetMap = {
+                        Scene1: ["match", "match2", "match3"], //Scene1
+                        Scene2: ["cloze", "cloze2", "cloze3"],
+                        Scene3: ["card", "card2", "card3"],
+                    };
 
-          // 確保 fetch 完成後傳回 Unity
-          let jsonString = JSON.stringify(activeScence);
-          if (window.uarGameInstance) {
-            window.uarGameInstance.SendMessage('GameManager', 'fromExcel', jsonString);
-          } else {
-            console.error("Unity WebGL 尚未初始化！");
-          }
-        })
-        .catch(error => console.error("讀取 Excel 發生錯誤:", error));
-    };
+                    const sheets = sheetMap[sceneName];
+                    const randomIndex = Math.floor(Math.random() * sheets.length);
+                    const sheet = workbook.Sheets[sheets[randomIndex]];
+                    console.log("sceneName：", sceneName);
+                    getQusetionBank(randomIndex);
+                    if (!sheet) {
+                        console.error("找不到工作表");
+                        return;
+                    }
 
-    window.sendGamePlayTime = function (message) {
-      localStorage.clear();
-      sessionStorage.clear();
-      let value = activeDict[message];  // message 為 key
-      let game_playtime = value ? value[2] : null;  //value 存在，就取第一個元素，否則返回 null
-      if (!game_playtime) {
-        console.error("遊戲時間資料不存在");
-        return;
-      }
-      console.log("game_playtime" + game_playtime);
-      // 確保 Unity WebGL 已初始化
-      if (window.uarGameInstance) {
-        window.uarGameInstance.SendMessage('GameManager', 'getGamePlayTime', String(game_playtime));
-      } else {
-        console.error("Unity WebGL 尚未初始化！");
-      }
-    }
+                    // Excel → JSON
+                    let raw = XLSX.utils.sheet_to_json(sheet, { raw: true });
 
-    window.SendGameInfo = function (sceneName) {
-      fetch("questionData.xlsx?t=" + new Date().getTime())
-        .then(response => response.arrayBuffer())
-        .then(data => {
-          let workbook = XLSX.read(data, { type: "array" });
+                    globalJsonData = raw.map(r => ({
+                        question: r.question || "",
+                        optionA: r.optionA || "",
+                        optionB: r.optionB || "",
+                        optionC: r.optionC || "",
+                        answer: r.answer || ""
+                    })).filter(r => r.optionA !== "");
 
-          let value = activeDict[sceneName];  // message 為 key
-          let firstValue = value ? value[0] : null;  //value 存在，就取第一個元素，否則返回 null
-          let sheetName = firstValue;
-          let worksheet = sheetName ? workbook.Sheets[sheetName] : null;//防呆
+                    // 產生題目
+                    let result = genQuestions(globalJsonData, { easy: 3, medium: 2, hard: 2 });
 
-          if (!worksheet) {
-            console.error("無法找到工作表！");
-            return;
-          }
-          let rawData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-          let jsonData = rawData.map(row => {
-            // 有A、 B、C 全部存在 → 回傳完整選項
-            if (row.optionB && row.optionC) {
-              return {
-                question: row.question,
-                optionA: row.optionA,
-                optionB: row.optionB,
-                optionC: row.optionC,
-                answer: row.answer || null
-              };
-            } else if (row.question && row.optionA) {
-              return {
-                question: row.question,
-                optionA: row.optionA
-              };
+                    let fullPool = result.pool;         // Unity 要的題庫
+                    let shuff_test = result.selected;  // 前後測題目
+
+                    console.log("Unity 題庫：", fullPool);
+                    console.log("前後測題目：", shuff_test);
+
+                    // 傳給 Unity
+                    if (window.uarGameInstance) {
+                        sendDataInChunks(fullPool, 10);
+                    } else {
+                        console.error("Unity 未初始化");
+                    }
+
+                    // 顯示到前後測 UI
+                    renderQuestions(sceneName, shuff_test);
+
+                })
+                .catch(error => console.error("讀取 Excel 失敗:", error));
+        };
+
+        function clearSelection() {
+            // 選取並直接取消勾選
+            for (let i = 1; i <= 14; i++) {
+                document
+                    .querySelectorAll(`input[name="test${i}"]`)
+                    .forEach(radio => radio.checked = false);
             }
-          }).filter(row => row !== null); // 過濾掉為 null 的項目
 
-          console.log("開始傳送:\n" + JSON.stringify(jsonData, null, 2));
-          // 確保 Unity 初始化後再發送
-          if (window.uarGameInstance) {
-            sendDataInChunks(jsonData, 10);
-          } else {
-            console.error("Unity 尚未初始化，無法傳送資料！");
-          }
-        })
-        .catch(error => {
-          console.error("讀取 Excel 失敗:", error);
-        });
-    };
-
-    function sendDataInChunks(data, chunkSize) {
-      let index = 0;
-      function sendNext() {
-        if (index >= data.length) {
-          console.log("所有資料已傳送完成！");
-          return;
         }
+        // 產生題目：pool(各難度抽固定數量) + selected(依比例從 pool 抽)
+        function genQuestions(
+            data,
+            selectedConfig = { easy: 3, medium: 2, hard: 2 },
+            poolSize = 10
+        ) {
+            const total = data.length;
+            const gap = Math.floor(total / 3);
 
-        let chunk = data.slice(index, index + chunkSize);
-        let jsonString = JSON.stringify(chunk);
-
-        // 限制資料大小（再小心一些）
-        if (jsonString.length > 1024 * 40) {
-          console.error("JSON 資料過大", jsonString.length);
-          index += chunkSize;
-          setTimeout(sendNext, 1000); // 延長延遲時間
-          return;
-        }
-
-        // 確保 Unity WebGL 已初始化
-        if (window.uarGameInstance) {
-          try {
-            //console.log(`發送資料第 ${index + 1} 到 ${index + chunk.length} 筆`);
-            window.uarGameInstance.SendMessage('SaveInfo', 'GetData', jsonString);
-            //console.log(`已傳送第 ${index + 1} 到 ${index + chunk.length} 筆資料`);
-
-            index += chunkSize; // 更新 index
-            setTimeout(sendNext, 500); //延遲後遞迴呼叫
-          } catch (error) {
-            console.error("Unity 傳輸錯誤，重試中...", error);
-            setTimeout(sendNext, 2000); // 增加重試時間
-          }
-        } else {
-          console.warn("Unity 尚未初始化，等待 1 秒後重試...");
-          setTimeout(sendNext, 2000); // 1 秒後重試
-        }
-      }
-
-      sendNext();
-    }
-
-    window.sendBackground = function (message) {
-      console.log("傳送背景");
-      localStorage.clear();
-      sessionStorage.clear();
-      let value = activeDict[message];  // message 為 key
-      let BgPath = value ? value[1] : null;  //value 存在，就取第一個元素，否則返回 null
-      if (!BgPath) {
-        console.error("無法發送空的圖片路徑");
-        return;
-      }
-
-      let imgElement = new Image();
-      imgElement.src = BgPath;
-
-      imgElement.onload = function () {
-        fetch(imgElement.src)
-          .then(response => response.blob())
-          .then(blob => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              const base64String = reader.result.split(",")[1];
-
-              // 確保 Unity WebGL 已初始化
-              if (window.uarGameInstance) {
-                window.uarGameInstance.SendMessage('UIManager', 'ReceiveBackground', base64String);
-              } else {
-                console.error("Unity WebGL 尚未初始化！");
-              }
+            // 依難度切題庫
+            const groups = {
+                easy: data.slice(0, gap),
+                medium: data.slice(gap, gap * 2),
+                hard: data.slice(gap * 2)
             };
-            reader.readAsDataURL(blob);
-          })
-          .catch(error => {
-            console.error("圖片讀取失敗:", error);
-          });
-      };
 
-    }
-    //按鈕功能
-    window.allImage = [];
-    window.BtnPathIndex = 0;
-    window.fetchImage = function (imagePath) {
-      localStorage.clear();
-      sessionStorage.clear();
-      if (!imagePath) {
-        console.error("無法發送空的圖片路徑");
-        return;
-      }
+            const resultPoolByLevel = {};
+            const selectedByLevel = {};
 
-      // 將圖片路徑加入佇列
-      window.allImage.push(imagePath);
+            // 對每個難度處理
+            ["easy", "medium", "hard"].forEach(level => {
 
-      // 如果是第一次呼叫或佇列剛加入，啟動發送流程
-      if (window.allImage.length === 1 && window.BtnPathIndex === 0) {
-        sendNextImage_Btn();
-      }
-    };
+                const needSelected = selectedConfig[level];
+                const allQuestions = groups[level];
 
-    function sendNextImage_Btn() {
-      if (window.BtnPathIndex >= window.allImage.length) {
-        // 所有圖片已處理完畢
-        console.log("所有圖片已發送至 Unity。");
+                //先抽 selected
+                const selected = getRandom(allQuestions, needSelected);
+
+                // 剩下可用題目（排除 selected）
+                const selectedIds = new Set(selected.map(q => q.id));
+                const remaining = allQuestions.filter(q => !selectedIds.has(q.id));
+
+                // 補齊到 poolSize
+                const needExtra = poolSize - selected.length;
+                const extra = getRandom(remaining, needExtra);
+
+                resultPoolByLevel[level] = [...selected, ...extra]; //依難度分類好的題庫
+                selectedByLevel[level] = selected;
+            });
+
+            return {
+                pool: [
+                    ...resultPoolByLevel.easy,
+                    ...resultPoolByLevel.medium,
+                    ...resultPoolByLevel.hard
+                ],
+                selected: [
+                    ...selectedByLevel.easy,
+                    ...selectedByLevel.medium,
+                    ...selectedByLevel.hard
+                ],
+                poolByLevel: resultPoolByLevel,
+                selectedByLevel
+            };
+        }
+
+
+
+
+        // 從陣列中抽 n
+        function getRandom(arr, n) {
+            if (arr.length <= n) return [...arr];
+            return [...arr].sort(() => Math.random() - 0.5).slice(0, n);
+        }
+
+        // 隨機打亂陣列的函式
+        function shuffle_Match(array) {
+            return array
+                .map(value => ({ value, sort: Math.random() })) // 加上隨機權重
+                .sort((a, b) => a.sort - b.sort)                // 依權重排序
+                .map(({ value }) => value);                     // 取出原值
+        }
+        // 顯示題目到前後測
+        function renderQuestions(scene, shuff_test) {
+            console.log("送入 renderQuestions 的 shuff_test =", shuff_test);
+            Q1 = true;
+            Q2 = false;
+            Q3 = false;
+            Q4 = false;
+            Q5 = false;
+            Q6 = false;
+            Q7 = false;
+            // Scene1: match
+            // Scene2: cloze
+            // Scene3: card
+
+            let Q_content = "";
+            let add = "";
+            if (scene === "Scene1") {
+                Q_content = "請選出正確中文的意思";
+                document.getElementById("pre_text").innerText = "Scene1 前測";
+                document.getElementById("pro_text").innerText = "Scene1 後測";
+                sceneNumber = "1";
+                add = "";
+            } else if (scene === "Scene2") {
+                Q_content = "請根據題目判斷空格應填入哪個的選項";
+                document.getElementById("pre_text").innerText = "Scene2 前測";
+                document.getElementById("pro_text").innerText = "Scene2 後測";
+                sceneNumber = "2";
+                add = "";
+            } else if (scene === "Scene3") {
+                Q_content = "";
+                add = " ";
+                document.getElementById("pre_text").innerText = "Scene3 前測";
+                document.getElementById("pro_text").innerText = "Scene3 後測";
+                sceneNumber = "3";
+                add = "請根據題目選擇正確的選項： ";
+                const fs_pre = document.getElementById("group_text1");
+                fs_pre.classList.replace("fs-4", "fs-5");
+                const fs_post = document.getElementById("group_text2");
+                fs_post.classList.replace("fs-4", "fs-5");
+                document.getElementById("nextBtn").innerText = "前往問卷";
+                document.getElementById("success").innerHTML = `
+                <a href="https://forms.gle/fVipAdLPukH3y7rR8"
+                target="_blank"
+                style="color:#0d6efd; font-weight:bold; text-decoration:underline; font-size: 30px;">
+                點我填寫回饋問卷
+                </a>
+            `;
+                /*  const fs_pre = document.getElementById("group_text1");
+                    fs_pre.classList.replace("fs-5", "fs-4");
+                    const fs_post = document.getElementById("group_text2");
+                    fs_post.classList.replace("fs-5", "fs-4");
+                */
+            }
+            //請選擇語意和文法正確的句子
+            document.getElementById("Q_title").innerText = Q_content;
+            document.getElementById("Q2_title").innerText = Q_content;
+            //題目
+            document.getElementById("Q1_word").innerText = "1. " + add + (shuff_test[0]?.question || "");
+            document.getElementById("Q2_word").innerText = "2. " + add + (shuff_test[1]?.question || "");
+            document.getElementById("Q3_word").innerText = "3. " + add + (shuff_test[2]?.question || "");
+            document.getElementById("Q4_word").innerText = "4. " + add + (shuff_test[3]?.question || "");
+            document.getElementById("Q5_word").innerText = "5. " + add + (shuff_test[4]?.question || "");
+            document.getElementById("Q6_word").innerText = "6. " + add + (shuff_test[5]?.question || "");
+            document.getElementById("Q7_word").innerText = "7. " + add + (shuff_test[6]?.question || "");
+            try {
+                console.log("開始產生選項，scene =", scene);
+                if (scene === "Scene1") { //Scene1
+                    console.log("進入 randomMatchOpt");
+                    randomMatchOpt(shuff_test);
+                } else {
+                    console.log("進入 randomCardOpt"); //card 和克漏字
+                    randomCardOpt(shuff_test);
+                }
+            } catch (err) {
+                console.error("選項生成時發生錯誤 → UI 無法顯示", err);
+            }
+            clearSelection();
+            // UI 顯示
+            console.log("準備顯示 UI");
+            document.getElementById("pre_test").style.display = "flex";
+            document.getElementById("sort_2").style.display = "none";
+            document.getElementById("sort_3").style.display = "none";
+            document.getElementById("sort_1").style.display = "block";
+        }
+
+
+        //配對題
+        function randomMatchOpt(q) {
+
+            q.forEach((item, idx) => {
+
+                const correct = item.optionA;
+                //記錄正確答案
+                if (idx === 0) correct_1 = correct;
+                if (idx === 1) correct_2 = correct;
+                if (idx === 2) correct_3 = correct;
+                if (idx === 3) correct_4 = correct;
+                if (idx === 4) correct_5 = correct;
+                if (idx === 5) correct_6 = correct;
+                if (idx === 6) correct_7 = correct;
+                //從題庫抓所有 optionA
+                let allOptions = globalJsonData
+                    .map(x => x.optionA)
+                    .filter(o => o && o !== correct);
+
+                //抽三個錯誤選項
+                let wrongOptions = shuffle(allOptions).slice(0, 3); ㄋ
+                // 合併
+                let ops = shuffle([correct, ...wrongOptions]);
+                document.querySelector(`label[for="S${idx + 1}_1"]`).textContent = ops[0];
+                document.querySelector(`label[for="S${idx + 1}_2"]`).textContent = ops[1];
+                document.querySelector(`label[for="S${idx + 1}_3"]`).textContent = ops[2];
+                document.querySelector(`label[for="S${idx + 1}_4"]`).textContent = ops[3];
+
+            });
+
+        }
+        function clearWord(str) {
+            return str + " ";
+        }
+
+        function randomCardOpt(q) {
+            q.forEach((item, idx) => {
+                let ops = shuffle([item.optionA, item.optionB, item.optionC, item.answer]);
+                // 記錄正確答案
+                if (idx === 0) correct_1 = item.answer;
+                if (idx === 1) correct_2 = item.answer;
+                if (idx === 2) correct_3 = item.answer;
+                if (idx === 3) correct_4 = item.answer;
+                if (idx === 4) correct_5 = item.answer;
+                if (idx === 5) correct_6 = item.answer;
+                if (idx === 6) correct_7 = item.answer;
+
+                document.querySelector(`label[for="S${idx + 1}_1"]`).textContent = ops[0];
+                document.querySelector(`label[for="S${idx + 1}_2"]`).textContent = ops[1];
+                document.querySelector(`label[for="S${idx + 1}_3"]`).textContent = ops[2];
+                document.querySelector(`label[for="S${idx + 1}_4"]`).textContent = ops[3];
+            });
+
+        }
+        function shuffle(arr) {
+            return arr
+                .map(x => ({ x, r: Math.random() }))
+                .sort((a, b) => a.r - b.r)
+                .map(obj => obj.x);
+        }
+
+        function sendDataInChunks(data, chunkSize) {
+            let index = 0;
+            function sendNext() {
+                if (index >= data.length) {
+                    console.log("所有資料已傳送完成！");
+                    return;
+                }
+
+                let chunk = data.slice(index, index + chunkSize);
+                let jsonString = JSON.stringify(chunk);
+
+                // 限制資料大小（再小心一些）
+                if (jsonString.length > 1024 * 40) {
+                    console.error("JSON 資料過大", jsonString.length);
+                    index += chunkSize;
+                    setTimeout(sendNext, 1000); // 延長延遲時間
+                    return;
+                }
+
+                // 確保 Unity WebGL 已初始化
+                if (window.uarGameInstance) {
+                    try {
+                        //console.log(`發送資料第 ${index + 1} 到 ${index + chunk.length} 筆`);
+                        window.uarGameInstance.SendMessage('SaveInfo', 'GetData', jsonString);
+                        //console.log(`已傳送第 ${index + 1} 到 ${index + chunk.length} 筆資料`);
+
+                        index += chunkSize; // 更新 index
+                        setTimeout(sendNext, 500); //延遲後遞迴呼叫
+                    } catch (error) {
+                        console.error("Unity 傳輸錯誤，重試中...", error);
+                        setTimeout(sendNext, 2000); // 增加重試時間
+                    }
+                } else {
+                    console.warn("Unity 尚未初始化，等待 1 秒後重試...");
+                    setTimeout(sendNext, 2000); // 1 秒後重試
+                }
+            }
+
+            sendNext();
+        }
+
+        /*function sendBg() {
+            console.log("傳送背景");
+            localStorage.clear();
+            sessionStorage.clear();
+ 
+            let BgPath;
+            //校園 建築 情緒
+ 
+            if (randomIndex == 0) {
+                BgPath = "images/00.jpg";
+            } else if (randomIndex == 1) {
+                BgPath = "images/01.jpg";
+            } else {
+                BgPath = "images/02.jpg";
+            }
+ 
+            if (!BgPath) {
+                console.error("無法發送空的圖片路徑");
+                return;
+            }
+ 
+            let imgElement = new Image();
+            imgElement.src = BgPath;
+ 
+            imgElement.onload = function () {
+                fetch(imgElement.src)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            const base64String = reader.result.split(",")[1];
+ 
+                            // 確保 Unity WebGL 已初始化
+                            if (window.uarGameInstance) {
+                                window.uarGameInstance.SendMessage('UIManager', 'ReceiveBackground', base64String);
+                            } else {
+                                console.error("Unity WebGL 尚未初始化！");
+                            }
+                        };
+                        reader.readAsDataURL(blob);
+                    })
+                    .catch(error => {
+                        console.error("圖片讀取失敗:", error);
+                    });
+            };
+ 
+        }*/
+        window.sendBackground = function (message) {
+            /*localStorage.clear();
+            sessionStorage.clear();
+            let value = activeDict[message];  // message 為 key
+            let BgPath = value ? value[1] : null;  //value 存在，就取第一個元素，否則返回 null
+            //校園 建築 情緒
+ 
+            if (randomIndex == 0) {
+                BgPath = "images/00.jpg";
+            }else if(randomIndex == 0) {
+                BgPath = "images/01.jpg";
+            }else{
+                BgPath = "images/s1.jpg";
+            }
+ 
+            if (!BgPath) {
+                console.error("無法發送空的圖片路徑");
+                return;
+            }
+ 
+            let imgElement = new Image();
+            imgElement.src = BgPath;
+ 
+            imgElement.onload = function () {
+                fetch(imgElement.src)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            const base64String = reader.result.split(",")[1];
+ 
+                            // 確保 Unity WebGL 已初始化
+                            if (window.uarGameInstance) {
+                                window.uarGameInstance.SendMessage('UIManager', 'ReceiveBackground', base64String);
+                            } else {
+                                console.error("Unity WebGL 尚未初始化！");
+                            }
+                        };
+                        reader.readAsDataURL(blob);
+                    })
+                    .catch(error => {
+                        console.error("圖片讀取失敗:", error);
+                    });
+            };*/
+
+        }
+        //按鈕功能
         window.allImage = [];
         window.BtnPathIndex = 0;
-        return;
-      }
-
-      const imagePath = window.allImage[window.BtnPathIndex];
-      const imgElement = new Image();
-      imgElement.src = imagePath;
-
-      imgElement.onload = function () {
-        fetch(imgElement.src)
-          .then(response => response.blob())
-          .then(blob => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              const base64String = reader.result.split(",")[1];
-
-              if (window.uarGameInstance) {
-                window.uarGameInstance.SendMessage('UIManager', 'ReceiveImage', base64String);
-                //console.log("已送出第", window.currentIndex + 1, "張：", imagePath);
-              } else {
-                console.error("Unity WebGL 尚未初始化！");
-              }
-
-              // 等 1 秒後再送下一張（避免 Unity 無法即時處理）
-              window.BtnPathIndex++;
-              setTimeout(sendNextImage_Btn, 200); // 調大延遲可提高成功率
-            };
-            reader.readAsDataURL(blob);
-          })
-          .catch(error => {
-            console.error("圖片讀取失敗:", error);
-            window.BtnPathIndex++;
-            setTimeout(sendNextImage_Btn, 1000); // 繼續下一張
-          });
-      };
-
-      imgElement.onerror = function () {
-        console.error("圖片載入錯誤：", imagePath);
-        window.BtnPathIndex++;
-        setTimeout(sendNextImage_Btn, 1000);
-      };
-    }
-    //按鈕功能
-    window.allImage = [];
-    window.BtnPathIndex = 0;
-    window.imageQueue = [];
-    window.currentIndex = 0;
-
-    window.fetchGameBg = function (imagePath) {
-      if (!imagePath) {
-        console.error("無法發送空的圖片路徑");
-        return;
-      }
-
-      // 將圖片路徑加入佇列
-      window.imageQueue.push(imagePath);
-
-      // 如果是第一次呼叫或佇列剛加入，啟動發送流程
-      if (window.imageQueue.length === 1 && window.currentIndex === 0) {
-        sendNextImage();
-      }
-    };
-
-    function sendNextImage() {
-      if (window.currentIndex >= window.imageQueue.length) {
-        // 所有圖片已處理完畢
-        console.log("所有圖片已發送至 Unity。");
         window.imageQueue = [];
         window.currentIndex = 0;
-        return;
-      }
 
-      const imagePath = window.imageQueue[window.currentIndex];
-      const imgElement = new Image();
-      imgElement.src = imagePath;
-
-      imgElement.onload = function () {
-        fetch(imgElement.src)
-          .then(response => response.blob())
-          .then(blob => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              const base64String = reader.result.split(",")[1];
-
-              if (window.uarGameInstance) {
-                window.uarGameInstance.SendMessage('UIManager', 'ReceiveGameBg', base64String);
-                //console.log("已送出第", window.currentIndex + 1, "張：", imagePath);
-              } else {
-                console.error("Unity WebGL 尚未初始化！");
-              }
-
-              // 等 1 秒後再送下一張（避免 Unity 無法即時處理）
-              window.currentIndex++;
-              setTimeout(sendNextImage, 100); // 調大延遲可提高成功率
-            };
-            reader.readAsDataURL(blob);
-          })
-          .catch(error => {
-            console.error("圖片讀取失敗:", error);
-            window.currentIndex++;
-            setTimeout(sendNextImage, 1000); // 繼續下一張
-          });
-      };
-
-      imgElement.onerror = function () {
-        console.error("圖片載入錯誤：", imagePath);
-        window.currentIndex++;
-        setTimeout(sendNextImage, 1000);
-      };
-    }
-    window.findBtnData = function (message) {
-      //console.log("findBtnData", message);  // 顯示傳入的 key
-      let value = btnDict[message];  // 查找對應的值
-      if (value) {
-        console.log("btn", value);
-        let jsonString = JSON.stringify(value);
-        if (window.uarGameInstance) {
-          window.uarGameInstance.SendMessage('GameManager', 'getBtnDataFromExcel', jsonString);
-        } else {
-          console.error("Unity WebGL 尚未初始化！");
-        }
-      } else {
-        console.log("找不到對應的按鈕資料", message);  // 顯示錯誤訊息
-      }
-    }
-
-  </script>
-  <!-- 1. 引入 Bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- 2. 建立 Modal（影片全螢幕） -->
-  <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
-      <div class="modal-content">
-        <div class="modal-header" style="max-height: 30%">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-            onclick="StopVideo()"></button>
-        </div>
-        <div class="modal-body p-0">
-          <video id="videoPlayer" class="w-100 h-100" controls playsinline>
-            <source src="" type="video/mp4">
-            你的瀏覽器不支援影片播放
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <script>
-
-    window.playVideo = function (url) {
-      let videoElement = document.getElementById("videoPlayer");
-      let modalElement = document.getElementById("videoModal");
-
-      if (!videoElement) {
-        console.error("找不到 videoPlayer");
-        return;
-      }
-
-      if (!modalElement) {
-        console.error("找不到 videoModal");
-        return;
-      }
-
-      let modal = new bootstrap.Modal(modalElement);
-
-      videoElement.src = url;  // **先設定影片來源
-
-      //顯示 Modal
-      modal.show();
-      //確保使用者點了Btn
-      videoElement.play().catch(error => {
-        console.log("播放失敗，嘗試喚醒 AudioContext", error);
-        videoElement.muted = true; // **靜音模式強制播放**
-        videoElement.play();
-      });
-    }
-    function StopVideo() {
-      let videoModal = document.getElementById("videoModal");
-      let videoElement = document.getElementById("videoPlayer");
-
-      if (!videoModal || !videoElement) {
-        console.error("找不到 videoModal 或 videoPlayer");
-        return;
-      }
-      videoElement.pause();
-      videoElement.currentTime = 0;  // 回到開頭
-
-      //移除影片來源
-      videoElement.src = "";
-
-      //關閉 Modal
-      let modalInstance = bootstrap.Modal.getInstance(videoModal);
-      if (modalInstance) {
-        modalInstance.hide();
-      } else {
-        modalInstance = new bootstrap.Modal(videoModal);
-        modalInstance.hide();
-      }
-
-      console.log("影片已停止並清空來源");
-    }
-
-
-    //旋轉
-    function RequestSensorPermission() {
-      console.log("傳送行動裝置的移動方向給 Unity:");
-      //向使用者請求感應器權限
-      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-        DeviceOrientationEvent.requestPermission()
-          //permissionState 回傳結果
-          .then(permissionState => {
-            //得到granted 就給權限
-            if (permissionState === 'granted') {
-              //deviceorientation 行動裝置的移動方向
-              window.addEventListener("deviceorientation", sendOrientationData);
+        window.fetchGameBg = function (imagePath) {
+            if (!imagePath) {
+                console.error("無法發送空的圖片路徑");
+                return;
             }
-          })
-          .catch(console.error);
-      } else {
-        // 如果不需要手動請求權限（如 Android 或舊版 iOS）
-        window.addEventListener("deviceorientation", sendOrientationData);
-      }
-    }
 
-    let lastBeta = 0, lastGamma = 0, lastAlpha = 0, greaterThan = 0.4;
-    function sendOrientationData(event) {
-      if (window.uarGameInstance) {
-        let gamma = event.gamma || 0;
-        let beta = event.beta || 0;
-        let alpha = event.alpha || 0;
+            // 將圖片路徑加入佇列
+            window.imageQueue.push(imagePath);
 
-        gamma = gamma * 1.2
-        let deltaBeta = Math.abs(beta - lastBeta);
-        let deltaAlpha = Math.abs(alpha - lastAlpha);
-        let deltGamma = Math.abs(gamma - lastGamma);
-        beta = beta * 5.2;
+            // 如果是第一次呼叫或佇列剛加入，啟動發送流程
+            if (window.imageQueue.length === 1 && window.currentIndex === 0) {
+                sendNextImage();
+            }
+        };
 
-        if (deltGamma > 0.00001 && gamma > 20) {
-          beta = lastBeta;
+        function sendNextImage() {
+            if (window.currentIndex >= window.imageQueue.length) {
+                // 所有圖片已處理完畢
+                console.log("所有圖片已發送至 Unity。");
+                window.imageQueue = [];
+                window.currentIndex = 0;
+                return;
+            }
+
+            const imagePath = window.imageQueue[window.currentIndex];
+            const imgElement = new Image();
+            imgElement.src = imagePath;
+
+            imgElement.onload = function () {
+                fetch(imgElement.src)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            const base64String = reader.result.split(",")[1];
+
+                            if (window.uarGameInstance) {
+                                window.uarGameInstance.SendMessage('UIManager', 'ReceiveGameBg', base64String);
+                                //console.log("已送出第", window.currentIndex + 1, "張：", imagePath);
+                            } else {
+                                console.error("Unity WebGL 尚未初始化！");
+                            }
+
+                            // 等 1 秒後再送下一張（避免 Unity 無法即時處理）
+                            window.currentIndex++;
+                            setTimeout(sendNextImage, 500); // 調大延遲可提高成功率
+                        };
+                        reader.readAsDataURL(blob);
+                    })
+                    .catch(error => {
+                        console.error("圖片讀取失敗:", error);
+                        window.currentIndex++;
+                        setTimeout(sendNextImage, 1000); // 繼續下一張
+                    });
+            };
+
+            imgElement.onerror = function () {
+                console.error("圖片載入錯誤：", imagePath);
+                window.currentIndex++;
+                setTimeout(sendNextImage, 1000);
+            };
+        }
+        window.findBtnData = function (message) {
+            //console.log("findBtnData", message);  // 顯示傳入的 key
+            let value = btnDict[message];  // 查找對應的值
+            if (value) {
+                console.log("btn", value);
+                let jsonString = JSON.stringify(value);
+                if (window.uarGameInstance) {
+                    window.uarGameInstance.SendMessage('GameManager', 'getBtnDataFromExcel', jsonString);
+                } else {
+                    console.error("Unity WebGL 尚未初始化！");
+                }
+            } else {
+                console.log("找不到對應的按鈕資料", message);  // 顯示錯誤訊息
+            }
         }
 
-        lastBeta = beta;
-        lastAlpha = alpha;
-        lastGamma = gamma;
+    </script>
+    <!-- 1. 引入 Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-        let data = `${beta},${gamma},${deltGamma},${alpha},${deltaAlpha}`;
-        window.uarGameInstance.SendMessage('CameraManager', 'UpdateCamera', data);
-      }
-    }
-
-
-  </script>
-  <!-- 設定API 視窗 -->
-  <div class="modal fade" id="SettingModal" tabindex="-1" aria-labelledby="SettingModalLabel" aria-hidden="true"
-    style="z-index: 999999;">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content rounded-4 shadow">
-        <div class="modal-header text-white">
-          <h5 class="modal-title fw-bold" id="SettingModalLabel" style="color: black;">設定API KEY(目前支援gemini)
-          </h5>
-          <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="關閉"
-            style="color: black;"></button>
+    <!-- 2. 建立 Modal（影片全螢幕） -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header" style="max-height: 30%">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="StopVideo()"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <video id="videoPlayer" class="w-100 h-100" controls playsinline>
+                        <source src="" type="video/mp4">
+                        你的瀏覽器不支援影片播放
+                    </video>
+                </div>
+            </div>
         </div>
-        <div class="modal-body text-center">
+    </div>
 
-          <div style="position: relative;">
-            <input type="password" id="password" placeholder="請複製貼上 API Key" class="form-control mb-3 mt-4"
-              style="padding: 10px; font-size: 16px; border-width: 2px;">
 
-            <!--<button type="button" onclick="togglePassword()"
+    <script>
+
+        window.playVideo = function (url) {
+            let videoElement = document.getElementById("videoPlayer");
+            let modalElement = document.getElementById("videoModal");
+
+            if (!videoElement) {
+                console.error("找不到 videoPlayer");
+                return;
+            }
+
+            if (!modalElement) {
+                console.error("找不到 videoModal");
+                return;
+            }
+
+            let modal = new bootstrap.Modal(modalElement);
+
+            videoElement.src = url;  // **先設定影片來源
+
+            //顯示 Modal
+            modal.show();
+            //確保使用者點了Btn
+            videoElement.play().catch(error => {
+                console.log("播放失敗，嘗試喚醒 AudioContext", error);
+                videoElement.muted = true; // **靜音模式強制播放**
+                videoElement.play();
+            });
+        }
+        function StopVideo() {
+            let videoModal = document.getElementById("videoModal");
+            let videoElement = document.getElementById("videoPlayer");
+
+            if (!videoModal || !videoElement) {
+                console.error("找不到 videoModal 或 videoPlayer");
+                return;
+            }
+            videoElement.pause();
+            videoElement.currentTime = 0;  // 回到開頭
+
+            //移除影片來源
+            videoElement.src = "";
+
+            //關閉 Modal
+            let modalInstance = bootstrap.Modal.getInstance(videoModal);
+            if (modalInstance) {
+                modalInstance.hide();
+            } else {
+                modalInstance = new bootstrap.Modal(videoModal);
+                modalInstance.hide();
+            }
+
+            console.log("影片已停止並清空來源");
+        }
+
+
+        //旋轉
+        function RequestSensorPermission() {
+            console.log("傳送給 Unity:");
+            //向使用者請求感應器權限
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission()
+                    //permissionState 回傳結果
+                    .then(permissionState => {
+                        //得到granted 就給權限
+                        if (permissionState === 'granted') {
+                            //deviceorientation 行動裝置的移動方向
+                            window.addEventListener("deviceorientation", sendOrientationData);
+                        }
+                    })
+                    .catch(console.error);
+            } else {
+                // 如果不需要手動請求權限（如 Android 或舊版 iOS）
+                window.addEventListener("deviceorientation", sendOrientationData);
+            }
+        }
+
+        let lastBeta = 0, lastGamma = 0, lastAlpha = 0, greaterThan = 0.4;
+        function sendOrientationData(event) {
+            if (window.uarGameInstance) {
+                let gamma = event.gamma || 0;
+                let beta = event.beta || 0;
+                let alpha = event.alpha || 0;
+
+                gamma = gamma * 1.2
+                let deltaBeta = Math.abs(beta - lastBeta);
+                let deltaAlpha = Math.abs(alpha - lastAlpha);
+                let deltGamma = Math.abs(gamma - lastGamma);
+                beta = beta * 5.2;
+
+                if (deltGamma > 0.00001 && gamma > 20) {
+                    beta = lastBeta;
+                }
+
+                lastBeta = beta;
+                lastAlpha = alpha;
+                lastGamma = gamma;
+
+                let data = `${beta},${gamma},${deltGamma},${alpha},${deltaAlpha}`;
+                window.uarGameInstance.SendMessage('CameraManager', 'UpdateCamera', data);
+            }
+        }
+
+
+        window.getGameRecode = function (data) {
+            console.log("接收到的 data:", data);
+            let obj = (typeof data === "string") ? JSON.parse(data) : data;
+
+            // 把物件轉換成 query string
+            let params = new URLSearchParams(obj).toString();
+
+            // 把參數加到網址後面
+            let url = "https://script.google.com/macros/s/AKfycbzQeeLS6gdO8mhYMcShakpBWH0hSb_0rhZeYK7w5kbaaY1G2GhAKKrfSgvqMfDtN659vQ/exec" + params;
+
+            // GET 請求
+            fetch(url, {
+                method: "GET"
+            })
+                .then(res => res.text())
+                .then(msg => console.log("Google 回應:", msg))
+                .catch(err => console.error("錯誤:", err));
+        }
+
+    </script>
+    <!-- 設定API 視窗 -->
+    <div class="modal fade" id="SettingModal" tabindex="-1" aria-labelledby="SettingModalLabel" aria-hidden="true"
+        style="z-index: 999999;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title fw-bold" id="SettingModalLabel" style="color: black;">設定API KEY(目前支援gemini)
+                    </h5>
+                    <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="關閉"
+                        style="color: black;"></button>
+                </div>
+                <div class="modal-body text-center">
+
+                    <div style="position: relative;">
+                        <input type="password" id="password" placeholder="請複製貼上 API Key" class="form-control mb-3 mt-4"
+                            style="padding: 10px; font-size: 16px; border-width: 2px;">
+
+                        <!--<button type="button" onclick="togglePassword()"
                             style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 18px;">
                             檢查
                         </button> -->
 
-            <p class="fs-5" style="color: rgb(255, 39, 39);" id="success"></p>
-          </div>
+                        <p class="fs-5" style="color: rgb(255, 39, 39);" id="success"></p>
+                    </div>
 
-        </div>
+                </div>
 
-        <div class="modal-footer justify-content-center">
-          <button onclick="pasteAPIKey()" class="btn btn-success px-4 fs-5">貼上</button>
-          <button onclick="SendSetting()" class="btn btn-primary px-4 fs-5">確認</button>
+                <div class="modal-footer justify-content-center">
+                    <button onclick="pasteAPIKey()" class="btn btn-success px-4 fs-5">貼上</button>
+                    <button onclick="SendSetting()" class="btn btn-primary px-4 fs-5">確認</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <script>
-    function togglePassword() {
-      const input = document.getElementById("password");
-      input.type = input.type === "password" ? "text" : "password";
-    }
-    let API = document.getElementById("password").value;
-    window.disableUnityKeyboardInput = true;
-
-    document.addEventListener("keydown", function (e) {
-      const active = document.activeElement;
-      if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
-        e.stopPropagation();
-      }
-    }, true);
-
-    document.addEventListener("DOMContentLoaded", function () {
-      document.getElementById('SettingModal').addEventListener('hidden.bs.modal', function () {
-        document.getElementById('unity-canvas').classList.remove("disable-events");
-      });
-    });
-
-    document.getElementById("password").addEventListener("keydown", function (e) {
-      e.stopPropagation();
-    });
-    function ShowSetting() {
-      const modal = new bootstrap.Modal(document.getElementById('SettingModal'));
-      modal.show();
-      console.log("Modal opened");
-
-      document.getElementById('unity-canvas').classList.add("disable-events");
-
-      setTimeout(() => {
-        const input = document.getElementById("password");
-        input.blur();
-        input.focus();
-        console.log("Focused input");
-      }, 200);
-    }
-
-    function SendSetting() {
-      API = document.getElementById("password").value;
-      window.uarGameInstance.SendMessage('ConnectAi', 'SetApiKey', API);
-
-      if (API.trim()) {
-        document.getElementById("success").innerText = "API Key 已成功設定！";
-      } else {
-        document.getElementById("success").innerText = "請輸入 API Key！";
-      }
-
-    }
-    function pasteAPIKey() {
-      if (navigator.clipboard && navigator.clipboard.readText) {
-        navigator.clipboard.readText().then(text => {
-          document.getElementById("password").value = text;
-          SendSetting();
-          document.getElementById("success").innerText = "API Key 已成功設定！";
-        }).catch(err => {
-          alert("無法存取剪貼簿" + err);
-        });
-      }
-    }
-    function sendAPI() {
-      API = document.getElementById("password").value;
-      if (API.trim()) {
-        window.uarGameInstance.SendMessage('ConnectAi', 'SetApiKey', API);
-        console.log("傳送API");
-      }
-    }
-
-  </script>
-
-  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
-
-      <div class="modal-content bg-dark border-0 rounded-0">
-        <div class="modal-header " style="z-index: 10; background-color: #ffffff; ">
-          <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body p-0 d-flex align-items-center justify-content-center" style="position: relative;">
-          <img id="modalImage" src="" alt="圖片" style="max-width: 90%; max-height: 90%; object-fit: contain;">
-          <button id="prevImageBtn" class="btn btn-dark fs-1"
-            style="left: 5%; position: absolute; top: 50%; transform: translateY(-50%); ">
-            <p class="pe-3 pt-3">〈</p>
-          </button>
-          <button id="nextImageBtn" class="btn btn-dark fs-1"
-            style="position: absolute; right: 5%; top: 50%; transform: translateY(-50%); ">
-            <p class="ps-3 pt-3">〉</p>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    //fetchBtn();
-    let Scence = [];
-    let Btn1 = [], Btn2 = [], Btn3 = [], Btn4 = [];
-    let btnDict = {};
-    //function fetchBtn() {
-    window.fetchBtn = function () {
-      fetch("questionData.xlsx?t=" + new Date().getTime())
-        .then(response => response.arrayBuffer())
-        .then(data => {
-          let workbook = XLSX.read(data, { type: "array" });
-          let sheetName = "editButton";
-          let worksheet = workbook.Sheets[sheetName];
-          let jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true, defval: "" });
-
-          const BtnType = (path) => {
-            if (!path || path.trim() === "") return [];
-            cleanPath = path.replace(/\\/g, "/");
-            if (cleanPath.includes('.jpg')) return cleanPath.split(',');
-            else return [cleanPath];
-          };
-
-          Scence = jsonData.map(row => row.ScenceName).filter(path => path);
-          Btn1 = jsonData.map(row => row.Button1).map(BtnType);
-          Btn2 = jsonData.map(row => row.Button2).map(BtnType);
-          Btn3 = jsonData.map(row => row.Button3).map(BtnType);
-          Btn4 = jsonData.map(row => row.Button4).map(BtnType);
-
-          for (let i = 0; i < jsonData.length; i++) {
-            const sceneName = jsonData[i].ScenceName;
-            if (sceneName) {
-              btnDict[sceneName] = [Btn1[i], Btn2[i], Btn3[i], Btn4[i]];
-            }
-          }
-
-          console.log("載入成功：", btnDict);
-        })
-        .catch(error => console.error("載入按鈕資料失敗", error));
-
-
-    }
-    let images = [];
-    //指定 Scene 的所有圖片
-    //function findBtnData(SceneName) {
-    window.findBtnImg = function (SceneName) {
-      console.log("查找 Scene:", SceneName);
-      const sceneData = btnDict[SceneName];
-      if (!sceneData) {
-        alert("找不到 Scene: " + SceneName);
-        return;
-      }
-
-      //圖片路徑
-
-      for (let group of sceneData) {
-        if (Array.isArray(group)) {
-          for (let path of group) {
-            if (typeof path === "string" && path.includes(".jpg")) {
-              images.push(path.trim());
-            }
-          }
+    <script>
+        function togglePassword() {
+            const input = document.getElementById("password");
+            input.type = input.type === "password" ? "text" : "password";
         }
-      }
+        let API = document.getElementById("password").value;
+        window.disableUnityKeyboardInput = true;
 
-      console.log("找到圖片：", images);
-      if (images.length === 0) {
-        alert("Scene 沒有任何圖片！");
-        return;
-      }
+        document.addEventListener("keydown", function (e) {
+            const active = document.activeElement;
+            if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) {
+                e.stopPropagation();
+            }
+        }, true);
 
-      //測試顯示 modal
-      //showImageModal(images);
-    }
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById('SettingModal').addEventListener('hidden.bs.modal', function () {
+                document.getElementById('unity-canvas').classList.remove("disable-events");
+            });
+        });
 
-    // 顯示圖片
-    function showImage() {
-      if (images == null) return;
-      let currentIndex = 0;
-      const modal = new bootstrap.Modal(document.getElementById("imageModal"));
-      const modalImg = document.getElementById("modalImage");
+        document.getElementById("password").addEventListener("keydown", function (e) {
+            e.stopPropagation();
+        });
+        function ShowSetting() {
+            const modal = new bootstrap.Modal(document.getElementById('SettingModal'));
+            modal.show();
+            console.log("Modal opened");
 
-      const updateImage = () => {
-        modalImg.src = images[currentIndex];
-      };
+            document.getElementById('unity-canvas').classList.add("disable-events");
 
-      document.getElementById("prevImageBtn").onclick = () => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateImage();
-      };
+            setTimeout(() => {
+                const input = document.getElementById("password");
+                input.blur();
+                input.focus();
+                console.log("Focused input");
+            }, 200);
+        }
 
-      document.getElementById("nextImageBtn").onclick = () => {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateImage();
-      };
+        function SendSetting() {
+            API = document.getElementById("password").value;
+            window.uarGameInstance.SendMessage('ConnectAi', 'SetApiKey', API);
 
-      updateImage();
-      modal.show();
-    }
-  </script>
+            if (API.trim()) {
+                document.getElementById("success").innerText = "API Key 已成功設定！";
+            } else {
+                document.getElementById("success").innerText = "請輸入 API Key！";
+            }
+
+        }
+        function pasteAPIKey() {
+            if (navigator.clipboard && navigator.clipboard.readText) {
+                navigator.clipboard.readText().then(text => {
+                    document.getElementById("password").value = text;
+                    SendSetting();
+                    document.getElementById("success").innerText = "API Key 已成功設定！";
+                }).catch(err => {
+                    alert("無法存取剪貼簿" + err);
+                });
+            }
+        }
+        function sendAPI() {
+            API = document.getElementById("password").value;
+            if (API.trim()) {
+                window.uarGameInstance.SendMessage('ConnectAi', 'SetApiKey', API);
+                console.log("傳送API");
+            }
+        }
+
+    </script>
+
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+
+            <div class="modal-content bg-dark border-0 rounded-0">
+                <div class="modal-header " style="z-index: 10; background-color: #ffffff; ">
+                    <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-0 d-flex align-items-center justify-content-center"
+                    style="position: relative;">
+                    <img id="modalImage" src="" alt="圖片" style="max-width: 90%; max-height: 90%; object-fit: contain;">
+                    <button id="prevImageBtn" class="btn btn-dark fs-1"
+                        style="left: 5%; position: absolute; top: 50%; transform: translateY(-50%); ">
+                        <p class="pe-3 pt-3">〈</p>
+                    </button>
+                    <button id="nextImageBtn" class="btn btn-dark fs-1"
+                        style="position: absolute; right: 5%; top: 50%; transform: translateY(-50%); ">
+                        <p class="ps-3 pt-3">〉</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //fetchBtn();
+        let Scence = [];
+        let Btn1 = [], Btn2 = [], Btn3 = [], Btn4 = [];
+        let btnDict = {};
+        //function fetchBtn() {
+        window.fetchBtn = function () {
+            fetch("expData.xlsx?t=" + new Date().getTime())
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    let workbook = XLSX.read(data, { type: "array" });
+                    let sheetName = "editButton";
+                    let worksheet = workbook.Sheets[sheetName];
+                    let jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: true, defval: "" });
+
+                    const BtnType = (path) => {
+                        if (!path || path.trim() === "") return [];
+                        cleanPath = path.replace(/\\/g, "/");
+                        if (cleanPath.includes('.jpg')) return cleanPath.split(',');
+                        else return [cleanPath];
+                    };
+
+                    Scence = jsonData.map(row => row.ScenceName).filter(path => path);
+                    Btn1 = jsonData.map(row => row.Button1).map(BtnType);
+                    Btn2 = jsonData.map(row => row.Button2).map(BtnType);
+                    Btn3 = jsonData.map(row => row.Button3).map(BtnType);
+                    Btn4 = jsonData.map(row => row.Button4).map(BtnType);
+
+                    for (let i = 0; i < jsonData.length; i++) {
+                        const sceneName = jsonData[i].ScenceName;
+                        if (sceneName) {
+                            btnDict[sceneName] = [Btn1[i], Btn2[i], Btn3[i], Btn4[i]];
+                        }
+                    }
+
+                    console.log("載入成功：", btnDict);
+                })
+                .catch(error => console.error("載入按鈕資料失敗", error));
+
+
+        }
+        let images = [];
+        //指定 Scene 的所有圖片
+        //function findBtnData(SceneName) {
+        window.findBtnImg = function (SceneName) {
+            console.log("查找 Scene:", SceneName);
+            const sceneData = btnDict[SceneName];
+            if (!sceneData) {
+                alert("找不到 Scene: " + SceneName);
+                return;
+            }
+
+            //圖片路徑
+
+            for (let group of sceneData) {
+                if (Array.isArray(group)) {
+                    for (let path of group) {
+                        if (typeof path === "string" && path.includes(".jpg")) {
+                            images.push(path.trim());
+                        }
+                    }
+                }
+            }
+
+            console.log("找到圖片：", images);
+            if (images.length === 0) {
+                alert("Scene 沒有任何圖片！");
+                return;
+            }
+
+            //測試顯示 modal
+            //showImageModal(images);
+        }
+
+        // 顯示圖片
+        function showImage() {
+            if (images == null) return;
+            let currentIndex = 0;
+            const modal = new bootstrap.Modal(document.getElementById("imageModal"));
+            const modalImg = document.getElementById("modalImage");
+
+            const updateImage = () => {
+                modalImg.src = images[currentIndex];
+            };
+
+            document.getElementById("prevImageBtn").onclick = () => {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                updateImage();
+            };
+
+            document.getElementById("nextImageBtn").onclick = () => {
+                currentIndex = (currentIndex + 1) % images.length;
+                updateImage();
+            };
+
+            updateImage();
+            modal.show();
+        }
+    </script>
 </body>
 
 </html>
