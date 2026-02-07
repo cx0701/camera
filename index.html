@@ -1670,7 +1670,7 @@
                     })).filter(r => r.optionA !== "");
 
                     // 產生題目
-                    let result = genQuestions(globalJsonData, { easy: 3, medium: 2, hard: 2 }, 10);
+                    let result = genQuestions(globalJsonData, { easy: 3, medium: 3, hard: 1 }, { easy: 13, medium: 12, hard: 5 });
 
                     let fullPool = result.pool;         // Unity 要的題庫
                     let shuff_test = result.selected;  // 前後測題目
@@ -1704,8 +1704,8 @@
         // 產生題目：pool(各難度抽固定數量) + selected(依比例從 pool 抽)
         function genQuestions(
             data,
-            selectedConfig = { easy: 3, medium: 2, hard: 2 },
-            poolSize = 10
+            selectedConfig = { easy: 3, medium: 3, hard: 1 },
+            poolSizeByLevel = { easy: 13, medium: 12, hard: 5 }
         ) {
             const total = data.length;
             const gap = Math.floor(total / 3);
@@ -1742,7 +1742,9 @@
                 const remaining = allQuestions.filter(q => q != null && !selectedSet.has(q));
 
                 // 補齊到 poolSize
-                const needExtra = poolSize - selected.length;
+                // 依難度決定 poolSize
+                const poolSize = poolSizeByLevel[level] ?? 10;   //如果不存在就預設為10
+                const needExtra = Math.max(0, poolSize - selected.length);
                 const extra = getRandom(remaining, needExtra);
 
                 resultPoolByLevel[level] = [...selected, ...extra]; //依難度分類好的題庫
