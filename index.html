@@ -250,10 +250,15 @@
                     style="color: black; ">
                     基本資料</h2>
 
-                <div class="input-group mb-3 mb-md-5 mt-2" id="inputGroup-sizing-lg">
+                <div class="input-group mb-3 mb-md-3 mt-1" id="inputGroup-sizing-lg">
                     <span class="input-group-text" id="basic-addon1">我的學號</span>
                     <input type="text" class="form-control" placeholder="範例：11514123" aria-label="Username"
                         aria-describedby="basic-addon1" id="userInput">
+                </div>
+                <div class="input-group mb-3 mb-md-3 mt-2" id="inputGroup-sizing-lg">
+                    <span class="input-group-text" id="basic-addon2">我的科系</span>
+                    <input type="text" class="form-control" placeholder="範例：資管系" aria-label="department"
+                        aria-describedby="basic-addon2" id="userInput2">
                 </div>
             </div>
 
@@ -283,15 +288,19 @@
                     <span>3.我的英文分班</span>
                     <div class="form-check d-flex align-items-center gap-2">
                         <input class="form-check-input " type="radio" name="class" id="class_1" value="option3">
-                        <label class="form-check-label mt-2" for="class_1">初級</label>
+                        <label class="form-check-label mt-2" for="class_1">基礎級</label>
+                    </div>
+                    <div class="form-check d-flex align-items-center gap-2">
+                        <input class="form-check-input " type="radio" name="class" id="class_2" value="option3">
+                        <label class="form-check-label " for="class_2">初級</label>
                     </div>
                     <div class="form-check ">
-                        <input class="form-check-input" type="radio" name="class" id="class_2" value="option3">
-                        <label class="form-check-label" for="class_2">中級</label>
+                        <input class="form-check-input" type="radio" name="class" id="class_3" value="option3">
+                        <label class="form-check-label" for="class_3">中級</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="class" id="class_3" value="option3">
-                        <label class="form-check-label" for="class_3">中高級</label>
+                        <input class="form-check-input" type="radio" name="class" id="class_4" value="option3">
+                        <label class="form-check-label" for="class_4">中高級</label>
                     </div>
                 </div>
 
@@ -1213,6 +1222,7 @@
             toeic_test = document.querySelector('input[name="toeic"]:checked')?.nextElementSibling.textContent.trim() || "";
             gept_test = document.querySelector('input[name="GEPT"]:checked')?.nextElementSibling.textContent.trim() || "";
             school_id = document.getElementById("userInput").value;
+            department = document.getElementById("userInput2").value;
             toeic_score = document.getElementById("toeic_sc").value;
             gept_score = document.getElementById("GEPT_sc").value;
 
@@ -1235,6 +1245,7 @@
             let data = {
                 time_id: time_id,
                 school_id: school_id,
+                department: department,
                 gender: gender,
                 education: education,
                 class_type: class_type,
@@ -1245,7 +1256,7 @@
             };
             let params = new URLSearchParams(data).toString();
             console.log("params", params);
-            let url = "https://script.google.com/macros/s/AKfycbzciaz1zNs13T1CJcjaUOPgCwPIQqliI-E-pzDo0UYvTWGo_x13VodX3hqHCyGu8KlK/exec?" + params;
+            let url = "https://script.google.com/macros/s/AKfycbzDmBp3yKMF41W0Ebct9uQFWhCk-uSGwgtY4wecE13Px-tq5K2tIVBlLdtX0uMzLvJG/exec?" + params;
             document.getElementById("modeSelector").style.display = "none"; // 關閉頁面
             fetch(url, {
                 method: "GET"
@@ -1455,9 +1466,9 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/e.loader.js";
         const config = {
-            dataUrl: buildUrl + "/ef9cd123bdc99a315721e6b407642f67.data.unityweb",
+            dataUrl: buildUrl + "/632b36f421f10857e3c6809c056d1753.data.unityweb",
             frameworkUrl: buildUrl + "/c5cd20de8309637d025b6fcb50da1873.js.unityweb",
-            codeUrl: buildUrl + "/a8030821aa68b65f791080688d910459.wasm.unityweb",
+            codeUrl: buildUrl + "/4dbfa5f93dde225ef6f097c6429b044a.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "英文學習平台",
@@ -2248,21 +2259,21 @@
         function RequestSensorPermission() {
             console.log("傳送給 Unity:");
             //向使用者請求感應器權限
-            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                DeviceOrientationEvent.requestPermission()
-                    //permissionState 回傳結果
-                    .then(permissionState => {
-                        //得到granted 就給權限
-                        if (permissionState === 'granted') {
-                            //deviceorientation 行動裝置的移動方向
-                            window.addEventListener("deviceorientation", sendOrientationData);
-                        }
-                    })
-                    .catch(console.error);
-            } else {
-                // 如果不需要手動請求權限（如 Android 或舊版 iOS）
-                window.addEventListener("deviceorientation", sendOrientationData);
-            }
+            // if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            //     DeviceOrientationEvent.requestPermission()
+            //         //permissionState 回傳結果
+            //         .then(permissionState => {
+            //             //得到granted 就給權限
+            //             if (permissionState === 'granted') {
+            //                 //deviceorientation 行動裝置的移動方向
+            //                 window.addEventListener("deviceorientation", sendOrientationData);
+            //             }
+            //         })
+            //         .catch(console.error);
+            // } else {
+            //     // 如果不需要手動請求權限（如 Android 或舊版 iOS）
+            //     window.addEventListener("deviceorientation", sendOrientationData);
+            // }
         }
 
         let lastBeta = 0, lastGamma = 0, lastAlpha = 0, greaterThan = 0.4;
