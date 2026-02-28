@@ -2311,15 +2311,15 @@
             let params = new URLSearchParams(obj).toString();
 
             // 把參數加到網址後面
-            // let url = "https://script.google.com/macros/s/AKfycbzQeeLS6gdO8mhYMcShakpBWH0hSb_0rhZeYK7w5kbaaY1G2GhAKKrfSgvqMfDtN659vQ/exec?" + params;
+            let url = "https://script.google.com/macros/s/AKfycbzQeeLS6gdO8mhYMcShakpBWH0hSb_0rhZeYK7w5kbaaY1G2GhAKKrfSgvqMfDtN659vQ/exec?" + params;
 
             // // GET 請求
-            // fetch(url, {
-            //     method: "GET"
-            // })
-            //     .then(res => res.text())
-            //     .then(msg => console.log("Google 回應:", msg))
-            //     .catch(err => console.error("錯誤:", err));
+            fetch(url, {
+                method: "GET"
+            })
+                .then(res => res.text())
+                .then(msg => console.log("Google 回應:", msg))
+                .catch(err => console.error("錯誤:", err));
         }
 
     </script>
